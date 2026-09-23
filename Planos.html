@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planos — YouDesing</title>
+<meta name="description" content="Planos de branding e marketing da YouDesing para negócios em diferentes fases.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="planos.css">
+<a href="index.htm">Voltar</a>
+</head>
+<style>
+    :root{
+  --paper:#EDF1F4;
+  --paper-2:#E2E8EC;
+  --ink:#171B24;
+  --ink-soft:#4A5567;
+  --accent:#FF5A2B;
+  --teal:#2F8F86;
+  --gold:#D9A93B;
+  --line:#B9C6D1;
+  --white:#FFFFFF;
+
+  --font-display:'Space Grotesk', sans-serif;
+  --font-body:'IBM Plex Sans', sans-serif;
+  --font-mono:'Space Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 32px;
+}
+
+h1,h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:-.01em;
+}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+
+/* ---------- BOTÕES ---------- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:13px 24px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:.92rem;
+  transition:transform .2s, background .2s, color .2s;
+}
+.btn-primary{background:var(--accent);color:var(--white);}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-ghost{border:1.5px solid var(--ink);}
+.btn-ghost:hover{background:var(--ink);color:var(--paper);}
+
+/* ---------- TOPBAR ---------- */
+.topbar{
+  border-bottom:1px solid var(--line);
+  background:rgba(237,241,244,.9);
+}
+.topbar-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 32px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1.1rem;
+}
+.brand-mark{width:28px;height:28px;}
+
+/* ---------- INTRO ---------- */
+.intro{
+  padding:72px 0 40px;
+}
+.intro h1{
+  font-size:clamp(2rem,4.4vw,3.1rem);
+  line-height:1.08;
+  margin:16px 0 18px;
+}
+.intro .lead{
+  color:var(--ink-soft);
+  max-width:520px;
+  font-size:1.05rem;
+}
+
+/* ---------- PLANOS ---------- */
+.plans{padding:24px 0 64px;}
+
+.plans-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
+  align-items:stretch;
+}
+
+.plan-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:30px 26px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  transition:transform .25s, box-shadow .25s;
+}
+.plan-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 32px -20px rgba(23,27,36,.35);
+}
+
+.plan-card.highlight{
+  border:2px solid var(--accent);
+}
+.plan-card.custom{
+  background:var(--paper-2);
+  border-style:dashed;
+}
+
+.badge{
+  position:absolute;
+  top:-13px;left:26px;
+  background:var(--accent);
+  color:var(--white);
+  font-family:var(--font-mono);
+  font-size:.65rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:5px 12px;
+  border-radius:999px;
+}
+
+.plan-head{margin-bottom:14px;}
+.plan-dot{
+  display:inline-block;
+  width:10px;height:10px;
+  border-radius:50%;
+  margin-bottom:10px;
+}
+.dot-start{background:var(--accent);}
+.dot-cresce{background:var(--accent);}
+.dot-escala{background:var(--teal);}
+.dot-custom{background:var(--ink-soft);}
+
+.plan-head h2{
+  font-size:1.4rem;
+  margin-bottom:4px;
+}
+.plan-tagline{
+  font-size:.88rem;
+  color:var(--ink-soft);
+}
+
+.plan-audience{
+  font-size:.86rem;
+  color:var(--ink-soft);
+  margin:14px 0 18px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+
+.plan-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:20px;
+}
+.plan-meta > div{display:flex;flex-direction:column;gap:4px;}
+.meta-label{
+  font-family:var(--font-mono);
+  font-size:.66rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.meta-value{
+  font-size:.92rem;
+  font-weight:600;
+}
+.meta-value.price{
+  font-family:var(--font-display);
+  font-size:1.3rem;
+  color:var(--ink);
+}
+
+.deliverables{
+  flex:1;
+  margin-bottom:26px;
+  font-size:.88rem;
+}
+.deliverables li{
+  position:relative;
+  padding:9px 0 9px 26px;
+  border-top:1px solid var(--line);
+  color:var(--ink-soft);
+}
+.deliverables li:first-child{border-top:none;}
+.deliverables li::before{
+  position:absolute;
+  left:0;
+  top:9px;
+  font-family:var(--font-mono);
+  font-size:.8rem;
+}
+.deliverables li.yes::before{
+  content:'✓';
+  color:var(--teal);
+}
+.deliverables li.no{
+  color:#B6BECB;
+  text-decoration:line-through;
+}
+.deliverables li.no::before{
+  content:'×';
+  color:#C7CDD6;
+}
+.deliverables li.info{
+  color:var(--ink-soft);
+  font-style:normal;
+}
+.deliverables li.info::before{
+  content:'•';
+  color:var(--accent);
+}
+
+.plan-cta{justify-content:center;width:100%;margin-top:auto;}
+
+/* ---------- NOTA ---------- */
+.plans-note{padding:0 0 80px;}
+.plans-note p{
+  max-width:680px;
+  margin:0 auto;
+  text-align:center;
+  font-size:.88rem;
+  color:var(--ink-soft);
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:var(--ink);
+  color:var(--paper);
+  padding:34px 0;
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+  font-size:.84rem;
+  color:#A7AFBC;
+}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width:1080px){
+  .plans-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:600px){
+  .wrap{padding:0 22px;}
+  .topbar-inner{padding:16px 22px;}
+  .plans-grid{grid-template-columns:1fr;}
+  .plan-meta{flex-direction:column;gap:10px;}
+  .footer-inner{flex-direction:column;align-items:flex-start;}
+}
+</style>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="#" class="brand">
+      YouDesing
+    </a>
+    <a href="#contato" class="btn btn-ghost">Falar com a gente</a>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <div class="wrap">
+      <span class="eyebrow">Planos</span>
+      <h1>Um plano pra cada fase<br>do seu negócio</h1>
+      <p class="lead">Da primeira identidade até o suporte contínuo de marketing — escolha o ponto de partida e evolua quando fizer sentido.</p>
+    </div>
+  </section>
+
+  <section class="plans">
+    <div class="wrap plans-grid">
+
+      <!-- START -->
+      <article class="plan-card">
+        <div class="plan-head">
+          <span class="plan-dot dot-start" aria-hidden="true"></span>
+          <h2>Start</h2>
+          <p class="plan-tagline">O essencial pra existir</p>
+        </div>
+
+        <p class="plan-audience">Pra quem: negócio recém-criado, só precisa de uma cara pra começar a vender.</p>
+
+        <div class="plan-meta">
+          <div><span class="meta-label">Prazo</span><span class="meta-value">5 a 7 dias úteis</span></div>
+          <div><span class="meta-label">A partir de</span><span class="meta-value price">R$ 990</span></div>
+        </div>
+
+        <ul class="deliverables">
+          <li class="yes">Logo principal + variações (horizontal, ícone)</li>
+          <li class="yes">Paleta de cores (3 a 5 tons)</li>
+          <li class="yes">1 fonte de marca (título + texto)</li>
+          <li class="yes">Arquivos para redes sociais (perfil, capa)</li>
+          <li class="no">Guia de marca</li>
+          <li class="info">1 rodada de revisão</li>
+        </ul>
+
+        <a href="#contato" class="btn btn-ghost plan-cta">Pedir proposta</a>
+      </article>
+
+      <!-- CRESCE -->
+      <article class="plan-card highlight">
+        <span class="badge">Mais escolhido</span>
+        <div class="plan-head">
+          <span class="plan-dot dot-cresce" aria-hidden="true"></span>
+          <h2>Cresce</h2>
+          <p class="plan-tagline">Pronto pra parecer profissional</p>
+        </div>
+
+        <p class="plan-audience">Pra quem: já validou o negócio e quer presença visual consistente em todo lugar.</p>
+
+        <div class="plan-meta">
+          <div><span class="meta-label">Prazo</span><span class="meta-value">10 a 14 dias úteis</span></div>
+          <div><span class="meta-label">A partir de</span><span class="meta-value price">R$ 2.190</span></div>
+        </div>
+
+        <ul class="deliverables">
+          <li class="yes">Tudo do plano Start</li>
+          <li class="yes">Guia de marca completo (logo, cores, tom de voz)</li>
+          <li class="yes">Kit de 10 posts editáveis para redes sociais</li>
+          <li class="yes">Cartão de visita + assinatura de e-mail</li>
+          <li class="info">2 rodadas de revisão</li>
+        </ul>
+
+        <a href="#contato" class="btn btn-primary plan-cta">Pedir proposta</a>
+      </article>
+
+      <!-- ESCALA -->
+      <article class="plan-card">
+        <div class="plan-head">
+          <span class="plan-dot dot-escala" aria-hidden="true"></span>
+          <h2>Escala</h2>
+          <p class="plan-tagline">Marca e marketing trabalhando juntos</p>
+        </div>
+
+        <p class="plan-audience">Pra quem: já tem clientes e precisa de consistência pra crescer.</p>
+
+        <div class="plan-meta">
+          <div><span class="meta-label">Prazo</span><span class="meta-value">3 a 4 semanas</span></div>
+          <div><span class="meta-label">A partir de</span><span class="meta-value price">R$ 3.890</span></div>
+        </div>
+
+        <ul class="deliverables">
+          <li class="yes">Tudo do plano Cresce</li>
+          <li class="yes">Naming e posicionamento de marca</li>
+          <li class="yes">Aplicações em embalagem/produto</li>
+          <li class="yes">Suporte de marketing visual por 3 meses</li>
+          <li class="info">3 rodadas de revisão</li>
+        </ul>
+
+        <a href="#contato" class="btn btn-ghost plan-cta">Pedir proposta</a>
+      </article>
+
+      <!-- SOB MEDIDA -->
+      <article class="plan-card custom">
+        <div class="plan-head">
+          <span class="plan-dot dot-custom" aria-hidden="true"></span>
+          <h2>Sob medida</h2>
+          <p class="plan-tagline">Pra quem precisa de algo fora da caixa</p>
+        </div>
+
+        <p class="plan-audience">Pra quem: franquias, rebranding de empresa existente ou projetos com escopo próprio.</p>
+
+        <div class="plan-meta">
+          <div><span class="meta-label">Prazo</span><span class="meta-value">combinado conforme escopo</span></div>
+          <div><span class="meta-label">Preço</span><span class="meta-value price">Sob consulta</span></div>
+        </div>
+
+        <ul class="deliverables">
+          <li class="yes">Diagnóstico de marca atual (em caso de rebranding)</li>
+          <li class="yes">Escopo 100% personalizado</li>
+          <li class="yes">Reuniões de acompanhamento dedicadas</li>
+        </ul>
+
+        <a href="#contato" class="btn btn-ghost plan-cta">Conversar sobre o projeto</a>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="plans-note">
+    <div class="wrap">
+      <p>Os valores acima são ponto de partida e podem variar conforme a complexidade do projeto. Todos os planos incluem briefing inicial e apresentação de propostas de conceito antes da produção final.</p>
+    </div>
+  </section>
+</main>
+
+<footer id="contato">
+  <div class="wrap footer-inner">
+    <span>© 2026 YouDesing. Todos os direitos reservados.</span>
+    <a href="mailto:ola@youdesing.com.br" class="btn btn-primary">ola@youdesing.com.br</a>
+  </div>
+</footer>
+
+</body>
+</html>
