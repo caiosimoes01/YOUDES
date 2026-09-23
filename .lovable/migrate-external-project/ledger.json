@@ -1,0 +1,27 @@
+{
+  "source": "github",
+  "repository": "caiosimoes01/YOUDES",
+  "capabilities": [
+    {
+      "capability": "legacy HTML/CSS source files",
+      "source": "repository working tree",
+      "outcome": "migrate",
+      "status": "blocked",
+      "next_action": "Make the listed HTML and CSS files available in the synchronized project working tree."
+    },
+    {
+      "capability": "TanStack page routes and shared navigation",
+      "source": "requested migration",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "Convert after the source files are present."
+    },
+    {
+      "capability": "verification",
+      "source": "requested migration",
+      "outcome": "verify",
+      "status": "pending",
+      "next_action": "Verify all converted routes after migration."
+    }
+  ]
+}
