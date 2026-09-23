@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulso Fitness — YouDesing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<a href="Portifolio.html">Outros Exemplos</a>
+<style>
+:root {
+  --night: #0E0E0E;
+  --carbon: #1A1A1A;
+  --panel: #222222;
+  --volt: #D6FF00;
+  --red: #FF3030;
+  --grey: #888888;
+  --off: #F0F0F0;
+  --line: #2E2E2E;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { background: var(--night); color: var(--off); font-family: 'Barlow', sans-serif; }
+a { color: inherit; text-decoration: none; }
+
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px; border-bottom: 1px solid var(--line);
+}
+.nav-logo { font-family: 'Space Mono', monospace; font-size: .78rem; letter-spacing: .1em; color: var(--grey); }
+.nav-back { font-size: .85rem; font-weight: 500; color: var(--grey); transition: color .2s; }
+.nav-back:hover { color: var(--volt); }
+
+/* HERO */
+.hero { position: relative; overflow: hidden; }
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; min-height: 88vh; }
+.hero-left {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 72px 56px; position: relative; z-index: 1;
+  background: var(--carbon);
+}
+.pulse-line {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  opacity: .06; background: repeating-linear-gradient(0deg, transparent, transparent 39px, var(--volt) 40px);
+}
+.kicker {
+  font-family: 'Space Mono', monospace; font-size: .72rem;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--volt); margin-bottom: 20px; display: block;
+}
+.hero-left h1 {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900;
+  font-size: clamp(4rem, 7vw, 8rem); line-height: .88;
+  text-transform: uppercase; letter-spacing: -.01em; margin-bottom: 32px;
+}
+.hero-left h1 span { color: var(--volt); display: block; }
+.hero-left p { font-size: 1rem; font-weight: 300; line-height: 1.7; color: #AAAAAA; max-width: 360px; }
+.hero-right { position: relative; overflow: hidden; background: var(--night); }
+.hero-right img { width: 100%; height: 100%; object-fit: cover; opacity: .5; mix-blend-mode: luminosity; }
+.hero-badge {
+  position: absolute; bottom: 36px; left: 36px;
+  border: 1.5px solid var(--volt); padding: 14px 20px; border-radius: 4px;
+  font-family: 'Space Mono', monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--volt);
+}
+.hero-stat {
+  position: absolute; top: 36px; right: 36px;
+  display: flex; flex-direction: column; align-items: flex-end;
+}
+.stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 900; color: var(--volt); line-height: 1; }
+.stat-label { font-size: .78rem; color: var(--grey); font-family: 'Space Mono', monospace; letter-spacing: .08em; }
+
+/* WRAP */
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 48px; }
+
+/* ECG LINE */
+.ecg { padding: 40px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
+.ecg-svg { width: 100%; height: 60px; }
+
+/* ABOUT */
+.about { padding: 96px 0; }
+.label-mono { font-family: 'Space Mono', monospace; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--volt); display: block; margin-bottom: 28px; }
+.two-col { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; }
+.about h2 {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1; text-transform: uppercase;
+}
+.about p { font-size: 1rem; font-weight: 300; line-height: 1.8; color: #AAAAAA; }
+.about p+p { margin-top: 20px; }
+.d-row { margin-top: 36px; }
+.d-item { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.d-label { font-size: .8rem; color: var(--grey); font-family: 'Space Mono', monospace; letter-spacing: .04em; }
+.d-val { font-size: .9rem; font-weight: 500; }
+
+/* ELEMENTOS */
+.elementos { padding: 96px 0; border-top: 1px solid var(--line); }
+.elem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 40px; }
+.elem-card { background: var(--carbon); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.elem-prev { height: 200px; display: flex; align-items: center; justify-content: center; }
+.elem-cap { padding: 16px 18px; border-top: 1px solid var(--line); }
+.elem-cap .name { font-weight: 500; font-size: .9rem; margin-bottom: 4px; }
+.elem-cap .desc { font-size: .78rem; color: var(--grey); }
+
+/* PROCESSO */
+.processo { padding: 80px 0 96px; border-top: 1px solid var(--line); }
+.steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; margin-top: 40px; }
+.step-n {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 4rem; font-weight: 900;
+  color: var(--volt); line-height: 1; margin-bottom: 16px;
+}
+.step h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+.step p { font-size: .88rem; font-weight: 300; line-height: 1.7; color: var(--grey); }
+
+/* FOOTER */
+footer { padding: 36px 48px; border-top: 1px solid var(--line); }
+.footer-inner { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.3rem; text-transform: uppercase; }
+.footer-note { font-size: .82rem; color: var(--grey); }
+.footer-cta { background: var(--volt); color: var(--night); padding: 12px 24px; border-radius: 4px; font-weight: 700; font-size: .88rem; font-family: 'Barlow Condensed', sans-serif; font-size:1rem; text-transform: uppercase; letter-spacing: .04em; transition: opacity .2s; }
+.footer-cta:hover { opacity: .85; }
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-left { padding: 60px 24px; }
+  .hero-right { min-height: 280px; }
+  .two-col { grid-template-columns: 1fr; gap: 40px; }
+  .elem-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  nav { padding: 16px 22px; }
+  .wrap { padding: 0 22px; }
+  .steps { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">YouDesing Studio</span>
+  <a href="Portfolio.html" class="nav-back">← Voltar ao portfólio</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="pulse-line"></div>
+      <span class="kicker">Bem-estar · 2025</span>
+      <h1>Pulso<span>Fit<br>ness</span></h1>
+      <p>Estúdio de treino funcional. A identidade foi construída em torno de energia e ritmo — dois conceitos que definem tanto o treino quanto a marca.</p>
+    </div>
+    <div class="hero-right">
+      <img src="img/Area de treino.jpg" alt="Pulso Fitness">
+      <div class="hero-badge">Identidade Visual · 2025</div>
+      <div class="hero-stat">
+        <span class="stat-num">01</span>
+        <span class="stat-label">Case · Bem-estar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ecg wrap">
+  <svg class="ecg-svg" viewBox="0 0 1140 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,30 100,30 140,30 160,5 175,55 190,10 205,50 220,30 320,30 420,30 460,30 480,5 495,55 510,10 525,50 540,30 640,30 740,30 780,30 800,5 815,55 830,10 845,50 860,30 960,30 1060,30 1100,30 1120,5 1135,55 1140,30"
+      stroke="#D6FF00" stroke-width="2" fill="none" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<section class="about">
+  <div class="wrap">
+    <span class="label-mono">O Projeto</span>
+    <div class="two-col">
+      <div>
+        <h2>Marca que pulsa no ritmo do treino</h2>
+        <div class="d-row">
+          <div class="d-item"><span class="d-label">Cliente</span><span class="d-val">Pulso Fitness</span></div>
+          <div class="d-item"><span class="d-label">Segmento</span><span class="d-val">Estúdio funcional</span></div>
+          <div class="d-item"><span class="d-label">Entregáveis</span><span class="d-val">Logo, uniforme, digital</span></div>
+          <div class="d-item"><span class="d-label">Duração</span><span class="d-val">3 semanas</span></div>
+        </div>
+      </div>
+      <div>
+        <p>O Pulso nasceu do desejo de criar um estúdio que fugisse do padrão das academias convencionais. O público são pessoas que treinam com intenção — não apenas por obrigação. A marca precisava comunicar isso com força.</p>
+        <p>Escolhemos um amarelo voltaico (quase neon) sobre fundo quase-preto como coluna vertebral da identidade. O efeito é imediato: atenção, energia, contraste. A tipografia condensed em caixa alta intensifica o tom sem precisar gritar.</p>
+        <p>O símbolo principal usa a forma do eletrocardiograma como elemento de design — literalmente o pulso da marca. Aparece no logo, na sinalização do estúdio, nos posts e até no fundo dos uniformes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="elementos">
+  <div class="wrap">
+    <span class="label-mono">Sistema Visual</span>
+    <div class="elem-grid">
+
+      <div class="elem-card">
+        <div class="elem-prev" style="display:flex;">
+          <div style="flex:1; background:#0E0E0E;"></div>
+          <div style="flex:1; background:#1A1A1A;"></div>
+          <div style="flex:1; background:#D6FF00;"></div>
+          <div style="flex:1; background:#FF3030;"></div>
+          <div style="flex:1; background:#F0F0F0;"></div>
+        </div>
+        <div class="elem-cap"><div class="name">Paleta</div><div class="desc">Carbon, volt, vermelho alerta</div></div>
+      </div>
+
+      <div class="elem-card">
+        <div class="elem-prev" style="background:#1A1A1A; padding:24px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:2.2rem; font-weight:900; color:#F0F0F0; text-transform:uppercase; line-height:.9; letter-spacing:-.01em;">PULSO</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:.85rem; font-weight:700; color:#D6FF00; letter-spacing:.22em; text-transform:uppercase; margin: 8px 0 16px;">FITNESS</div>
+          <div style="font-family:'Barlow',sans-serif; font-size:.82rem; font-weight:300; color:#888; line-height:1.6;">Treino · Ritmo · Resultado</div>
+        </div>
+        <div class="elem-cap"><div class="name">Tipografia</div><div class="desc">Barlow Condensed + Barlow</div></div>
+      </div>
+
+      <div class="elem-card">
+        <div class="elem-prev" style="background:#0E0E0E; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+          <svg width="120" height="50" viewBox="0 0 120 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="0,25 20,25 32,25 38,5 44,45 50,8 56,42 62,25 80,25 100,25 120,25" stroke="#D6FF00" stroke-width="3" fill="none" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:900; color:#F0F0F0; letter-spacing:.08em; text-transform:uppercase;">PULSO FITNESS</div>
+        </div>
+        <div class="elem-cap"><div class="name">Logotipo</div><div class="desc">ECG + wordmark</div></div>
+      </div>
+
+      <div class="elem-card">
+        <div class="elem-prev" style="background:#D6FF00; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;">
+          <div style="width:80px; height:100px; background:#0E0E0E; border-radius:4px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; padding:10px;">
+            <svg width="60" height="20" viewBox="0 0 60 20" fill="none"><polyline points="0,10 10,10 16,10 19,2 22,18 25,3 28,17 31,10 40,10 50,10 60,10" stroke="#D6FF00" stroke-width="2" fill="none"/></svg>
+            <span style="font-family:'Barlow Condensed',sans-serif; font-size:.55rem; font-weight:900; color:#D6FF00; letter-spacing:.1em; text-transform:uppercase;">PULSO</span>
+          </div>
+        </div>
+        <div class="elem-cap"><div class="name">Uniforme & Merch</div><div class="desc">Camiseta e squeeze do estúdio</div></div>
+      </div>
+
+      <div class="elem-card">
+        <div class="elem-prev" style="background:#1A1A1A; padding:20px; display:flex; flex-direction:column; justify-content:center; gap:8px;">
+          <div style="background:#0E0E0E; border:1px solid #2E2E2E; border-radius:6px; padding:12px 14px;">
+            <div style="font-family:'Space Mono',monospace; font-size:.6rem; color:#D6FF00; letter-spacing:.1em;">@pulso.fitness</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.3rem; font-weight:900; color:#F0F0F0; text-transform:uppercase; line-height:1; margin-top:6px;">SEU LIMITE<br>É SUA ESCOLHA.</div>
+          </div>
+        </div>
+        <div class="elem-cap"><div class="name">Social Media</div><div class="desc">Templates para Instagram</div></div>
+      </div>
+
+      <div class="elem-card">
+        <div class="elem-prev" style="background:#222; display:flex; align-items:center; justify-content:center; gap:20px;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <div style="width:48px; height:48px; background:#D6FF00; display:flex; align-items:center; justify-content:center; border-radius:4px;">
+              <svg width="30" height="12" viewBox="0 0 30 12" fill="none"><polyline points="0,6 6,6 9,6 11,1 13,11 15,2 17,10 19,6 24,6 30,6" stroke="#0E0E0E" stroke-width="2" fill="none"/></svg>
+            </div>
+            <span style="font-size:.55rem; color:#888; font-family:'Space Mono',monospace; letter-spacing:.05em;">ÍCONE</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <div style="border:1.5px solid #D6FF00; padding:8px 14px; border-radius:4px;">
+              <span style="font-family:'Barlow Condensed',sans-serif; font-size:.75rem; font-weight:900; color:#D6FF00; letter-spacing:.1em; text-transform:uppercase;">PULSO</span>
+            </div>
+            <span style="font-size:.55rem; color:#888; font-family:'Space Mono',monospace; letter-spacing:.05em;">CONTORNO</span>
+          </div>
+        </div>
+        <div class="elem-cap"><div class="name">Variações</div><div class="desc">Ícone quadrado e outline</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="processo">
+  <div class="wrap">
+    <span class="label-mono">Como trabalhamos</span>
+    <div class="steps">
+      <div class="step"><div class="step-n">01</div><h3>Briefing</h3><p>Entendemos o público, o espaço e o que diferencia o estúdio da concorrência.</p></div>
+      <div class="step"><div class="step-n">02</div><h3>Direção</h3><p>Definimos o território criativo, a paleta e o conceito central da marca.</p></div>
+      <div class="step"><div class="step-n">03</div><h3>Execução</h3><p>Logo, sistema visual, sinalização, uniforme e templates para redes.</p></div>
+      <div class="step"><div class="step-n">04</div><h3>Entrega</h3><p>Manual completo, arquivos em todos os formatos, orientação de uso.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">YouDesing</div>
+    <span class="footer-note">Quer uma identidade que pulsa assim?</span>
+    <a href="mailto:ola@youdesing.com.br" class="footer-cta">Falar com a gente</a>
+  </div>
+</footer>
+
+</body>
+</html>
