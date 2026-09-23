@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processo — YouDesing</title>
+<meta name="description" content="Como funciona o processo de criação de marca da YouDesing, do briefing à entrega final.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="processo.css">
+<a href="index.htm">Voltar</a>
+</head>
+<style>
+    :root{
+  --paper:#EDF1F4;
+  --paper-2:#E2E8EC;
+  --ink:#171B24;
+  --ink-soft:#4A5567;
+  --accent:#FF5A2B;
+  --teal:#2F8F86;
+  --line:#B9C6D1;
+  --white:#FFFFFF;
+
+  --font-display:'Space Grotesk', sans-serif;
+  --font-body:'IBM Plex Sans', sans-serif;
+  --font-mono:'Space Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{color:inherit;text-decoration:none;}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+.wrap{
+  max-width:880px;
+  margin:0 auto;
+  padding:0 32px;
+}
+
+h1,h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:-.01em;
+}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+
+/* ---------- BOTÕES ---------- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:13px 24px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:.92rem;
+  transition:transform .2s, background .2s, color .2s;
+}
+.btn-primary{background:var(--accent);color:var(--white);}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-ghost{border:1.5px solid var(--ink);}
+.btn-ghost:hover{background:var(--ink);color:var(--paper);}
+
+/* ---------- TOPBAR ---------- */
+.topbar{
+  border-bottom:1px solid var(--line);
+  background:rgba(237,241,244,.9);
+}
+.topbar-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 32px;
+  max-width:880px;
+  margin:0 auto;
+}
+.brand{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1.1rem;
+}
+
+/* ---------- INTRO ---------- */
+.intro{
+  padding:72px 0 36px;
+}
+.intro h1{
+  font-size:clamp(2rem,4.4vw,2.9rem);
+  line-height:1.1;
+  margin:16px 0 18px;
+}
+.intro .lead{
+  color:var(--ink-soft);
+  max-width:480px;
+  font-size:1.05rem;
+}
+
+/* ---------- TIMELINE ---------- */
+.timeline{padding:20px 0 90px;}
+
+.step{
+  display:grid;
+  grid-template-columns:80px 1fr;
+  gap:28px;
+  position:relative;
+  padding-bottom:44px;
+}
+.step:not(.last)::before{
+  content:'';
+  position:absolute;
+  left:39px;
+  top:60px;
+  bottom:0;
+  width:1px;
+  background:var(--line);
+}
+.step.last{padding-bottom:0;}
+
+.step-marker{
+  display:flex;
+  justify-content:center;
+}
+.step-number{
+  width:64px;height:64px;
+  border-radius:50%;
+  background:var(--white);
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--font-mono);
+  font-size:1rem;
+  font-weight:700;
+  color:var(--accent);
+}
+
+.step-body{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px 26px;
+}
+.step-tag{
+  font-family:var(--font-mono);
+  font-size:.68rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--teal);
+}
+.step-body h2{
+  font-size:1.25rem;
+  margin:8px 0 10px;
+}
+.step-body p{
+  font-size:.94rem;
+  color:var(--ink-soft);
+  margin-bottom:14px;
+}
+.step-duration{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:.74rem;
+  letter-spacing:.03em;
+  color:var(--ink);
+  background:var(--paper-2);
+  padding:5px 12px;
+  border-radius:999px;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:var(--ink);
+  color:var(--paper);
+  padding:34px 0;
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+  font-size:.84rem;
+  color:#A7AFBC;
+  max-width:880px;
+  margin:0 auto;
+  padding:0 32px;
+}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width:560px){
+  .wrap, .topbar-inner, .footer-inner{padding:0 22px;}
+  .step{grid-template-columns:56px 1fr;gap:18px;}
+  .step-number{width:48px;height:48px;font-size:.85rem;}
+  .step:not(.last)::before{left:27px;top:52px;}
+  .step-body{padding:20px 20px;}
+}
+</style>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="#" class="brand">YouDesing</a>
+    <a href="#contato" class="btn btn-ghost">Falar com a gente</a>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <div class="wrap">
+      <span class="eyebrow">Processo</span>
+      <h1>Do briefing à entrega,<br>em seis etapas</h1>
+      <p class="lead">Um processo direto, pensado para quem precisa lançar rápido e sem retrabalho.</p>
+    </div>
+  </section>
+
+  <section class="timeline">
+    <div class="wrap">
+
+      <article class="step">
+        <div class="step-marker">
+          <span class="step-number">01</span>
+        </div>
+        <div class="step-body">
+          <span class="step-tag">Briefing</span>
+          <h2>Briefing</h2>
+          <p>Conversamos sobre o negócio, o público, os concorrentes e o que a marca precisa transmitir. Aqui também alinhamos prazo, escopo e expectativas.</p>
+          <span class="step-duration">Duração: 1 a 2 dias</span>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-marker">
+          <span class="step-number">02</span>
+        </div>
+        <div class="step-body">
+          <span class="step-tag">Conceito</span>
+          <h2>Pesquisa e conceito</h2>
+          <p>Pesquisamos referências do mercado e do público-alvo, e desenvolvemos 2 a 3 direções diferentes de logo e identidade — cada uma com uma lógica própria, não só variações de cor.</p>
+          <span class="step-duration">Duração: 3 a 5 dias</span>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-marker">
+          <span class="step-number">03</span>
+        </div>
+        <div class="step-body">
+          <span class="step-tag">Escolha</span>
+          <h2>Apresentação e escolha</h2>
+          <p>Apresentamos as direções com explicação do raciocínio por trás de cada uma. Você escolhe a que mais faz sentido, ou pede ajustes antes de decidir.</p>
+          <span class="step-duration">Duração: 1 dia de reunião + tempo de retorno</span>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-marker">
+          <span class="step-number">04</span>
+        </div>
+        <div class="step-body">
+          <span class="step-tag">Refinamento</span>
+          <h2>Refinamento</h2>
+          <p>Lapidamos a direção escolhida: ajustamos traço, proporções, cores e tipografia até a identidade ficar redonda. É aqui que entram as rodadas de revisão do plano contratado.</p>
+          <span class="step-duration">Duração: 3 a 5 dias</span>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-marker">
+          <span class="step-number">05</span>
+        </div>
+        <div class="step-body">
+          <span class="step-tag">Produção</span>
+          <h2>Produção das aplicações</h2>
+          <p>Aplicamos a identidade nos materiais combinados no plano: redes sociais, cartão de visita, embalagem, apresentações, etc.</p>
+          <span class="step-duration">Duração: 3 a 7 dias, conforme o plano</span>
+        </div>
+      </article>
+
+      <article class="step last">
+        <div class="step-marker">
+          <span class="step-number">06</span>
+        </div>
+        <div class="step-body">
+          <span class="step-tag">Entrega</span>
+          <h2>Entrega final</h2>
+          <p>Entregamos todos os arquivos finais (logo em todos os formatos, paleta, fontes) junto com o guia de marca, explicando como e onde usar cada elemento.</p>
+          <span class="step-duration">Duração: 1 dia</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<footer id="contato">
+  <div class="wrap footer-inner">
+    <span>© 2026 YouDesing. Todos os direitos reservados.</span>
+    <a href="mailto:ola@youdesing.com.br" class="btn btn-primary">ola@youdesing.com.br</a>
+  </div>
+</footer>
+
+</body>
+</html>
