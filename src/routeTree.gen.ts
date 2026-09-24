@@ -10,33 +10,168 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlanosRouteImport } from './routes/planos'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as ProcessosRouteImport } from './routes/processos'
+import { Route as ServicosRouteImport } from './routes/servicos'
+import { Route as CasesBlocoStudioRouteImport } from './routes/cases.bloco-studio'
+import { Route as CasesLumeAtelieRouteImport } from './routes/cases.lume-atelie'
+import { Route as CasesNomadeCoworkingRouteImport } from './routes/cases.nomade-coworking'
+import { Route as CasesPulsoFitnessRouteImport } from './routes/cases.pulso-fitness'
+import { Route as CasesRaizCafeRouteImport } from './routes/cases.raiz-cafe'
+import { Route as CasesVerticeContabilidadeRouteImport } from './routes/cases.vertice-contabilidade'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlanosRoute = PlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcessosRoute = ProcessosRouteImport.update({
+  id: '/processos',
+  path: '/processos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicosRoute = ServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasesBlocoStudioRoute = CasesBlocoStudioRouteImport.update({
+  id: '/cases/bloco-studio',
+  path: '/cases/bloco-studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasesLumeAtelieRoute = CasesLumeAtelieRouteImport.update({
+  id: '/cases/lume-atelie',
+  path: '/cases/lume-atelie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasesNomadeCoworkingRoute = CasesNomadeCoworkingRouteImport.update({
+  id: '/cases/nomade-coworking',
+  path: '/cases/nomade-coworking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasesPulsoFitnessRoute = CasesPulsoFitnessRouteImport.update({
+  id: '/cases/pulso-fitness',
+  path: '/cases/pulso-fitness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasesRaizCafeRoute = CasesRaizCafeRouteImport.update({
+  id: '/cases/raiz-cafe',
+  path: '/cases/raiz-cafe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasesVerticeContabilidadeRoute =
+  CasesVerticeContabilidadeRouteImport.update({
+    id: '/cases/vertice-contabilidade',
+    path: '/cases/vertice-contabilidade',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/planos': typeof PlanosRoute
+  '/portfolio': typeof PortfolioRoute
+  '/processos': typeof ProcessosRoute
+  '/servicos': typeof ServicosRoute
+  '/cases/bloco-studio': typeof CasesBlocoStudioRoute
+  '/cases/lume-atelie': typeof CasesLumeAtelieRoute
+  '/cases/nomade-coworking': typeof CasesNomadeCoworkingRoute
+  '/cases/pulso-fitness': typeof CasesPulsoFitnessRoute
+  '/cases/raiz-cafe': typeof CasesRaizCafeRoute
+  '/cases/vertice-contabilidade': typeof CasesVerticeContabilidadeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/planos': typeof PlanosRoute
+  '/portfolio': typeof PortfolioRoute
+  '/processos': typeof ProcessosRoute
+  '/servicos': typeof ServicosRoute
+  '/cases/bloco-studio': typeof CasesBlocoStudioRoute
+  '/cases/lume-atelie': typeof CasesLumeAtelieRoute
+  '/cases/nomade-coworking': typeof CasesNomadeCoworkingRoute
+  '/cases/pulso-fitness': typeof CasesPulsoFitnessRoute
+  '/cases/raiz-cafe': typeof CasesRaizCafeRoute
+  '/cases/vertice-contabilidade': typeof CasesVerticeContabilidadeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/planos': typeof PlanosRoute
+  '/portfolio': typeof PortfolioRoute
+  '/processos': typeof ProcessosRoute
+  '/servicos': typeof ServicosRoute
+  '/cases/bloco-studio': typeof CasesBlocoStudioRoute
+  '/cases/lume-atelie': typeof CasesLumeAtelieRoute
+  '/cases/nomade-coworking': typeof CasesNomadeCoworkingRoute
+  '/cases/pulso-fitness': typeof CasesPulsoFitnessRoute
+  '/cases/raiz-cafe': typeof CasesRaizCafeRoute
+  '/cases/vertice-contabilidade': typeof CasesVerticeContabilidadeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/planos'
+    | '/portfolio'
+    | '/processos'
+    | '/servicos'
+    | '/cases/bloco-studio'
+    | '/cases/lume-atelie'
+    | '/cases/nomade-coworking'
+    | '/cases/pulso-fitness'
+    | '/cases/raiz-cafe'
+    | '/cases/vertice-contabilidade'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/planos'
+    | '/portfolio'
+    | '/processos'
+    | '/servicos'
+    | '/cases/bloco-studio'
+    | '/cases/lume-atelie'
+    | '/cases/nomade-coworking'
+    | '/cases/pulso-fitness'
+    | '/cases/raiz-cafe'
+    | '/cases/vertice-contabilidade'
+  id:
+    | '__root__'
+    | '/'
+    | '/planos'
+    | '/portfolio'
+    | '/processos'
+    | '/servicos'
+    | '/cases/bloco-studio'
+    | '/cases/lume-atelie'
+    | '/cases/nomade-coworking'
+    | '/cases/pulso-fitness'
+    | '/cases/raiz-cafe'
+    | '/cases/vertice-contabilidade'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PlanosRoute: typeof PlanosRoute
+  PortfolioRoute: typeof PortfolioRoute
+  ProcessosRoute: typeof ProcessosRoute
+  ServicosRoute: typeof ServicosRoute
+  CasesBlocoStudioRoute: typeof CasesBlocoStudioRoute
+  CasesLumeAtelieRoute: typeof CasesLumeAtelieRoute
+  CasesNomadeCoworkingRoute: typeof CasesNomadeCoworkingRoute
+  CasesPulsoFitnessRoute: typeof CasesPulsoFitnessRoute
+  CasesRaizCafeRoute: typeof CasesRaizCafeRoute
+  CasesVerticeContabilidadeRoute: typeof CasesVerticeContabilidadeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +183,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/planos': {
+      id: '/planos'
+      path: '/planos'
+      fullPath: '/planos'
+      preLoaderRoute: typeof PlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/processos': {
+      id: '/processos'
+      path: '/processos'
+      fullPath: '/processos'
+      preLoaderRoute: typeof ProcessosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/servicos': {
+      id: '/servicos'
+      path: '/servicos'
+      fullPath: '/servicos'
+      preLoaderRoute: typeof ServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cases/bloco-studio': {
+      id: '/cases/bloco-studio'
+      path: '/cases/bloco-studio'
+      fullPath: '/cases/bloco-studio'
+      preLoaderRoute: typeof CasesBlocoStudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cases/lume-atelie': {
+      id: '/cases/lume-atelie'
+      path: '/cases/lume-atelie'
+      fullPath: '/cases/lume-atelie'
+      preLoaderRoute: typeof CasesLumeAtelieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cases/nomade-coworking': {
+      id: '/cases/nomade-coworking'
+      path: '/cases/nomade-coworking'
+      fullPath: '/cases/nomade-coworking'
+      preLoaderRoute: typeof CasesNomadeCoworkingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cases/pulso-fitness': {
+      id: '/cases/pulso-fitness'
+      path: '/cases/pulso-fitness'
+      fullPath: '/cases/pulso-fitness'
+      preLoaderRoute: typeof CasesPulsoFitnessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cases/raiz-cafe': {
+      id: '/cases/raiz-cafe'
+      path: '/cases/raiz-cafe'
+      fullPath: '/cases/raiz-cafe'
+      preLoaderRoute: typeof CasesRaizCafeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cases/vertice-contabilidade': {
+      id: '/cases/vertice-contabilidade'
+      path: '/cases/vertice-contabilidade'
+      fullPath: '/cases/vertice-contabilidade'
+      preLoaderRoute: typeof CasesVerticeContabilidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PlanosRoute: PlanosRoute,
+  PortfolioRoute: PortfolioRoute,
+  ProcessosRoute: ProcessosRoute,
+  ServicosRoute: ServicosRoute,
+  CasesBlocoStudioRoute: CasesBlocoStudioRoute,
+  CasesLumeAtelieRoute: CasesLumeAtelieRoute,
+  CasesNomadeCoworkingRoute: CasesNomadeCoworkingRoute,
+  CasesPulsoFitnessRoute: CasesPulsoFitnessRoute,
+  CasesRaizCafeRoute: CasesRaizCafeRoute,
+  CasesVerticeContabilidadeRoute: CasesVerticeContabilidadeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
