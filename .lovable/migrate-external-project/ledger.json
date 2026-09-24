@@ -6,15 +6,15 @@
       "capability": "legacy HTML/CSS source files",
       "source": "repository working tree",
       "outcome": "migrate",
-      "status": "blocked",
-      "next_action": "Make the listed HTML and CSS files available in the synchronized project working tree."
+      "status": "migrated",
+      "next_action": "Verify converted pages."
     },
     {
       "capability": "TanStack page routes and shared navigation",
       "source": "requested migration",
       "outcome": "migrate",
-      "status": "pending",
-      "next_action": "Convert after the source files are present."
+      "status": "migrated",
+      "next_action": "Verify navigation and rendering."
     },
     {
       "capability": "verification",
