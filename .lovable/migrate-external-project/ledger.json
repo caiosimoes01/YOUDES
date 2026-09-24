@@ -6,22 +6,22 @@
       "capability": "legacy HTML/CSS source files",
       "source": "repository working tree",
       "outcome": "migrate",
-      "status": "migrated",
-      "next_action": "Verify converted pages."
+      "status": "verified",
+      "next_action": "None."
     },
     {
       "capability": "TanStack page routes and shared navigation",
       "source": "requested migration",
       "outcome": "migrate",
-      "status": "migrated",
-      "next_action": "Verify navigation and rendering."
+      "status": "verified",
+      "next_action": "None."
     },
     {
       "capability": "verification",
       "source": "requested migration",
       "outcome": "verify",
-      "status": "pending",
-      "next_action": "Verify all converted routes after migration."
+      "status": "verified",
+      "next_action": "Replace the six image placeholders when the original image files are supplied."
     }
   ]
 }
