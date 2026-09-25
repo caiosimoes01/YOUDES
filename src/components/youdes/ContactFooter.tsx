@@ -39,7 +39,7 @@ export function ContactFooter() {
       <div className="contact-footer__inner">
         <div className="contact-footer__identity">
           <strong>YOUDES</strong>
-          <span>© 2026 YouDesing. Todos os direitos reservados.</span>
+          <span>© 2026 Youdes. Todos os direitos reservados.</span>
         </div>
 
         <div className="contact-footer__channels">

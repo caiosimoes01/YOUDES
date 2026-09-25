@@ -233,13 +233,13 @@
   --navy-2: color-mix(in srgb, var(--brand-navy) 84%, var(--brand-ink));
   --slate: color-mix(in srgb, var(--brand-navy) 72%, var(--brand-white));
   --brown-dark: var(--brand-navy);
-  --brown-mid: var(--brand-red);
-  --accent: var(--brand-red);
+  --brown-mid: var(--brand-navy);
+  --accent: var(--brand-navy);
   --red: var(--brand-red);
   --blue: var(--brand-navy);
   --blue-lt: color-mix(in srgb, var(--brand-navy) 76%, var(--brand-white));
   --teal: var(--brand-navy);
-  --terra: var(--brand-red);
+  --terra: var(--brand-navy);
   --moss: var(--brand-navy);
   --sage: var(--brand-navy);
   --caramel: var(--brand-orange);
@@ -258,9 +258,9 @@
 }
 
 .legacy-page :is(h1, h2, h3) { color: inherit; }
-.legacy-page :is(.kicker, .eyebrow, .label-mono, .section-label, .service-tag, .step-tag, .step-number, .step-n, .step-num) { color: var(--brand-red); }
-.legacy-page :is(.btn-primary, .footer-cta) { background: var(--brand-red); color: var(--brand-white); }
-.legacy-page :is(.btn-primary, .footer-cta):hover { background: var(--brand-orange); color: var(--brand-ink); }
+.legacy-page :is(.kicker, .eyebrow, .label-mono, .section-label, .service-tag, .step-tag, .step-number, .step-n, .step-num) { color: var(--brand-navy); }
+.legacy-page :is(.btn-primary, .footer-cta) { background: var(--brand-navy); color: var(--brand-white); }
+.legacy-page :is(.btn-primary, .footer-cta):hover { background: var(--brand-red); color: var(--brand-white); }
 .legacy-page :is(.badge, .hero-badge, .hero-tag) { background: var(--brand-orange); color: var(--brand-ink); }
 .legacy-page a:hover { color: var(--brand-orange); }
 .legacy-page :focus-visible { outline-color: var(--brand-orange); }

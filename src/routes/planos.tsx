@@ -4,9 +4,9 @@ import { planosPage } from "@/content/planos";
 
 export const Route = createFileRoute("/planos")({
   head: () => ({ meta: [
-    { title: "Planos — YouDesing" },
-    { name: "description", content: "Planos de branding e marketing da YouDesing para negócios em diferentes fases." },
-    { property: "og:title", content: "Planos — YouDesing" },
+    { title: "Planos — Youdes" },
+    { name: "description", content: "Planos de branding e marketing da Youdes para negócios em diferentes fases." },
+    { property: "og:title", content: "Planos — Youdes" },
     { property: "og:description", content: "Escolha o plano de marca ideal para a fase do seu negócio." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }),
