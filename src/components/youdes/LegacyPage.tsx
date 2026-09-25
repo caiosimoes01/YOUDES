@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import { ContactFooter } from "./ContactFooter";
 import { SiteHeader } from "./SiteHeader";
 
 type LegacyPageProps = {
@@ -9,6 +10,8 @@ type LegacyPageProps = {
 };
 
 export function LegacyPage({ css, markup, pageClass = "" }: LegacyPageProps) {
+  const contentWithoutLegacyFooter = markup.replace(/<footer\b[\s\S]*?<\/footer>/gi, "");
+
   useEffect(() => {
     const revealItems = document.querySelectorAll(".legacy-page .reveal");
     if (!("IntersectionObserver" in window)) {
@@ -26,7 +29,7 @@ export function LegacyPage({ css, markup, pageClass = "" }: LegacyPageProps) {
     );
     revealItems.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, [markup]);
+  }, [contentWithoutLegacyFooter]);
 
   return (
     <>
@@ -34,8 +37,9 @@ export function LegacyPage({ css, markup, pageClass = "" }: LegacyPageProps) {
       <SiteHeader />
       <div
         className={`legacy-page ${pageClass}`.trim()}
-        dangerouslySetInnerHTML={{ __html: markup }}
+        dangerouslySetInnerHTML={{ __html: contentWithoutLegacyFooter }}
       />
+      <ContactFooter />
     </>
   );
 }
