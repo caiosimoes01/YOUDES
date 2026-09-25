@@ -28,11 +28,7 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="site-header__inner">
         <Link to="/" className="site-brand" onClick={() => setOpen(false)}>
-          <svg viewBox="0 0 32 32" aria-hidden="true">
-            <circle cx="16" cy="16" r="15" />
-            <path d="M8 9 16 18 16 26M24 9 16 18" />
-          </svg>
-          <span>YouDesing</span>
+          <img src="/brand/youdes-logo.png" alt="YOUDES" className="site-brand__logo" />
         </Link>
 
         <nav className={open ? "site-nav site-nav--open" : "site-nav"} aria-label="Navegação principal">

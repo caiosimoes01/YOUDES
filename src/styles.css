@@ -186,9 +186,7 @@
   white-space: nowrap;
 }
 
-.site-brand svg { width: 30px; height: 30px; }
-.site-brand circle { fill: none; stroke: var(--brand-navy); }
-.site-brand path { fill: none; stroke: var(--brand-red); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.site-brand__logo { height: 26px; width: auto; display: block; }
 
 .site-nav { display: flex; align-items: center; gap: 22px; font: 500 .85rem "IBM Plex Sans", sans-serif; }
 .site-nav__link { color: var(--brand-navy); text-decoration: none; transition: color .2s; }
