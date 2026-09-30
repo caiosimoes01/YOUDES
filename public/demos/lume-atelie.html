@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUME ATELIÊ — Moda Autoral, Leveza & Fibras Naturais</title>
+
+    <!-- Google Fonts: Jost & Cormorant Garamond -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Custom Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lume: {
+                            sand: '#F0EAE0',        // Fundo principal (Areia)
+                            surface: '#E9E2D5',     // Fundo secundário
+                            card: '#F6F3ED',        // Cartões suaves
+                            brown: '#3D2B1F',       // Texto e acentos (Marrom Escuro)
+                            terracotta: '#C4A882',  // Terracota
+                            blush: '#E8C4B0',       // Rosa suave
+                            moss: '#5C6650',        // Verde musgo
+                            subtle: '#D8CEBE'
+                        }
+                    },
+                    fontFamily: {
+                        jost: ['Jost', 'sans-serif'],
+                        editorial: ['Cormorant Garamond', 'serif']
+                    },
+                    boxShadow: {
+                        'organic': '0 10px 30px -10px rgba(61, 43, 31, 0.08)',
+                        'float': '0 20px 40px -15px rgba(61, 43, 31, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F0EAE0;
+            color: #3D2B1F;
+            font-family: 'Jost', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-editorial {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F0EAE0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C4A882;
+            border-radius: 4px;
+        }
+
+        /* Hotspot Pulse Animation */
+        @keyframes hotspotPulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(196, 168, 130, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(196, 168, 130, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(196, 168, 130, 0); }
+        }
+
+        .hotspot-ring {
+            animation: hotspotPulse 2.5s infinite;
+        }
+
+        /* Glassmorphism organic overlay */
+        .lume-glass {
+            background: rgba(246, 243, 237, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .lume-glass-dark {
+            background: rgba(61, 43, 31, 0.92);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Range slider customization */
+        input[type=range] {
+            accent-color: #3D2B1F;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-lume-blush selection:text-lume-brown">
+
+    <div class="bg-lume-brown text-lume-sand text-xs font-medium py-2 px-4 text-center tracking-wider uppercase flex items-center justify-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-lume-terracotta inline-block"></span>
+        <span>Frete grátis em compras acima de R$ 350 · Feito à mão no Brasil em edições limitadas</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-lume-terracotta inline-block hidden sm:inline-block"></span>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-lume-sand/90 backdrop-blur-md border-b border-lume-subtle/50 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" aria-label="Abrir menu" class="lg:hidden text-lume-brown p-2 hover:text-lume-terracotta transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Brand Logo -->
+            <a href="#" class="flex flex-col items-center group">
+                <span class="font-editorial text-2xl sm:text-3xl font-semibold tracking-[0.25em] text-lume-brown uppercase group-hover:text-lume-terracotta transition-colors">
+                    Lume Ateliê
+                </span>
+                <span class="text-[9px] font-light tracking-[0.3em] text-lume-moss uppercase -mt-1">Moda Autoral & Orgânica</span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8 font-medium text-xs tracking-[0.15em] uppercase text-lume-brown">
+                <a href="#colecao" class="hover:text-lume-terracotta transition-colors border-b border-transparent hover:border-lume-terracotta py-1">Coleções</a>
+                <a href="#fibras" class="hover:text-lume-terracotta transition-colors border-b border-transparent hover:border-lume-terracotta py-1">Guia de Fibras</a>
+                <a href="#provador" class="hover:text-lume-terracotta transition-colors border-b border-transparent hover:border-lume-terracotta py-1 flex items-center gap-1.5">
+                    <span>Provador Virtual</span>
+                    <span class="px-1.5 py-0.5 text-[8px] bg-lume-blush text-lume-brown rounded-full font-bold">NOVO</span>
+                </a>
+                <a href="#lookbook" class="hover:text-lume-terracotta transition-colors border-b border-transparent hover:border-lume-terracotta py-1">Lookbook</a>
+                <a href="#manifesto" class="hover:text-lume-terracotta transition-colors border-b border-transparent hover:border-lume-terracotta py-1">Manifesto</a>
+            </nav>
+
+            <!-- Action Icons (Wishlist & Cart Trigger) -->
+            <div class="flex items-center gap-4">
+                <!-- Search Button -->
+                <button aria-label="Buscar peças" onclick="toggleSearch()" class="p-2 text-lume-brown hover:text-lume-terracotta transition-colors">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Wishlist Counter Icon -->
+                <button aria-label="Favoritos" onclick="showToast('Sua lista de desejos possui 2 itens salvos.')" class="p-2 text-lume-brown hover:text-lume-terracotta transition-colors relative">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                    <span id="wishlistBadge" class="absolute top-1 right-1 w-4 h-4 bg-lume-blush text-lume-brown text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+                </button>
+
+                <!-- Shopping Bag / Cart Drawer Button -->
+                <button onclick="toggleCartDrawer()" aria-label="Sacola de Compras" class="px-3 py-2 bg-lume-brown text-lume-sand rounded-full hover:bg-lume-moss transition-all flex items-center gap-2 text-xs tracking-wider uppercase shadow-organic">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline font-medium">Sacola</span>
+                    <span id="cartCountBadge" class="w-5 h-5 bg-lume-terracotta text-lume-brown text-xs font-bold rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-lume-card border-b border-lume-subtle px-6 py-6 space-y-4 font-medium text-xs tracking-widest uppercase">
+            <a href="#colecao" onclick="toggleMobileMenu()" class="block text-lume-brown hover:text-lume-terracotta py-1">Coleções</a>
+            <a href="#fibras" onclick="toggleMobileMenu()" class="block text-lume-brown hover:text-lume-terracotta py-1">Guia de Fibras</a>
+            <a href="#provador" onclick="toggleMobileMenu()" class="block text-lume-brown hover:text-lume-terracotta py-1 flex items-center justify-between">
+                <span>Provador Virtual</span>
+                <span class="px-2 py-0.5 text-[9px] bg-lume-blush text-lume-brown rounded-full font-bold">NOVO</span>
+            </a>
+            <a href="#lookbook" onclick="toggleMobileMenu()" class="block text-lume-brown hover:text-lume-terracotta py-1">Lookbook Interativo</a>
+            <a href="#manifesto" onclick="toggleMobileMenu()" class="block text-lume-brown hover:text-lume-terracotta py-1">Nosso Manifesto</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="relative py-12 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column: Editorial Headline & Copy -->
+                <div class="lg:col-span-6 space-y-8">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-lume-card border border-lume-terracotta/40 rounded-full text-xs font-medium text-lume-moss tracking-widest uppercase">
+                        <span class="w-2 h-2 rounded-full bg-lume-moss animate-pulse"></span>
+                        <span>Coleção Primavera/Verão 2026 · Edição Botânica</span>
+                    </div>
+
+                    <h1 class="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal leading-[1.08] text-lume-brown">
+                        Moda autoral que respira <span class="italic font-normal text-lume-moss">leveza, poesia</span> e essência.
+                    </h1>
+
+                    <p class="text-lume-brown/80 text-base sm:text-lg font-light leading-relaxed max-w-xl">
+                        Desenhamos peças atemporais confeccionadas exclusivamente em linho puro, algodão orgânico e tingimento botânico. Roupas com caimento fluido feitas para acompanhar os movimentos do seu corpo.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                        <a href="#colecao" class="px-8 py-4 bg-lume-brown hover:bg-lume-moss text-lume-sand text-xs tracking-[0.2em] font-medium uppercase rounded-full shadow-organic transition-all text-center flex items-center justify-center gap-3">
+                            <span>Ver Nova Coleção</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#manifesto" class="px-8 py-4 bg-lume-card hover:bg-lume-surface text-lume-brown border border-lume-terracotta/50 text-xs tracking-[0.2em] font-medium uppercase rounded-full transition-all text-center">
+                            Nosso Manifesto
+                        </a>
+                    </div>
+
+                    <!-- Editorial Micro Highlights -->
+                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-lume-subtle/60">
+                        <div>
+                            <div class="font-editorial text-3xl text-lume-brown">100%</div>
+                            <div class="text-[11px] font-medium uppercase tracking-wider text-lume-brown/70 mt-1">Fibras Naturais</div>
+                        </div>
+                        <div>
+                            <div class="font-editorial text-3xl text-lume-brown">Zero</div>
+                            <div class="text-[11px] font-medium uppercase tracking-wider text-lume-brown/70 mt-1">Plástico em Peças</div>
+                        </div>
+                        <div>
+                            <div class="font-editorial text-3xl text-lume-brown">Artanal</div>
+                            <div class="text-[11px] font-medium uppercase tracking-wider text-lume-brown/70 mt-1">Produção Rastreável</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column: Asymmetrical Editorial Photography -->
+                <div class="lg:col-span-6 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        
+                        <!-- Main Fashion Image -->
+                        <div class="relative rounded-[2.5rem] overflow-hidden border-4 border-lume-card shadow-float aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80" alt="Lume Ateliê - Modelo usando vestido fluido de linho" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                            
+                            <!-- Soft Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-lume-brown/40 via-transparent to-transparent"></div>
+
+                            <!-- Bottom Floating Image Tag -->
+                            <div class="absolute bottom-6 left-6 right-6 p-4 lume-glass rounded-2xl border border-white/40 flex items-center justify-between">
+                                <div class="space-y-0.5">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-lume-moss">Destaque da Coleção</span>
+                                    <div class="font-editorial text-lg text-lume-brown font-medium">Vestido Aura em Linho Puro</div>
+                                    <div class="text-xs font-medium text-lume-brown/80">R$ 480,00</div>
+                                </div>
+                                <button onclick="quickViewProduct('vestido-aura')" class="px-3.5 py-2 bg-lume-brown text-lume-sand text-[10px] font-medium uppercase tracking-widest rounded-full hover:bg-lume-terracotta hover:text-lume-brown transition-colors">
+                                    Ver Detalhes
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Floating Photo Detail -->
+                        <div class="hidden sm:block absolute -bottom-8 -left-8 w-44 h-56 rounded-2xl overflow-hidden border-4 border-lume-sand shadow-float">
+                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80" alt="Detalhe do tecido natural Lume" class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Floating Organic Stamp -->
+                        <div class="absolute -top-6 -right-6 w-24 h-24 bg-lume-blush text-lume-brown rounded-full border-2 border-lume-sand flex flex-col items-center justify-center p-2 text-center shadow-organic transform rotate-12">
+                            <i data-lucide="leaf" class="w-5 h-5 text-lume-moss mb-0.5"></i>
+                            <span class="text-[9px] font-bold uppercase tracking-tighter leading-tight">Eco Rastreável</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="fibras" class="py-20 bg-lume-surface/60 border-y border-lume-subtle/50 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-lume-moss">TRANSPARÊNCIA DA MATÉRIA-PRIMA</span>
+                    <h2 class="font-editorial text-3xl sm:text-5xl font-normal text-lume-brown">
+                        Guia de <span class="italic font-normal text-lume-terracotta">Fibras Orgânicas</span> & Toque
+                    </h2>
+                    <p class="text-lume-brown/80 text-sm font-light">
+                        Selecionamos apenas matérias-primas de baixo impacto ambiental. Toque e sinta a diferença do cultivo consciente.
+                    </p>
+                </div>
+
+                <!-- Interactive Tabs Header -->
+                <div class="flex flex-wrap items-center justify-center gap-3 mb-10">
+                    <button onclick="switchFiberTab(0)" class="fiber-tab active px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-widest border border-lume-brown bg-lume-brown text-lume-sand transition-all">
+                        100% Linho Puro
+                    </button>
+                    <button onclick="switchFiberTab(1)" class="fiber-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-widest border border-lume-subtle bg-lume-card text-lume-brown hover:border-lume-brown transition-all">
+                        Algodão Orgânico
+                    </button>
+                    <button onclick="switchFiberTab(2)" class="fiber-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-widest border border-lume-subtle bg-lume-card text-lume-brown hover:border-lume-brown transition-all">
+                        Viscose Ecovero™
+                    </button>
+                    <button onclick="switchFiberTab(3)" class="fiber-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-widest border border-lume-subtle bg-lume-card text-lume-brown hover:border-lume-brown transition-all">
+                        Algodão Reciclado
+                    </button>
+                </div>
+
+                <!-- Dynamic Tab Content Panel -->
+                <div id="fiberContentDisplay" class="bg-lume-card rounded-3xl p-6 sm:p-10 border border-lume-subtle shadow-organic">
+                    <!-- Content populated via JavaScript -->
+                </div>
+
+            </div>
+        </section>
+
+        <section id="colecao" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div class="space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-lume-moss">EDIÇÃO LIMITADA 2026</span>
+                    <h2 class="font-editorial text-4xl sm:text-5xl font-normal text-lume-brown">
+                        Coleção <span class="italic font-normal text-lume-terracotta">Aura & Terra</span>
+                    </h2>
+                </div>
+
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterProducts('all', this)" class="prod-filter active px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest bg-lume-brown text-lume-sand border border-lume-brown transition-all">Todas as Peças</button>
+                    <button onclick="filterProducts('vestidos', this)" class="prod-filter px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest bg-lume-card text-lume-brown border border-lume-subtle hover:border-lume-brown transition-all">Vestidos Fluidos</button>
+                    <button onclick="filterProducts('alfaiataria', this)" class="prod-filter px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest bg-lume-card text-lume-brown border border-lume-subtle hover:border-lume-brown transition-all">Alfaiataria Leve</button>
+                    <button onclick="filterProducts('camisas', this)" class="prod-filter px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest bg-lume-card text-lume-brown border border-lume-subtle hover:border-lume-brown transition-all">Camisas & Blusas</button>
+                    <button onclick="filterProducts('acessorios', this)" class="prod-filter px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest bg-lume-card text-lume-brown border border-lume-subtle hover:border-lume-brown transition-all">Acessórios</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products rendered via JavaScript -->
+            </div>
+
+        </section>
+
+        <section id="provador" class="py-20 bg-lume-surface/70 border-y border-lume-subtle px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-6">
+                        <span class="text-xs font-bold uppercase tracking-[0.25em] text-lume-moss">TECNOLOGIA DE PROVADOR</span>
+                        <h2 class="font-editorial text-4xl sm:text-5xl font-normal text-lume-brown leading-tight">
+                            Guia de <span class="italic font-normal text-lume-terracotta">Caimento Personalizado</span>
+                        </h2>
+                        <p class="text-lume-brown/80 text-sm font-light leading-relaxed">
+                            Nossas modelagens são pensadas para abraçar a diversidade dos corpos sem apertar ou restringir. Insira suas medidas para receber a recomendação exata do tamanho ideal para a sua silhueta.
+                        </p>
+
+                        <div class="p-4 bg-lume-card rounded-2xl border border-lume-subtle text-xs text-lume-brown/80 space-y-2">
+                            <div class="flex items-center gap-2 font-medium text-lume-brown">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-lume-terracotta"></i>
+                                <span>Garantia de Troca Sustentável</span>
+                            </div>
+                            <p>Se o caimento não for do seu agrado, trocamos sem custo adicional em até 30 dias.</p>
+                        </div>
+                    </div>
+
+                    <!-- Size Finder Interactive Widget -->
+                    <div class="lg:col-span-7 bg-lume-card p-6 sm:p-10 rounded-3xl border border-lume-subtle shadow-organic space-y-8">
+                        <div class="flex items-center justify-between pb-4 border-b border-lume-subtle">
+                            <span class="text-xs font-bold uppercase tracking-widest text-lume-brown">// SIMULADOR DE TAMANHO</span>
+                            <span class="text-xs text-lume-moss font-medium">Modelagem Orgânica Lume</span>
+                        </div>
+
+                        <!-- Form Inputs -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            
+                            <!-- Height Slider -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-medium text-lume-brown">
+                                    <span>Sua Altura</span>
+                                    <span id="heightValue" class="font-bold text-lume-terracotta">165 cm</span>
+                                </div>
+                                <input type="range" id="inputHeight" min="150" max="190" value="165" oninput="updateSizeFinder()" class="w-full h-2 bg-lume-surface rounded-lg cursor-pointer">
+                            </div>
+
+                            <!-- Weight Slider -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-medium text-lume-brown">
+                                    <span>Seu Peso</span>
+                                    <span id="weightValue" class="font-bold text-lume-terracotta">62 kg</span>
+                                </div>
+                                <input type="range" id="inputWeight" min="45" max="110" value="62" oninput="updateSizeFinder()" class="w-full h-2 bg-lume-surface rounded-lg cursor-pointer">
+                            </div>
+
+                        </div>
+
+                        <!-- Fit Preference Buttons -->
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-lume-brown">Preferencia de Caimento:</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <button onclick="selectFitStyle('ajustado', this)" class="fit-btn px-3 py-2.5 rounded-xl border border-lume-subtle text-xs font-medium text-lume-brown hover:border-lume-brown transition-all">Ajustado</button>
+                                <button onclick="selectFitStyle('natural', this)" class="fit-btn active px-3 py-2.5 rounded-xl border-2 border-lume-brown bg-lume-brown text-lume-sand text-xs font-medium transition-all">Natural (Ideal)</button>
+                                <button onclick="selectFitStyle('fluido', this)" class="fit-btn px-3 py-2.5 rounded-xl border border-lume-subtle text-xs font-medium text-lume-brown hover:border-lume-brown transition-all">Fluido / Oversized</button>
+                            </div>
+                        </div>
+
+                        <!-- Result Output Card -->
+                        <div class="p-6 bg-lume-sand rounded-2xl border border-lume-terracotta/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div class="space-y-1 text-center sm:text-left">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-lume-moss">Tamanho Recomendado</span>
+                                <div id="recommendedSizeResult" class="font-editorial text-4xl font-bold text-lume-brown">Tamanho M</div>
+                                <p id="recommendedDescResult" class="text-xs text-lume-brown/80">Proporciona conforto sem marcar o corpo, com comprimento ideal para sua altura.</p>
+                            </div>
+                            <button onclick="applyRecommendedFilter()" class="px-6 py-3 bg-lume-brown text-lume-sand text-xs font-medium uppercase tracking-widest rounded-full hover:bg-lume-moss transition-colors whitespace-nowrap">
+                                Filtrar Peças M
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="lookbook" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <span class="text-xs font-bold uppercase tracking-[0.25em] text-lume-moss">LOOKBOOK EDITORIAL</span>
+                <h2 class="font-editorial text-4xl sm:text-5xl font-normal text-lume-brown">
+                    Componha seu <span class="italic font-normal text-lume-terracotta">Visual Botânico</span>
+                </h2>
+                <p class="text-lume-brown/80 text-sm font-light">
+                    Clique nos pontos marcados na imagem para explorar cada peça da composição.
+                </p>
+            </div>
+
+            <!-- Hotspot Lookbook Main Image Wrapper -->
+            <div class="relative rounded-3xl overflow-hidden border-4 border-lume-card shadow-float max-w-4xl mx-auto aspect-[16/10] bg-lume-surface">
+                <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=80" alt="Lookbook Editorial Lume Ateliê" class="w-full h-full object-cover">
+                
+                <!-- Hotspot 1: Camisa Linho -->
+                <div class="absolute top-[32%] left-[48%] group">
+                    <button onclick="showHotspotProduct(1)" aria-label="Ver Camisa de Linho" class="w-8 h-8 rounded-full bg-lume-sand/90 text-lume-brown border-2 border-lume-brown flex items-center justify-center shadow-lg hotspot-ring cursor-pointer transition-transform group-hover:scale-125">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Hotspot 2: Calça Pantalona -->
+                <div class="absolute top-[68%] left-[52%] group">
+                    <button onclick="showHotspotProduct(2)" aria-label="Ver Calça Pantalona" class="w-8 h-8 rounded-full bg-lume-sand/90 text-lume-brown border-2 border-lume-brown flex items-center justify-center shadow-lg hotspot-ring cursor-pointer transition-transform group-hover:scale-125">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Hotspot 3: Bolsa Algodão -->
+                <div class="absolute top-[55%] left-[32%] group">
+                    <button onclick="showHotspotProduct(3)" aria-label="Ver Bolsa Artesanal" class="w-8 h-8 rounded-full bg-lume-sand/90 text-lume-brown border-2 border-lume-brown flex items-center justify-center shadow-lg hotspot-ring cursor-pointer transition-transform group-hover:scale-125">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Floating Hotspot Card Popover -->
+                <div id="hotspotCard" class="hidden absolute bottom-6 left-6 right-6 sm:left-auto sm:right-6 sm:w-80 lume-glass p-4 rounded-2xl border border-white/50 shadow-float space-y-3 transition-all">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span id="hotspotCategory" class="text-[9px] font-bold uppercase tracking-widest text-lume-moss">Tops & Camisas</span>
+                            <h4 id="hotspotTitle" class="font-editorial text-xl font-bold text-lume-brown">Camisa Orgânica Brisa</h4>
+                        </div>
+                        <button onclick="closeHotspotCard()" class="text-lume-brown hover:text-lume-terracotta">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span id="hotspotPrice" class="font-editorial text-lg text-lume-brown font-semibold">R$ 360,00</span>
+                        <button id="hotspotAddBtn" onclick="addHotspotToCart()" class="px-4 py-2 bg-lume-brown text-lume-sand text-xs font-medium uppercase tracking-widest rounded-full hover:bg-lume-moss transition-colors">
+                            Adicionar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="manifesto" class="py-20 bg-lume-brown text-lume-sand px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto space-y-16">
+                
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-lume-terracotta">O MANIFESTO LUME</span>
+                    <h2 class="font-editorial text-4xl sm:text-6xl font-normal leading-tight">
+                        "Desacelerar o ritmo da moda para reconectar com a terra."
+                    </h2>
+                    <p class="text-lume-sand/80 text-base font-light leading-relaxed">
+                        Acreditamos na beleza da imperfeição, nos tecidos que respiram e na valorização de quem costura cada Bainha. Nossas coleções são produzidas em pequenas tiragens para evitar o desperdício têxtil.
+                    </p>
+                </div>
+
+                <!-- Transparency Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1 -->
+                    <div class="p-8 rounded-3xl bg-lume-sand/5 border border-lume-sand/10 space-y-4 hover:border-lume-terracotta/40 transition-colors">
+                        <div class="w-12 h-12 rounded-2xl bg-lume-terracotta/20 text-lume-terracotta flex items-center justify-center">
+                            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-normal text-lume-sand">Ateliê Autoral Local</h3>
+                        <p class="text-xs text-lume-sand/70 leading-relaxed font-light">
+                            100% da produção é confeccionada por costureiras parceiras no Brasil com remuneração justa e ambiente de trabalho digno.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="p-8 rounded-3xl bg-lume-sand/5 border border-lume-sand/10 space-y-4 hover:border-lume-terracotta/40 transition-colors">
+                        <div class="w-12 h-12 rounded-2xl bg-lume-terracotta/20 text-lume-terracotta flex items-center justify-center">
+                            <i data-lucide="package-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-normal text-lume-sand">Embalagem Compostável</h3>
+                        <p class="text-xs text-lume-sand/70 leading-relaxed font-light">
+                            Seu pedido chega envelopado em papel reciclado sem plástico, acompanhado de tag plantável de sementes de flores silvestres.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="p-8 rounded-3xl bg-lume-sand/5 border border-lume-sand/10 space-y-4 hover:border-lume-terracotta/40 transition-colors">
+                        <div class="w-12 h-12 rounded-2xl bg-lume-terracotta/20 text-lume-terracotta flex items-center justify-center">
+                            <i data-lucide="sprout" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-editorial text-2xl font-normal text-lume-sand">Tingimento Botânico</h3>
+                        <p class="text-xs text-lume-sand/70 leading-relaxed font-light">
+                            Utilizamos extratos de cascas de acácia, cúrcuma e indigo vegetal para colorir nossos fios de forma não poluente.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <div class="bg-lume-card rounded-3xl p-8 sm:p-14 border border-lume-subtle shadow-organic text-center space-y-6">
+                <span class="text-xs font-bold uppercase tracking-[0.25em] text-lume-moss">CARTAS DE INSPIRAÇÃO</span>
+                <h2 class="font-editorial text-3xl sm:text-5xl font-normal text-lume-brown">
+                    Receba Nossas Edições Limitadas em Primeira Mão
+                </h2>
+                <p class="text-lume-brown/80 text-sm font-light max-w-lg mx-auto leading-relaxed">
+                    Assine nossa newsletter e ganhe <strong class="font-bold text-lume-brown">10% OFF na sua primeira compra</strong>, além de ensaios visuais sobre moda consciente.
+                </p>
+
+                <form onsubmit="handleNewsletterSubmit(event)" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+                    <input type="email" required placeholder="Seu melhor e-mail aqui..." class="w-full px-5 py-3.5 bg-lume-sand border border-lume-subtle rounded-full text-xs text-lume-brown placeholder-lume-brown/50 outline-none focus:border-lume-brown">
+                    <button type="submit" class="px-8 py-3.5 bg-lume-brown hover:bg-lume-moss text-lume-sand text-xs font-medium uppercase tracking-widest rounded-full transition-colors whitespace-nowrap">
+                        Assinar
+                    </button>
+                </form>
+                <div id="newsletterSuccess" class="hidden text-xs text-lume-moss font-medium">✨ Obrigado! Seu cupom de 10% OFF é <strong>LUME10</strong>.</div>
+            </div>
+        </section>
+    </main>
+
+    <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+        <!-- Backdrop -->
+        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-lume-brown/60 backdrop-blur-sm transition-opacity"></div>
+        
+        <!-- Drawer Panel -->
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-lume-card shadow-float flex flex-col justify-between border-l border-lume-subtle">
+                
+                <!-- Drawer Header -->
+                <div class="p-6 border-b border-lume-subtle flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-lume-brown"></i>
+                        <h3 class="font-editorial text-2xl font-bold text-lume-brown">Sua Sacola</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="text-lume-brown hover:text-lume-terracotta">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Free Shipping Progress Bar -->
+                <div class="px-6 py-3 bg-lume-surface/60 border-b border-lume-subtle space-y-1">
+                    <div id="freeShippingText" class="text-[11px] font-medium text-lume-brown flex justify-between">
+                        <span>Frete Grátis</span>
+                        <span id="shippingProgressVal">Faltam R$ 350,00</span>
+                    </div>
+                    <div class="w-full bg-lume-subtle h-2 rounded-full overflow-hidden">
+                        <div id="shippingProgressBar" class="bg-lume-terracotta h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- Cart Items List Container -->
+                <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Items populated dynamically via JS -->
+                </div>
+
+                <!-- Drawer Footer & Checkout -->
+                <div class="p-6 border-t border-lume-subtle bg-lume-sand space-y-4">
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between text-lume-brown/80">
+                            <span>Subtotal</span>
+                            <span id="cartSubtotal" class="font-bold text-lume-brown">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between text-lume-brown/80">
+                            <span>Frete Estimado</span>
+                            <span id="cartShippingFee" class="font-bold text-lume-moss">A calcular</span>
+                        </div>
+                        <div class="flex justify-between text-sm font-bold text-lume-brown pt-2 border-t border-lume-subtle">
+                            <span>Total</span>
+                            <span id="cartTotal" class="font-editorial text-2xl">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <button onclick="simulateCheckout()" class="w-full py-4 bg-lume-brown hover:bg-lume-moss text-lume-sand text-xs font-medium uppercase tracking-[0.2em] rounded-full transition-all shadow-organic flex items-center justify-center gap-2">
+                        <span>Finalizar Compra</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <p class="text-[10px] text-center text-lume-brown/60">Pagamento seguro via Cartão, Pix ou Boleto</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="quickViewModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div onclick="closeQuickView()" class="absolute inset-0 bg-lume-brown/60 backdrop-blur-sm"></div>
+        <div class="relative bg-lume-card rounded-3xl border border-lume-subtle max-w-2xl w-full p-6 sm:p-8 shadow-float overflow-hidden z-10 space-y-6">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 text-lume-brown hover:text-lume-terracotta">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="quickViewContent">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <div id="toastAlert" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 lume-glass-dark text-lume-sand px-5 py-3.5 rounded-2xl shadow-float flex items-center gap-3 border border-white/20 text-xs">
+        <i data-lucide="check-circle" class="w-5 h-5 text-lume-terracotta"></i>
+        <span id="toastMsg">Item adicionado à sacola!</span>
+    </div>
+
+    <footer class="bg-lume-surface/80 border-t border-lume-subtle pt-16 pb-12 text-lume-brown">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-lume-subtle">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="md:col-span-5 space-y-4">
+                    <a href="#" class="font-editorial text-2xl font-bold tracking-widest uppercase text-lume-brown">Lume Ateliê</a>
+                    <p class="text-xs text-lume-brown/80 max-w-sm leading-relaxed font-light">
+                        Marca autoral de moda lenta e consciente. Feito no Brasil com fibras de cultivo sustentável e respeito aos ciclos da natureza.
+                    </p>
+                    <div class="flex items-center gap-3 text-xs font-medium text-lume-moss">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        <span>Ateliê & Showroom: Pinheiros, São Paulo - SP</span>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation Links -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-lume-brown">Navegação</h4>
+                    <ul class="space-y-2 text-xs text-lume-brown/80 font-light">
+                        <li><a href="#colecao" class="hover:text-lume-terracotta transition-colors">Nova Coleção</a></li>
+                        <li><a href="#fibras" class="hover:text-lume-terracotta transition-colors">Guia de Fibras Naturais</a></li>
+                        <li><a href="#provador" class="hover:text-lume-terracotta transition-colors">Provador Virtual</a></li>
+                        <li><a href="#lookbook" class="hover:text-lume-terracotta transition-colors">Lookbook Interativo</a></li>
+                        <li><a href="#manifesto" class="hover:text-lume-terracotta transition-colors">Nosso Manifesto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Socials & Contact -->
+                <div class="md:col-span-4 space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-lume-brown">Acompanhe Nosso Ateliê</h4>
+                    <div class="flex gap-3">
+                        <a href="#" aria-label="Instagram da Lume Ateliê" class="w-10 h-10 rounded-full bg-lume-card border border-lume-subtle flex items-center justify-center hover:bg-lume-terracotta hover:text-lume-sand transition-colors">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" aria-label="Pinterest da Lume Ateliê" class="w-10 h-10 rounded-full bg-lume-card border border-lume-subtle flex items-center justify-center hover:bg-lume-terracotta hover:text-lume-sand transition-colors">
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" aria-label="WhatsApp do Ateliê" class="w-10 h-10 rounded-full bg-lume-card border border-lume-subtle flex items-center justify-center hover:bg-lume-terracotta hover:text-lume-sand transition-colors">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="text-xs text-lume-brown/70 font-light">
+                        Atendimento: atendimento@lumeatelie.com.br
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-lume-brown/70 gap-4 font-light">
+                <div>© 2026 LUME ATELIÊ. TODOS OS DIREITOS RESERVADOS.</div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:underline">Política de Trocas</a>
+                    <a href="#" class="hover:underline">Sustentabilidade</a>
+                    <a href="#" class="hover:underline">Termos & Condições</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+        // Product Catalog Data
+        const productsData = [
+            {
+                id: 'vestido-aura',
+                category: 'vestidos',
+                title: 'Vestido Aura Linho Puro',
+                price: 480.00,
+                fabric: '100% Linho Francês',
+                image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80',
+                colors: [
+                    { name: 'Terracota', hex: '#C4A882' },
+                    { name: 'Areia', hex: '#F0EAE0' },
+                    { name: 'Musgo', hex: '#5C6650' }
+                ]
+            },
+            {
+                id: 'camisa-brisa',
+                category: 'camisas',
+                title: 'Camisa Bossa Algodão Orgânico',
+                price: 360.00,
+                fabric: '100% Algodão Certificado GOTS',
+                image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80',
+                colors: [
+                    { name: 'Areia', hex: '#F0EAE0' },
+                    { name: 'Rosa Suave', hex: '#E8C4B0' }
+                ]
+            },
+            {
+                id: 'blazer-terrapura',
+                category: 'alfaiataria',
+                title: 'Blazer Desestruturado Terra',
+                price: 620.00,
+                fabric: 'Linho & Algodão Reciclado',
+                image: 'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&w=800&q=80',
+                colors: [
+                    { name: 'Terracota', hex: '#C4A882' },
+                    { name: 'Marrom Escuro', hex: '#3D2B1F' }
+                ]
+            },
+            {
+                id: 'calca-pantalona-brisa',
+                category: 'alfaiataria',
+                title: 'Calça Pantalona Fluida',
+                price: 420.00,
+                fabric: '100% Linho Puro Rastreável',
+                image: 'https://images.unsplash.com/photo-1508427953056-b00b8d78ebf5?auto=format&fit=crop&w=800&q=80',
+                colors: [
+                    { name: 'Musgo', hex: '#5C6650' },
+                    { name: 'Areia', hex: '#F0EAE0' }
+                ]
+            },
+            {
+                id: 'quimono-botanico',
+                category: 'vestidos',
+                title: 'Quimono Tingimento Vegetal',
+                price: 540.00,
+                fabric: 'Viscose Ecovero™',
+                image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80',
+                colors: [
+                    { name: 'Rosa Suave', hex: '#E8C4B0' },
+                    { name: 'Terracota', hex: '#C4A882' }
+                ]
+            },
+            {
+                id: 'bolsa-palha-artesanal',
+                category: 'acessorios',
+                title: 'Bolsa Artesanal Fibras de Curió',
+                price: 290.00,
+                fabric: 'Fibra Natural Trançada à Mão',
+                image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80',
+                colors: [
+                    { name: 'Areia', hex: '#F0EAE0' }
+                ]
+            }
+        ];
+
+        // Fiber Tabs Data
+        const fiberTabsData = [
+            {
+                title: '100% Linho Puro Rastreável',
+                origin: 'Normandia, França (fiação no Brasil)',
+                breathability: '98% de fluxo de ar',
+                desc: 'O linho é uma das fibras mais nobres e ecológicas do planeta. Cultivado sem pesticidas sintéticos, melhora a cada lavagem, tornando-se mais macio e mantendo a temperatura do corpo agradável no verão.',
+                care: 'Lavar em água fria, secar à sombra e usar o ferro levemente úmido para manter o vinco natural.',
+                image: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                title: 'Algodão Orgânico Certificado (GOTS)',
+                origin: 'Paraíba & Ceará, Brasil',
+                breathability: '92% de respirabilidade',
+                desc: 'Cultivado em sistemas agroflorestais sem irrigação predatória. Nossos tecidos utilizam algodão colorido que já nasce nas tonalidades terracota e areia, dispensando aditivos químicos.',
+                care: 'Usar sabão neutro e evitar branqueadores ópticos.',
+                image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                title: 'Viscose Sustentável Ecovero™',
+                origin: 'Madeira Certificada FSC',
+                breathability: '90% toque sedoso',
+                desc: 'Produzida com até 50% menos emissões e impacto hídrico em comparação com a viscose genérica. Oferece um caimento esvoaçante ideal para vestidos e quimonos.',
+                care: 'Não torcer a peça molhada e passar no avesso.',
+                image: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                title: 'Algodão Reciclado de Sobras Têxteis',
+                origin: 'Economia Circular - SP',
+                breathability: '88% resistência elevada',
+                desc: 'Aproveitamos sobras de corte do nosso próprio ateliê que são desfiadas e fias novamente juntas a fibras de algodão virgem orgânico, zerando o desperdício.',
+                care: 'Lavar no ciclo delicado.',
+                image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80'
+            }
+        ];
+
+        // Global State
+        let shoppingCart = [];
+        let activeFilter = 'all';
+
+        // Render Product Catalog
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? productsData 
+                : productsData.filter(p => p.category === filter);
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-lume-card rounded-3xl overflow-hidden border border-lume-subtle shadow-organic group hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between';
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="relative aspect-[3/4] overflow-hidden bg-lume-surface">
+                            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            
+                            <button onclick="quickViewProduct('${p.id}')" class="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-lume-sand/90 text-lume-brown text-[10px] font-bold uppercase tracking-widest rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                                Olhada Rápida
+                            </button>
+
+                            <span class="absolute top-4 left-4 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 bg-lume-sand text-lume-moss rounded-full border border-lume-subtle">
+                                ${p.fabric}
+                            </span>
+                        </div>
+
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center gap-1.5">
+                                ${p.colors.map(c => `<span class="w-3.5 h-3.5 rounded-full border border-lume-brown/20" style="background-color: ${c.hex}" title="${c.name}"></span>`).join('')}
+                            </div>
+                            <h3 class="font-editorial text-2xl font-normal text-lume-brown leading-snug">${p.title}</h3>
+                            <div class="font-editorial text-lg text-lume-brown font-semibold">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+                        </div>
+                    </div>
+
+                    <div class="px-6 pb-6">
+                        <button onclick="addToCart('${p.id}')" class="w-full py-3 bg-lume-brown hover:bg-lume-moss text-lume-sand text-xs font-medium uppercase tracking-widest rounded-full transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>Adicionar à Sacola</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Filter Catalog Trigger
+        function filterProducts(category, btn) {
+            document.querySelectorAll('.prod-filter').forEach(b => {
+                b.classList.remove('bg-lume-brown', 'text-lume-sand');
+                b.classList.add('bg-lume-card', 'text-lume-brown');
+            });
+            btn.classList.remove('bg-lume-card', 'text-lume-brown');
+            btn.classList.add('bg-lume-brown', 'text-lume-sand');
+
+            renderProducts(category);
+        }
+
+        // Fiber Tab Switch Logic
+        function switchFiberTab(index) {
+            const tabs = document.querySelectorAll('.fiber-tab');
+            tabs.forEach((t, i) => {
+                if (i === index) {
+                    t.className = 'fiber-tab active px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-widest border border-lume-brown bg-lume-brown text-lume-sand transition-all';
+                } else {
+                    t.className = 'fiber-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-widest border border-lume-subtle bg-lume-card text-lume-brown hover:border-lume-brown transition-all';
+                }
+            });
+
+            const data = fiberTabsData[index];
+            const display = document.getElementById('fiberContentDisplay');
+            display.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-lume-terracotta">Origem: ${data.origin}</span>
+                            <h3 class="font-editorial text-3xl sm:text-4xl font-normal text-lume-brown">${data.title}</h3>
+                        </div>
+                        <p class="text-lume-brown/80 text-sm leading-relaxed font-light">${data.desc}</p>
+                        
+                        <div class="p-4 bg-lume-sand rounded-2xl border border-lume-subtle space-y-2">
+                            <div class="text-xs font-bold uppercase tracking-wider text-lume-moss">Cuidados Recomendados:</div>
+                            <div class="text-xs text-lume-brown/80 font-light">${data.care}</div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-xs font-medium text-lume-brown">
+                            <span class="px-3 py-1 bg-lume-blush text-lume-brown rounded-full font-bold">${data.breathability}</span>
+                            <span>✓ Cultivo Sem Agrotóxicos</span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden border-2 border-lume-subtle">
+                        <img src="${data.image}" alt="${data.title}" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            `;
+        }
+
+        // Virtual Size Finder Widget Algorithm
+        let fitStyle = 'natural';
+
+        function selectFitStyle(style, btn) {
+            fitStyle = style;
+            document.querySelectorAll('.fit-btn').forEach(b => {
+                b.className = 'fit-btn px-3 py-2.5 rounded-xl border border-lume-subtle text-xs font-medium text-lume-brown hover:border-lume-brown transition-all';
+            });
+            btn.className = 'fit-btn active px-3 py-2.5 rounded-xl border-2 border-lume-brown bg-lume-brown text-lume-sand text-xs font-medium transition-all';
+            updateSizeFinder();
+        }
+
+        function updateSizeFinder() {
+            const h = parseInt(document.getElementById('inputHeight').value);
+            const w = parseInt(document.getElementById('inputWeight').value);
+
+            document.getElementById('heightValue').innerText = `${h} cm`;
+            document.getElementById('weightValue').innerText = `${w} kg`;
+
+            // Simple size recommendation calculation
+            let size = 'M';
+            if (w < 52) size = 'PP';
+            else if (w >= 52 && w < 60) size = 'P';
+            else if (w >= 60 && w < 72) size = 'M';
+            else if (w >= 72 && w < 84) size = 'G';
+            else size = 'GG';
+
+            if (fitStyle === 'fluido' && size !== 'GG') {
+                if (size === 'PP') size = 'P';
+                else if (size === 'P') size = 'M';
+                else if (size === 'M') size = 'G';
+                else if (size === 'G') size = 'GG';
+            }
+
+            document.getElementById('recommendedSizeResult').innerText = `Tamanho ${size}`;
+            document.getElementById('recommendedDescResult').innerText = `Recomendado para ${w}kg e ${h}cm com estilo de caimento ${fitStyle}.`;
+        }
+
+        function applyRecommendedFilter() {
+            showToast('Filtro de tamanho aplicado na coleção!');
+            document.getElementById('colecao').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Hotspot Lookbook Popovers
+        const hotspotItems = {
+            1: { title: 'Camisa Orgânica Brisa', price: 360.00, cat: 'Tops & Camisas', id: 'camisa-brisa' },
+            2: { title: 'Calça Pantalona Fluida', price: 420.00, cat: 'Alfaiataria Leve', id: 'calca-pantalona-brisa' },
+            3: { title: 'Bolsa Artesanal Curió', price: 290.00, cat: 'Acessórios', id: 'bolsa-palha-artesanal' }
+        };
+
+        let currentHotspot = null;
+
+        function showHotspotProduct(id) {
+            currentHotspot = hotspotItems[id];
+            const card = document.getElementById('hotspotCard');
+            document.getElementById('hotspotTitle').innerText = currentHotspot.title;
+            document.getElementById('hotspotPrice').innerText = `R$ ${currentHotspot.price.toFixed(2).replace('.', ',')}`;
+            document.getElementById('hotspotCategory').innerText = currentHotspot.cat;
+            card.classList.remove('hidden');
+        }
+
+        function closeHotspotCard() {
+            document.getElementById('hotspotCard').classList.add('hidden');
+        }
+
+        function addHotspotToCart() {
+            if (currentHotspot) {
+                addToCart(currentHotspot.id);
+                closeHotspotCard();
+            }
+        }
+
+        // Cart Drawer Logic
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function addToCart(productId, selectedSize = 'M') {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = shoppingCart.find(item => item.id === productId && item.size === selectedSize);
+            if (existing) {
+                existing.qty++;
+            } else {
+                shoppingCart.push({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    size: selectedSize,
+                    qty: 1
+                });
+            }
+
+            updateCartUI();
+            showToast(`${product.title} foi adicionado à sacola.`);
+        }
+
+        function removeFromCart(index) {
+            shoppingCart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartList = document.getElementById('cartItemsList');
+            const cartCountBadge = document.getElementById('cartCountBadge');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const cartTotal = document.getElementById('cartTotal');
+            const shippingProgressVal = document.getElementById('shippingProgressVal');
+            const shippingProgressBar = document.getElementById('shippingProgressBar');
+
+            cartList.innerHTML = '';
+            let subtotal = 0;
+            let totalQty = 0;
+
+            if (shoppingCart.length === 0) {
+                cartList.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 text-lume-subtle mx-auto"></i>
+                        <p class="text-xs text-lume-brown/70">Sua sacola está vazia no momento.</p>
+                    </div>
+                `;
+            } else {
+                shoppingCart.forEach((item, index) => {
+                    subtotal += item.price * item.qty;
+                    totalQty += item.qty;
+
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex gap-4 p-3 bg-lume-card rounded-2xl border border-lume-subtle items-center';
+                    itemEl.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}" class="w-16 h-20 object-cover rounded-xl bg-lume-surface">
+                        <div class="flex-1 space-y-1">
+                            <h4 class="font-editorial text-lg font-bold text-lume-brown leading-tight">${item.title}</h4>
+                            <div class="text-[10px] text-lume-brown/70">Tam: ${item.size} · Qtd: ${item.qty}</div>
+                            <div class="font-editorial text-sm font-bold text-lume-brown">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</div>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-lume-brown/40 hover:text-red-600 p-1">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    `;
+                    cartList.appendChild(itemEl);
+                });
+            }
+
+            cartCountBadge.innerText = totalQty;
+            cartSubtotal.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            cartTotal.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+
+            // Free Shipping Progress (Threshold: R$ 350)
+            const threshold = 350;
+            if (subtotal >= threshold) {
+                shippingProgressVal.innerText = 'Você ganhou Frete Grátis!';
+                shippingProgressBar.style.width = '100%';
+            } else {
+                const diff = threshold - subtotal;
+                shippingProgressVal.innerText = `Faltam R$ ${diff.toFixed(2).replace('.', ',')}`;
+                shippingProgressBar.style.width = `${Math.min(100, (subtotal / threshold) * 100)}%`;
+            }
+
+            lucide.createIcons();
+        }
+
+        // Quick View Modal
+        function quickViewProduct(productId) {
+            const p = productsData.find(item => item.id === productId);
+            if (!p) return;
+
+            const modal = document.getElementById('quickViewModal');
+            const content = document.getElementById('quickViewContent');
+
+            content.innerHTML = `
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-lume-surface border border-lume-subtle">
+                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-lume-moss">${p.fabric}</span>
+                        <h3 class="font-editorial text-3xl font-bold text-lume-brown">${p.title}</h3>
+                        <div class="font-editorial text-2xl font-bold text-lume-brown">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+                        <p class="text-xs text-lume-brown/80 font-light leading-relaxed">
+                            Confeccionado artesanalmente com costura dupla reforçada e tingimento natural que não desbota.
+                        </p>
+                        
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-lume-brown">Selecione o Tamanho:</label>
+                            <div class="flex gap-2">
+                                <button class="w-10 h-10 rounded-full border border-lume-brown text-xs font-bold hover:bg-lume-brown hover:text-lume-sand">PP</button>
+                                <button class="w-10 h-10 rounded-full border border-lume-brown text-xs font-bold bg-lume-brown text-lume-sand">P</button>
+                                <button class="w-10 h-10 rounded-full border border-lume-brown text-xs font-bold hover:bg-lume-brown hover:text-lume-sand">M</button>
+                                <button class="w-10 h-10 rounded-full border border-lume-brown text-xs font-bold hover:bg-lume-brown hover:text-lume-sand">G</button>
+                            </div>
+                        </div>
+
+                        <button onclick="addToCart('${p.id}'); closeQuickView();" class="w-full py-3.5 bg-lume-brown hover:bg-lume-moss text-lume-sand text-xs font-medium uppercase tracking-widest rounded-full transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>Adicionar à Sacola</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.add('hidden');
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toastAlert');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // Simulation Triggers
+        function toggleSearch() {
+            showToast('Busca ativada. Digite o que procura...');
+        }
+
+        function simulateCheckout() {
+            if (shoppingCart.length === 0) {
+                showToast('Sua sacola está vazia!');
+                return;
+            }
+            showToast('Redirecionando para o Checkout Seguro Lume...');
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            document.getElementById('newsletterSuccess').classList.remove('hidden');
+        }
+
+        // On Window Load Initializations
+        window.onload = function() {
+            renderProducts();
+            switchFiberTab(0);
+            updateSizeFinder();
+        };
+    </script>
+</body>
+</html>

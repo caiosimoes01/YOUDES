@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOCO STUDIO — Software House Modular & Escalável</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bloco: {
+                            bg: '#F7F6F3',
+                            ink: '#111214',
+                            blue: '#1A5CFF',
+                            blueHover: '#0043E0',
+                            yellow: '#FFD600',
+                            card: '#FFFFFF',
+                            border: '#111214',
+                            subtle: '#E6E4DD',
+                            muted: '#666560'
+                        }
+                    },
+                    fontFamily: {
+                        jakarta: ['Plus Jakarta Sans', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'block': '4px 4px 0px #111214',
+                        'block-sm': '2px 2px 0px #111214',
+                        'block-lg': '6px 6px 0px #111214',
+                        'block-blue': '4px 4px 0px #1A5CFF',
+                        'block-yellow': '4px 4px 0px #FFD600'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F7F6F3;
+            color: #111214;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Subtle grid background pattern */
+        .grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(17, 18, 20, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(17, 18, 20, 0.05) 1px, transparent 1px);
+        }
+
+        /* Infinite marquee animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 20s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F6F3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #111214;
+            border-radius: 4px;
+        }
+
+        .border-bloco {
+            border: 2px solid #111214;
+        }
+    </style>
+</head>
+<body class="grid-pattern min-h-screen flex flex-col justify-between selection:bg-bloco-yellow selection:text-bloco-ink">
+
+    <!-- Header Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#F7F6F3]/90 backdrop-blur-md border-b-2 border-bloco-ink transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo Modular -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="flex items-center font-extrabold text-xl sm:text-2xl tracking-tight">
+                    <span class="bg-bloco-ink text-bloco-bg px-2.5 py-1 rounded-l-lg border-2 border-bloco-ink transition-transform group-hover:-translate-x-0.5">BLOCO</span>
+                    <span class="bg-bloco-yellow text-bloco-ink px-2.5 py-1 rounded-r-lg border-2 border-l-0 border-bloco-ink font-bold shadow-block-sm transition-transform group-hover:translate-x-0.5">[STUDIO]</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-semibold text-sm tracking-wide text-bloco-ink">
+                <a href="#stack" class="hover:text-bloco-blue transition-colors">Stack Modular</a>
+                <a href="#calculadora" class="hover:text-bloco-blue transition-colors flex items-center gap-1.5">
+                    <span>Simulador</span>
+                    <span class="px-2 py-0.5 text-[10px] bg-bloco-yellow text-bloco-ink border border-bloco-ink font-extrabold rounded-full">INTERATIVO</span>
+                </a>
+                <a href="#servicos" class="hover:text-bloco-blue transition-colors">Serviços & Cases</a>
+                <a href="#processo" class="hover:text-bloco-blue transition-colors">Método 4S</a>
+                <a href="#faq" class="hover:text-bloco-blue transition-colors">FAQ</a>
+            </nav>
+
+            <!-- CTA Buttons -->
+            <div class="hidden sm:flex items-center gap-3">
+                <button onclick="openBriefingModal()" class="px-5 py-2.5 bg-bloco-blue hover:bg-bloco-blueHover text-white font-bold text-sm rounded-xl border-2 border-bloco-ink shadow-block hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+                    SIMULAR PROJETO
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden p-2 rounded-xl border-2 border-bloco-ink bg-bloco-card shadow-block-sm">
+                <i data-lucide="menu" class="w-6 h-6 text-bloco-ink"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-bloco-card border-b-2 border-bloco-ink px-6 py-6 space-y-4 font-bold text-base">
+            <a href="#stack" class="block text-bloco-ink hover:text-bloco-blue py-1">Stack Modular</a>
+            <a href="#calculadora" class="block text-bloco-ink hover:text-bloco-blue py-1 flex items-center justify-between">
+                <span>Simulador de Escopo</span>
+                <span class="text-xs bg-bloco-yellow border border-bloco-ink px-2 py-0.5 rounded-full font-bold">PROJETAR</span>
+            </a>
+            <a href="#servicos" class="block text-bloco-ink hover:text-bloco-blue py-1">Serviços & Cases</a>
+            <a href="#processo" class="block text-bloco-ink hover:text-bloco-blue py-1">Método 4S</a>
+            <a href="#faq" class="block text-bloco-ink hover:text-bloco-blue py-1">FAQ</a>
+            <button onclick="openBriefingModal()" class="w-full py-3 bg-bloco-blue text-white font-bold text-center rounded-xl border-2 border-bloco-ink shadow-block">
+                SIMULAR PROJETO
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="pt-12 pb-20 lg:pt-24 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column -->
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <!-- Dynamic Badge -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-bloco-card border-2 border-bloco-ink rounded-full shadow-block-sm text-xs font-extrabold uppercase tracking-wider">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-bloco-ink">SOFTWARE HOUSE EM FASE DE EXPANSÃO · 2026</span>
+                    </div>
+
+                    <!-- Main Headline -->
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-bloco-ink leading-[1.05]">
+                        Construímos produtos digitais com <span class="bg-bloco-yellow px-2 py-0.5 border-2 border-bloco-ink shadow-block-sm rounded-lg inline-block my-1">arquitetura modular</span> e velocidade de startup.
+                    </h1>
+
+                    <p class="text-bloco-muted text-base sm:text-lg font-medium max-w-2xl leading-relaxed">
+                        Esqueça projetos engessados de 12 meses. Na Bloco Studio, acoplamos módulos prontos de autenticação, IA e infraestrutura cloud para lançar seu software escalável em poucas semanas.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                        <button onclick="openBriefingModal()" class="px-8 py-4 bg-bloco-blue hover:bg-bloco-blueHover text-white font-extrabold text-lg rounded-2xl border-2 border-bloco-ink shadow-block hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-2">
+                            <span>INICIAR SIMULAÇÃO</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                        <a href="#calculadora" class="px-8 py-4 bg-bloco-card hover:bg-bloco-subtle text-bloco-ink font-extrabold text-lg rounded-2xl border-2 border-bloco-ink shadow-block hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all text-center">
+                            ESTIMAR CUSTO & TEMPO
+                        </a>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t-2 border-bloco-ink/10">
+                        <div>
+                            <div class="font-extrabold text-2xl sm:text-3xl text-bloco-blue">4 a 8 sem</div>
+                            <div class="text-xs font-bold text-bloco-muted uppercase tracking-wider">Tempo Médio de MVP</div>
+                        </div>
+                        <div>
+                            <div class="font-extrabold text-2xl sm:text-3xl text-bloco-ink">100%</div>
+                            <div class="text-xs font-bold text-bloco-muted uppercase tracking-wider">Código Próprio</div>
+                        </div>
+                        <div>
+                            <div class="font-extrabold text-2xl sm:text-3xl text-bloco-ink">99.9%</div>
+                            <div class="text-xs font-bold text-bloco-muted uppercase tracking-wider">Uptime Cloud</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column: Interactive Modular Stack Preview -->
+                <div id="stack" class="lg:col-span-5">
+                    <div class="bg-bloco-card rounded-3xl p-6 sm:p-8 border-2 border-bloco-ink shadow-block-lg space-y-6">
+                        <div class="flex items-center justify-between pb-4 border-b-2 border-bloco-subtle">
+                            <div>
+                                <span class="text-xs font-extrabold text-bloco-blue uppercase tracking-wider">// ARQUITETURA EM TEMPO REAL</span>
+                                <h3 class="font-extrabold text-xl text-bloco-ink">Monte o seu Bloco Core</h3>
+                            </div>
+                            <span class="px-2.5 py-1 bg-bloco-yellow border-2 border-bloco-ink text-xs font-bold rounded-lg shadow-block-sm">
+                                INTERATIVO
+                            </span>
+                        </div>
+
+                        <!-- Interactive Module Stack Elements -->
+                        <div class="space-y-3">
+                            <p class="text-xs font-bold text-bloco-muted">Clique nos componentes para alternar a ativação do ecossistema:</p>
+                            
+                            <!-- Block 1 -->
+                            <div onclick="toggleHeroBlock(this)" class="hero-block active p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:bg-bloco-yellow/20 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-bloco-blue text-white border-2 border-bloco-ink flex items-center justify-center font-bold">
+                                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-sm text-bloco-ink">Auth & Security Module</div>
+                                        <div class="text-xs text-bloco-muted">OAuth2, MFA, JWT, RBAC Roles</div>
+                                    </div>
+                                </div>
+                                <span class="block-status text-xs font-extrabold px-2 py-1 rounded bg-emerald-200 text-emerald-900 border border-bloco-ink">ATIVO</span>
+                            </div>
+
+                            <!-- Block 2 -->
+                            <div onclick="toggleHeroBlock(this)" class="hero-block active p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:bg-bloco-yellow/20 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-bloco-yellow text-bloco-ink border-2 border-bloco-ink flex items-center justify-center font-bold">
+                                        <i data-lucide="bot" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-sm text-bloco-ink">AI Agent & LLM Engine</div>
+                                        <div class="text-xs text-bloco-muted">OpenAI API, LangChain, RAG</div>
+                                    </div>
+                                </div>
+                                <span class="block-status text-xs font-extrabold px-2 py-1 rounded bg-emerald-200 text-emerald-900 border border-bloco-ink">ATIVO</span>
+                            </div>
+
+                            <!-- Block 3 -->
+                            <div onclick="toggleHeroBlock(this)" class="hero-block active p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:bg-bloco-yellow/20 transition-all flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-bloco-ink text-white border-2 border-bloco-ink flex items-center justify-center font-bold">
+                                        <i data-lucide="database" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-sm text-bloco-ink">Cloud Data Pipeline</div>
+                                        <div class="text-xs text-bloco-muted">PostgreSQL, Redis, AWS Lambda</div>
+                                    </div>
+                                </div>
+                                <span class="block-status text-xs font-extrabold px-2 py-1 rounded bg-emerald-200 text-emerald-900 border border-bloco-ink">ATIVO</span>
+                            </div>
+
+                        </div>
+
+                        <!-- Stack Performance Output -->
+                        <div class="p-4 bg-bloco-ink text-bloco-bg rounded-2xl border-2 border-bloco-ink flex items-center justify-between">
+                            <div class="space-y-0.5">
+                                <div class="text-[10px] uppercase tracking-wider text-bloco-yellow font-bold">Estatística do Ecossistema</div>
+                                <div id="heroStackEstimate" class="text-sm font-bold">3 Módulos Selecionados — Pronto para Escalar</div>
+                            </div>
+                            <div class="w-3 h-3 rounded-full bg-bloco-yellow shadow-block-sm animate-ping"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Infinite Tech Marquee -->
+        <section class="py-6 bg-bloco-ink text-bloco-bg border-y-2 border-bloco-ink overflow-hidden shadow-block">
+            <div class="animate-marquee flex items-center gap-12 text-sm sm:text-base font-extrabold tracking-widest uppercase">
+                <span class="flex items-center gap-2"><i data-lucide="code" class="text-bloco-yellow w-5 h-5"></i> React & Next.js</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="server" class="text-bloco-blue w-5 h-5"></i> Node.js & Python</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="cloud" class="text-bloco-yellow w-5 h-5"></i> AWS Cloud & Docker</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="database" class="text-bloco-blue w-5 h-5"></i> PostgreSQL & GraphQL</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="smartphone" class="text-bloco-yellow w-5 h-5"></i> Flutter Mobile</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="bot" class="text-bloco-blue w-5 h-5"></i> OpenAI & LangChain</span>
+                <span>•</span>
+                
+                <!-- Repeat for seamless loop -->
+                <span class="flex items-center gap-2"><i data-lucide="code" class="text-bloco-yellow w-5 h-5"></i> React & Next.js</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="server" class="text-bloco-blue w-5 h-5"></i> Node.js & Python</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="cloud" class="text-bloco-yellow w-5 h-5"></i> AWS Cloud & Docker</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="database" class="text-bloco-blue w-5 h-5"></i> PostgreSQL & GraphQL</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="smartphone" class="text-bloco-yellow w-5 h-5"></i> Flutter Mobile</span>
+                <span>•</span>
+                <span class="flex items-center gap-2"><i data-lucide="bot" class="text-bloco-blue w-5 h-5"></i> OpenAI & LangChain</span>
+            </div>
+        </section>
+
+        <!-- Calculador de Projeto Modular Section -->
+        <section id="calculadora" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="bg-bloco-card rounded-3xl p-8 sm:p-12 border-2 border-bloco-ink shadow-block-lg">
+                
+                <div class="max-w-3xl mb-10 space-y-3">
+                    <span class="text-xs font-extrabold text-bloco-blue uppercase tracking-wider px-3 py-1 bg-bloco-blue/10 border border-bloco-blue/30 rounded-full">
+                        FERRAMENTA INTERATIVA DE ORÇAMENTO
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-bloco-ink">
+                        Calculador de <span class="bg-bloco-yellow px-2 border-2 border-bloco-ink rounded-lg">Projeto Modular</span>
+                    </h2>
+                    <p class="text-bloco-muted text-base font-medium">
+                        Selecione abaixo os blocos funcionais que o seu software precisa. A estimativa de prazos, complexidade técnica e investimento será calculada na hora.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Selection Options (Checklist) -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <label class="block text-xs font-extrabold text-bloco-ink uppercase tracking-wider">Módulos Funcionais Desejados:</label>
+                        
+                        <!-- Module Option 1 -->
+                        <div onclick="toggleModuleOption('auth', 1, 4000, 1, this)" class="calc-option p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:border-bloco-blue transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="mod-auth" class="w-5 h-5 accent-bloco-blue cursor-pointer">
+                                <div>
+                                    <div class="font-bold text-bloco-ink">Autenticação & Gestão de Usuários</div>
+                                    <div class="text-xs text-bloco-muted">Login social, controle de permissões (RBAC) e recuperação de senha.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold font-mono px-2 py-1 bg-bloco-card rounded border border-bloco-ink">+1 sem</span>
+                        </div>
+
+                        <!-- Module Option 2 -->
+                        <div onclick="toggleModuleOption('pay', 1.5, 6000, 1, this)" class="calc-option p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:border-bloco-blue transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="mod-pay" class="w-5 h-5 accent-bloco-blue cursor-pointer">
+                                <div>
+                                    <div class="font-bold text-bloco-ink">Checkout & Checkout Transacional</div>
+                                    <div class="text-xs text-bloco-muted">Integração Pix, cartão via Stripe/Asaas e assinaturas recorrentes.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold font-mono px-2 py-1 bg-bloco-card rounded border border-bloco-ink">+1.5 sem</span>
+                        </div>
+
+                        <!-- Module Option 3 -->
+                        <div onclick="toggleModuleOption('dash', 2, 8000, 2, this)" class="calc-option p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:border-bloco-blue transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="mod-dash" class="w-5 h-5 accent-bloco-blue cursor-pointer">
+                                <div>
+                                    <div class="font-bold text-bloco-ink">Dashboard Admin & Analytics</div>
+                                    <div class="text-xs text-bloco-muted">Painel gerencial com gráficos, relatórios e exportação em CSV/PDF.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold font-mono px-2 py-1 bg-bloco-card rounded border border-bloco-ink">+2 sem</span>
+                        </div>
+
+                        <!-- Module Option 4 -->
+                        <div onclick="toggleModuleOption('ai', 2.5, 12000, 3, this)" class="calc-option p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:border-bloco-blue transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="mod-ai" class="w-5 h-5 accent-bloco-blue cursor-pointer">
+                                <div>
+                                    <div class="font-bold text-bloco-ink">Agente de IA & Processamento LLM</div>
+                                    <div class="text-xs text-bloco-muted">Atendimento automatizado, RAG sob documentos e extração de dados.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold font-mono px-2 py-1 bg-bloco-card rounded border border-bloco-ink">+2.5 sem</span>
+                        </div>
+
+                        <!-- Module Option 5 -->
+                        <div onclick="toggleModuleOption('mobile', 3, 15000, 3, this)" class="calc-option p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:border-bloco-blue transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="mod-mobile" class="w-5 h-5 accent-bloco-blue cursor-pointer">
+                                <div>
+                                    <div class="font-bold text-bloco-ink">Aplicativo Mobile Nativo (iOS / Android)</div>
+                                    <div class="text-xs text-bloco-muted">Desenvolvimento em Flutter com push notifications e biometria.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold font-mono px-2 py-1 bg-bloco-card rounded border border-bloco-ink">+3 sem</span>
+                        </div>
+
+                        <!-- Module Option 6 -->
+                        <div onclick="toggleModuleOption('cloud', 1, 5000, 1, this)" class="calc-option p-4 bg-bloco-bg rounded-2xl border-2 border-bloco-ink cursor-pointer hover:border-bloco-blue transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="mod-cloud" class="w-5 h-5 accent-bloco-blue cursor-pointer">
+                                <div>
+                                    <div class="font-bold text-bloco-ink">Infraestrutura Cloud & CI/CD</div>
+                                    <div class="text-xs text-bloco-muted">Deploy automatizado na AWS/GCP com monitoramento 24/7.</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold font-mono px-2 py-1 bg-bloco-card rounded border border-bloco-ink">+1 sem</span>
+                        </div>
+                    </div>
+
+                    <!-- Live Estimate Box -->
+                    <div class="lg:col-span-5 sticky top-28">
+                        <div class="bg-bloco-ink text-bloco-bg rounded-3xl p-6 sm:p-8 border-2 border-bloco-ink shadow-block space-y-6">
+                            
+                            <div class="flex items-center justify-between pb-4 border-b border-bloco-bg/20">
+                                <span class="text-xs font-bold uppercase tracking-wider text-bloco-yellow">// ESCOPO ESTIMADO</span>
+                                <span id="complexityBadge" class="px-2.5 py-0.5 text-xs font-extrabold bg-bloco-blue text-white rounded border border-bloco-bg">ESSENCIAL</span>
+                            </div>
+
+                            <!-- Metrics -->
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="text-xs text-bloco-bg/70 uppercase font-bold">Prazo Estimado de Lançamento</div>
+                                    <div id="calcWeeks" class="text-4xl font-extrabold text-bloco-yellow">2 a 3 semanas</div>
+                                </div>
+
+                                <div>
+                                    <div class="text-xs text-bloco-bg/70 uppercase font-bold">Investimento Estimado</div>
+                                    <div id="calcCost" class="text-3xl font-extrabold text-white">R$ 12.000 — R$ 16.000</div>
+                                </div>
+
+                                <div class="p-3 bg-bloco-bg/10 rounded-xl border border-bloco-bg/20 text-xs leading-relaxed text-bloco-bg/80">
+                                    <i data-lucide="info" class="w-4 h-4 text-bloco-yellow inline mr-1"></i>
+                                    Inclui documentação técnica completa, código-fonte transferido e 30 dias de suporte pós-launch.
+                                </div>
+                            </div>
+
+                            <button onclick="submitCalculatorScope()" class="w-full py-4 bg-bloco-yellow hover:bg-yellow-400 text-bloco-ink font-extrabold text-base rounded-2xl border-2 border-bloco-ink shadow-block-sm transition-all flex items-center justify-center gap-2">
+                                <span>ENVIAR ESTE ESCOPO</span>
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Modular Services & Cases Portfolio Section -->
+        <section id="servicos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t-2 border-bloco-ink/10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-xs font-extrabold text-bloco-blue uppercase tracking-wider">PORTFÓLIO & CAPACIDADES</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-bloco-ink mt-1">
+                        Módulos de <span class="bg-bloco-blue text-white px-2 py-0.5 rounded-lg">Sucesso</span>
+                    </h2>
+                </div>
+
+                <!-- Portfolio Category Filter Tabs -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterPortfolio('all', this)" class="port-tab active px-4 py-2 bg-bloco-ink text-bloco-bg font-bold text-sm rounded-xl border-2 border-bloco-ink transition-all">Todos</button>
+                    <button onclick="filterPortfolio('saas', this)" class="port-tab px-4 py-2 bg-bloco-card text-bloco-ink font-bold text-sm rounded-xl border-2 border-bloco-ink hover:bg-bloco-subtle transition-all">SaaS</button>
+                    <button onclick="filterPortfolio('fintech', this)" class="port-tab px-4 py-2 bg-bloco-card text-bloco-ink font-bold text-sm rounded-xl border-2 border-bloco-ink hover:bg-bloco-subtle transition-all">Fintech</button>
+                    <button onclick="filterPortfolio('ai', this)" class="port-tab px-4 py-2 bg-bloco-card text-bloco-ink font-bold text-sm rounded-xl border-2 border-bloco-ink hover:bg-bloco-subtle transition-all">IA & Dados</button>
+                </div>
+            </div>
+
+            <!-- Portfolio Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Case 1 -->
+                <div class="port-card saas bg-bloco-card rounded-3xl p-6 border-2 border-bloco-ink shadow-block hover:-translate-y-1 transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 bg-bloco-yellow text-xs font-extrabold rounded-lg border border-bloco-ink">SaaS B2B</span>
+                            <span class="text-xs font-mono text-bloco-muted">4 Semanas</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-bloco-ink">Plataforma NexusOps</h3>
+                        <p class="text-bloco-muted text-sm leading-relaxed">
+                            Gestão de tarefas operacionais com automação de relatórios em PDF e integração via Webhooks.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t-2 border-bloco-subtle mt-6 flex items-center justify-between">
+                        <div class="flex gap-1.5 text-[10px] font-bold font-mono">
+                            <span class="px-2 py-0.5 bg-bloco-bg rounded border border-bloco-ink">Next.js</span>
+                            <span class="px-2 py-0.5 bg-bloco-bg rounded border border-bloco-ink">PostgreSQL</span>
+                        </div>
+                        <button onclick="openBriefingModal('Case NexusOps')" aria-label="Ver mais sobre NexusOps" class="p-2 bg-bloco-bg hover:bg-bloco-yellow rounded-xl border border-bloco-ink transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-bloco-ink"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="port-card fintech bg-bloco-card rounded-3xl p-6 border-2 border-bloco-ink shadow-block hover:-translate-y-1 transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 bg-bloco-blue text-white text-xs font-extrabold rounded-lg border border-bloco-ink">Fintech</span>
+                            <span class="text-xs font-mono text-bloco-muted">6 Semanas</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-bloco-ink">PayFlow Gateway</h3>
+                        <p class="text-bloco-muted text-sm leading-relaxed">
+                            Motor de pagamentos instantâneos via Pix e split de transações com conformidade de segurança.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t-2 border-bloco-subtle mt-6 flex items-center justify-between">
+                        <div class="flex gap-1.5 text-[10px] font-bold font-mono">
+                            <span class="px-2 py-0.5 bg-bloco-bg rounded border border-bloco-ink">Node.js</span>
+                            <span class="px-2 py-0.5 bg-bloco-bg rounded border border-bloco-ink">Redis</span>
+                        </div>
+                        <button onclick="openBriefingModal('Case PayFlow')" aria-label="Ver mais sobre PayFlow" class="p-2 bg-bloco-bg hover:bg-bloco-yellow rounded-xl border border-bloco-ink transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-bloco-ink"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Case 3 -->
+                <div class="port-card ai bg-bloco-card rounded-3xl p-6 border-2 border-bloco-ink shadow-block hover:-translate-y-1 transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 bg-bloco-ink text-bloco-bg text-xs font-extrabold rounded-lg border border-bloco-ink">IA & Dados</span>
+                            <span class="text-xs font-mono text-bloco-muted">5 Semanas</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-bloco-ink">Cognitive Docs</h3>
+                        <p class="text-bloco-muted text-sm leading-relaxed">
+                            Agente conversacional treinado em base de conhecimento para suporte ao cliente enterprise.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t-2 border-bloco-subtle mt-6 flex items-center justify-between">
+                        <div class="flex gap-1.5 text-[10px] font-bold font-mono">
+                            <span class="px-2 py-0.5 bg-bloco-bg rounded border border-bloco-ink">Python</span>
+                            <span class="px-2 py-0.5 bg-bloco-bg rounded border border-bloco-ink">OpenAI</span>
+                        </div>
+                        <button onclick="openBriefingModal('Case Cognitive Docs')" aria-label="Ver mais sobre Cognitive Docs" class="p-2 bg-bloco-bg hover:bg-bloco-yellow rounded-xl border border-bloco-ink transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-bloco-ink"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Process 4-Steps Section -->
+        <section id="processo" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t-2 border-bloco-ink/10">
+            <div class="max-w-3xl mb-16 space-y-3">
+                <span class="text-xs font-extrabold text-bloco-blue uppercase tracking-wider">MÉTODO BLOCO STUDIO</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-bloco-ink">
+                    Como transformamos ideias em <span class="bg-bloco-yellow px-2 border-2 border-bloco-ink rounded-lg">código rodando</span>
+                </h2>
+            </div>
+
+            <!-- Steps Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Step 1 -->
+                <div class="bg-bloco-card rounded-3xl p-6 border-2 border-bloco-ink shadow-block relative space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-bloco-ink text-bloco-yellow font-black text-xl flex items-center justify-center border-2 border-bloco-ink">
+                        01
+                    </div>
+                    <h3 class="text-xl font-extrabold text-bloco-ink">Escopo & Specs</h3>
+                    <p class="text-bloco-muted text-sm leading-relaxed">
+                        Mapeamos as funcionalidades cruciais do projeto e definimos a arquitetura modular com prazos fixos.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-bloco-card rounded-3xl p-6 border-2 border-bloco-ink shadow-block relative space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-bloco-blue text-white font-black text-xl flex items-center justify-center border-2 border-bloco-ink">
+                        02
+                    </div>
+                    <h3 class="text-xl font-extrabold text-bloco-ink">Arquitetura Modular</h3>
+                    <p class="text-bloco-muted text-sm leading-relaxed">
+                        Acoplamos componentes pré-construídos de auth, banco de dados e APIs para acelerar o desenvolvimento.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-bloco-card rounded-3xl p-6 border-2 border-bloco-ink shadow-block relative space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-bloco-yellow text-bloco-ink font-black text-xl flex items-center justify-center border-2 border-bloco-ink">
+                        03
+                    </div>
+                    <h3 class="text-xl font-extrabold text-bloco-ink">Sprints de Código</h3>
+                    <p class="text-bloco-muted text-sm leading-relaxed">
+                        Desenvolvimento ágil com entregas semanais funcionais para validação constante e refinamento.
+                    </p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-bloco-card rounded-3xl p-6 border-2 border-bloco-ink shadow-block relative space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-400 text-bloco-ink font-black text-xl flex items-center justify-center border-2 border-bloco-ink">
+                        04
+                    </div>
+                    <h3 class="text-xl font-extrabold text-bloco-ink">Launch & Scale</h3>
+                    <p class="text-bloco-muted text-sm leading-relaxed">
+                        Deploy automatizado em ambiente cloud escalável com suporte de 30 dias pós-lançamento.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t-2 border-bloco-ink/10">
+            <div class="text-center mb-12 space-y-3">
+                <span class="text-xs font-extrabold text-bloco-blue uppercase tracking-wider">DUVIDAS FREQUENTES</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-bloco-ink">
+                    Perguntas sobre a <span class="bg-bloco-yellow px-2 border-2 border-bloco-ink rounded-lg">Bloco Studio</span>
+                </h2>
+            </div>
+
+            <!-- Accordion List -->
+            <div class="space-y-4">
+                
+                <!-- FAQ Item 1 -->
+                <div class="bg-bloco-card rounded-2xl border-2 border-bloco-ink shadow-block-sm overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-extrabold text-lg text-bloco-ink flex items-center justify-between gap-4">
+                        <span>O código-fonte do projeto pertence a quem?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-bloco-ink transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6 text-bloco-muted text-sm leading-relaxed border-t border-bloco-subtle pt-4">
+                        100% seu. Após a conclusão do projeto e transferência final, fornecemos todos os repositórios Git, chaves de acesso cloud e documentação de arquitetura sem nenhuma taxa recorrente oculta.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-bloco-card rounded-2xl border-2 border-bloco-ink shadow-block-sm overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-extrabold text-lg text-bloco-ink flex items-center justify-between gap-4">
+                        <span>O que significa desenvolvimento por "Módulos"?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-bloco-ink transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6 text-bloco-muted text-sm leading-relaxed border-t border-bloco-subtle pt-4">
+                        Em vez de recriar funcionalidades padrão do zero (como telas de login, recuperação de senha, checkout e rotinas de banco de dados), reutilizamos componentes pré-testados e auditados. Isso economiza até 60% do tempo de desenvolvimento.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-bloco-card rounded-2xl border-2 border-bloco-ink shadow-block-sm overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-6 text-left font-extrabold text-lg text-bloco-ink flex items-center justify-between gap-4">
+                        <span>Como funciona o suporte técnico após o lançamento?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-bloco-ink transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6 text-bloco-muted text-sm leading-relaxed border-t border-bloco-subtle pt-4">
+                        Todos os nossos projetos incluem 30 dias de garantia e suporte pós-launch para correção de eventuais bugs. Após esse período, oferecemos contratos opcionais de manutenção contínua e evolução do produto.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="bg-bloco-ink text-bloco-bg rounded-3xl p-8 sm:p-12 border-2 border-bloco-ink shadow-block-lg text-center space-y-6 relative overflow-hidden">
+                <span class="px-3 py-1 bg-bloco-yellow text-bloco-ink font-extrabold text-xs uppercase tracking-wider rounded-full inline-block">
+                    PROJETOS PARA 2026
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-2xl mx-auto leading-tight">
+                    Pronto para lançar seu software com arquitetura de elite?
+                </h2>
+                <p class="text-bloco-bg/80 text-base max-w-xl mx-auto">
+                    Agende uma reunião diagnóstica de 20 minutos com nossos engenheiros de software.
+                </p>
+                <div class="pt-4">
+                    <button onclick="openBriefingModal()" class="px-8 py-4 bg-bloco-yellow hover:bg-yellow-400 text-bloco-ink font-extrabold text-lg rounded-2xl border-2 border-bloco-ink shadow-block-sm transition-all inline-flex items-center gap-2">
+                        <span>AGENDAR DIAGNÓSTICO GRATUITO</span>
+                        <i data-lucide="calendar" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Briefing / Booking Modal -->
+    <div id="briefingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-bloco-ink/80 backdrop-blur-sm">
+        <div class="bg-bloco-card rounded-3xl border-2 border-bloco-ink w-full max-w-lg p-6 sm:p-8 relative shadow-block-lg space-y-6">
+            
+            <button onclick="closeBriefingModal()" aria-label="Fechar modal" class="absolute top-5 right-5 text-bloco-ink hover:text-bloco-blue">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="space-y-2">
+                <span class="text-xs font-extrabold text-bloco-blue uppercase tracking-wider">// SIMULAÇÃO & BRIEFING</span>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-bloco-ink">Iniciar Novo Projeto</h3>
+                <p class="text-bloco-muted text-sm">Preencha os dados básicos e entraremos em contato em até 2 horas úteis.</p>
+            </div>
+
+            <!-- Form -->
+            <form id="briefingForm" onsubmit="handleBriefingSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-bloco-ink mb-1">Seu Nome / Empresa</label>
+                    <input type="text" required placeholder="Ex: João da Startup X" class="w-full bg-bloco-bg border-2 border-bloco-ink rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-bloco-blue">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-bloco-ink mb-1">E-mail Profissional</label>
+                    <input type="email" required placeholder="joao@empresa.com" class="w-full bg-bloco-bg border-2 border-bloco-ink rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-bloco-blue">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-bloco-ink mb-1">Escopo do Projeto</label>
+                    <input type="text" id="modalScopeInput" readonly class="w-full bg-bloco-subtle border-2 border-bloco-ink rounded-xl px-4 py-3 text-sm font-extrabold text-bloco-blue cursor-not-allowed">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-bloco-ink mb-1">Mensagem ou Detalhes Extras</label>
+                    <textarea rows="3" placeholder="Descreva sucintamente a ideia do software..." class="w-full bg-bloco-bg border-2 border-bloco-ink rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-bloco-blue"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-bloco-blue hover:bg-bloco-blueHover text-white font-extrabold text-lg rounded-xl border-2 border-bloco-ink shadow-block transition-all">
+                    ENVIAR PARA ANÁLISE
+                </button>
+            </form>
+
+            <!-- Success State -->
+            <div id="briefingSuccess" class="hidden text-center py-8 space-y-4">
+                <div class="w-16 h-16 bg-bloco-yellow rounded-2xl border-2 border-bloco-ink flex items-center justify-center mx-auto shadow-block">
+                    <i data-lucide="check" class="w-8 h-8 text-bloco-ink"></i>
+                </div>
+                <h4 class="text-2xl font-extrabold text-bloco-ink">ESCOPO RECEBIDO!</h4>
+                <p class="text-bloco-muted text-sm max-w-sm mx-auto">Um de nossos arquiteto de software já está analisando seus requisitos. Você receberá uma proposta preliminar no seu e-mail.</p>
+                <button onclick="closeBriefingModal()" class="px-6 py-2.5 bg-bloco-ink text-bloco-bg font-bold rounded-xl border-2 border-bloco-ink">
+                    FECHAR
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="border-t-2 border-bloco-ink bg-bloco-card pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b-2 border-bloco-subtle">
+                
+                <!-- Brand column -->
+                <div class="md:col-span-5 space-y-4">
+                    <a href="#" class="flex items-center gap-2">
+                        <div class="flex items-center font-extrabold text-xl">
+                            <span class="bg-bloco-ink text-bloco-bg px-2.5 py-1 rounded-l-lg border-2 border-bloco-ink">BLOCO</span>
+                            <span class="bg-bloco-yellow text-bloco-ink px-2.5 py-1 rounded-r-lg border-2 border-l-0 border-bloco-ink font-bold">[STUDIO]</span>
+                        </div>
+                    </a>
+                    <p class="text-bloco-muted text-sm leading-relaxed max-w-sm">
+                        Software house em fase de expansão focada em desenvolvimento modular, arquitetura de microsserviços e integração de inteligência artificial.
+                    </p>
+
+                    <!-- Real-time Status Badge -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-bloco-bg border border-bloco-ink rounded-lg text-xs font-bold text-bloco-ink">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span>🟢 Disponível para novos projetos em 2026</span>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="font-extrabold text-sm uppercase tracking-wider text-bloco-ink">Navegação</h4>
+                    <ul class="space-y-2 text-sm font-semibold text-bloco-muted">
+                        <li><a href="#stack" class="hover:text-bloco-blue transition-colors">Stack Modular</a></li>
+                        <li><a href="#calculadora" class="hover:text-bloco-blue transition-colors">Calculador de Escopo</a></li>
+                        <li><a href="#servicos" class="hover:text-bloco-blue transition-colors">Portfólio de Cases</a></li>
+                        <li><a href="#processo" class="hover:text-bloco-blue transition-colors">Método de Trabalho</a></li>
+                    </ul>
+                </div>
+
+                <!-- Socials & Info -->
+                <div class="md:col-span-4 space-y-4">
+                    <h4 class="font-extrabold text-sm uppercase tracking-wider text-bloco-ink">Conecte-se conosco</h4>
+                    <div class="flex gap-3">
+                        <a href="#" aria-label="GitHub da Bloco Studio" class="w-10 h-10 rounded-xl bg-bloco-bg border-2 border-bloco-ink flex items-center justify-center hover:bg-bloco-yellow transition-colors">
+                            <i data-lucide="github" class="w-5 h-5 text-bloco-ink"></i>
+                        </a>
+                        <a href="#" aria-label="LinkedIn da Bloco Studio" class="w-10 h-10 rounded-xl bg-bloco-bg border-2 border-bloco-ink flex items-center justify-center hover:bg-bloco-yellow transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5 text-bloco-ink"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter da Bloco Studio" class="w-10 h-10 rounded-xl bg-bloco-bg border-2 border-bloco-ink flex items-center justify-center hover:bg-bloco-yellow transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5 text-bloco-ink"></i>
+                        </a>
+                    </div>
+                    <div class="text-xs text-bloco-muted font-mono">
+                        Contato: contato@blocostudio.dev
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-bold text-bloco-muted gap-4">
+                <div>© 2026 BLOCO STUDIO. TODOS OS DIREITOS RESERVADOS.</div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:underline">Termos de Uso</a>
+                    <a href="#" class="hover:underline">Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Logic Scripts -->
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Hero Stack Block Toggle
+        function toggleHeroBlock(el) {
+            el.classList.toggle('active');
+            const statusBadge = el.querySelector('.block-status');
+            if (el.classList.contains('active')) {
+                el.classList.remove('opacity-50');
+                statusBadge.innerText = 'ATIVO';
+                statusBadge.className = 'block-status text-xs font-extrabold px-2 py-1 rounded bg-emerald-200 text-emerald-900 border border-bloco-ink';
+            } else {
+                el.classList.add('opacity-50');
+                statusBadge.innerText = 'INATIVO';
+                statusBadge.className = 'block-status text-xs font-extrabold px-2 py-1 rounded bg-red-100 text-red-800 border border-bloco-ink';
+            }
+
+            const activeCount = document.querySelectorAll('.hero-block.active').length;
+            document.getElementById('heroStackEstimate').innerText = `${activeCount} Módulos Selecionados — Pronto para Escalar`;
+        }
+
+        // Modular Project Calculator Logic
+        let selectedModules = {
+            auth: false,
+            pay: false,
+            dash: false,
+            ai: false,
+            mobile: false,
+            cloud: false
+        };
+
+        const moduleStats = {
+            auth: { weeks: 1, cost: 4000, complexity: 1 },
+            pay: { weeks: 1.5, cost: 6000, complexity: 1 },
+            dash: { weeks: 2, cost: 8000, complexity: 2 },
+            ai: { weeks: 2.5, cost: 12000, complexity: 3 },
+            mobile: { weeks: 3, cost: 15000, complexity: 3 },
+            cloud: { weeks: 1, cost: 5000, complexity: 1 }
+        };
+
+        function toggleModuleOption(key, weeks, cost, complexity, el) {
+            const checkbox = el.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            selectedModules[key] = checkbox.checked;
+
+            if (checkbox.checked) {
+                el.classList.add('border-bloco-blue', 'bg-bloco-blue/5');
+            } else {
+                el.classList.remove('border-bloco-blue', 'bg-bloco-blue/5');
+            }
+
+            calculateScope();
+        }
+
+        function calculateScope() {
+            let baseWeeks = 2;
+            let baseCost = 12000;
+            let totalComplexityScore = 0;
+
+            for (const key in selectedModules) {
+                if (selectedModules[key]) {
+                    baseWeeks += moduleStats[key].weeks;
+                    baseCost += moduleStats[key].cost;
+                    totalComplexityScore += moduleStats[key].complexity;
+                }
+            }
+
+            const minWeeks = Math.floor(baseWeeks);
+            const maxWeeks = Math.ceil(baseWeeks + 1);
+            document.getElementById('calcWeeks').innerText = `${minWeeks} a ${maxWeeks} semanas`;
+
+            const minCostFormatted = baseCost.toLocaleString('pt-BR');
+            const maxCostFormatted = (baseCost * 1.25).toLocaleString('pt-BR');
+            document.getElementById('calcCost').innerText = `R$ ${minCostFormatted} — R$ ${maxCostFormatted}`;
+
+            // Complexity Badge update
+            const badge = document.getElementById('complexityBadge');
+            if (totalComplexityScore === 0) {
+                badge.innerText = 'ESSENCIAL (MVP)';
+                badge.className = 'px-2.5 py-0.5 text-xs font-extrabold bg-bloco-blue text-white rounded border border-bloco-bg';
+            } else if (totalComplexityScore <= 3) {
+                badge.innerText = 'MODERADO';
+                badge.className = 'px-2.5 py-0.5 text-xs font-extrabold bg-bloco-yellow text-bloco-ink rounded border border-bloco-ink';
+            } else {
+                badge.innerText = 'AVANÇADO / ENTERPRISE';
+                badge.className = 'px-2.5 py-0.5 text-xs font-extrabold bg-bloco-ink text-bloco-yellow rounded border border-bloco-bg';
+            }
+        }
+
+        function submitCalculatorScope() {
+            const weeksText = document.getElementById('calcWeeks').innerText;
+            const costText = document.getElementById('calcCost').innerText;
+            openBriefingModal(`Escopo Calculado: ${weeksText} (${costText})`);
+        }
+
+        // Portfolio Category Filtering
+        function filterPortfolio(category, btn) {
+            document.querySelectorAll('.port-tab').forEach(t => {
+                t.classList.remove('bg-bloco-ink', 'text-bloco-bg');
+                t.classList.add('bg-bloco-card', 'text-bloco-ink');
+            });
+            btn.classList.remove('bg-bloco-card', 'text-bloco-ink');
+            btn.classList.add('bg-bloco-ink', 'text-bloco-bg');
+
+            document.querySelectorAll('.port-card').forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // FAQ Accordion Toggle
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('[data-lucide="chevron-down"]');
+            
+            content.classList.toggle('hidden');
+            if (!content.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Modal Controls
+        function openBriefingModal(scope) {
+            document.getElementById('modalScopeInput').value = scope || 'Escopo Personalizado';
+            document.getElementById('briefingForm').classList.remove('hidden');
+            document.getElementById('briefingSuccess').classList.add('hidden');
+            document.getElementById('briefingModal').classList.remove('hidden');
+        }
+
+        function closeBriefingModal() {
+            document.getElementById('briefingModal').classList.add('hidden');
+        }
+
+        function handleBriefingSubmit(e) {
+            e.preventDefault();
+            document.getElementById('briefingForm').classList.add('hidden');
+            document.getElementById('briefingSuccess').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
