@@ -4,6 +4,6 @@ import { pulsoFitnessPage } from "@/content/pulsoFitness";
 
 export const Route = createFileRoute("/cases/pulso-fitness")({
   head: () => ({ meta: meta("Pulso Fitness", "Identidade de energia e ritmo criada pela Youdes para um estúdio funcional.") }),
-  component: () => <LegacyPage {...pulsoFitnessPage} pageClass="case-pulso" />,
+  component: () => <LegacyPage {...pulsoFitnessPage} pageClass="case-pulso" demoUrl="/demos/pulso-fitness.html" />,
 });
 function meta(name: string, description: string) { return [{ title: `${name} — Youdes` }, { name: "description", content: description }, { property: "og:title", content: `${name} — Youdes` }, { property: "og:description", content: description }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }]; }

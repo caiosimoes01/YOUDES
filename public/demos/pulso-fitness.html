@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSO FITNESS — Treine no Ritmo da Sua Máxima Performance</title>
+    
+    <!-- Google Fonts: Barlow Condensed & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800;1,900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pulso: {
+                            black: '#0E0E0E',
+                            carbon: '#1A1A1A',
+                            carbonHover: '#262626',
+                            volt: '#D6FF00',
+                            voltDark: '#B2D600',
+                            red: '#FF3030',
+                            redDark: '#D62222',
+                            text: '#F5F5F5',
+                            muted: '#A0A0A0',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        barlow: ['"Barlow Condensed"', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'volt-glow': '0 0 30px rgba(214, 255, 0, 0.35)',
+                        'volt-sm': '0 0 12px rgba(214, 255, 0, 0.25)',
+                        'red-glow': '0 0 30px rgba(255, 48, 48, 0.4)',
+                        'red-sm': '0 0 12px rgba(255, 48, 48, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0E0E0E;
+            color: #F5F5F5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Diagonal slash pattern */
+        .slash-bg {
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(214, 255, 0, 0.02),
+                rgba(214, 255, 0, 0.02) 15px,
+                transparent 15px,
+                transparent 30px
+            );
+        }
+
+        /* Glassmorphic Dark Carbon Panel */
+        .carbon-card {
+            background: rgba(26, 26, 26, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0E0E0E;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D6FF00;
+        }
+
+        /* Pulse wave keyframes */
+        @keyframes pulseLine {
+            0% { stroke-dashoffset: 1000; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .pulse-path {
+            stroke-dasharray: 1000;
+            animation: pulseLine 3s linear infinite;
+        }
+
+        /* Custom Clip Paths for aggressive kinetic geometry */
+        .clip-slant {
+            clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+        }
+        .clip-button {
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+        }
+
+        /* Range Slider Styling */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: #D6FF00;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(214, 255, 0, 0.8);
+            border: 2px solid #0E0E0E;
+        }
+    </style>
+</head>
+<body class="slash-bg min-h-screen flex flex-col justify-between selection:bg-pulso-volt selection:text-pulso-black">
+
+    <!-- Header / Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-pulso-black/90 backdrop-blur-md border-b border-pulso-border transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-pulso-volt flex items-center justify-center rounded-lg shadow-volt-sm group-hover:scale-105 transition-transform duration-300 transform -skew-x-12">
+                    <i data-lucide="activity" class="w-6 h-6 text-pulso-black stroke-[3]"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-barlow text-3xl font-black italic tracking-wider text-pulso-text leading-none group-hover:text-pulso-volt transition-colors">
+                        PULSO<span class="text-pulso-volt">.</span>
+                    </span>
+                    <span class="font-barlow text-[10px] font-bold tracking-[0.3em] text-pulso-red uppercase leading-none">FITNESS STUDIO</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-barlow text-lg font-bold tracking-widest uppercase text-pulso-muted">
+                <a href="#modalidades" class="hover:text-pulso-volt transition-colors duration-200">Modalidades</a>
+                <a href="#calculadora" class="hover:text-pulso-volt transition-colors duration-200 flex items-center gap-1">
+                    Calculadora BPM <span class="px-1.5 py-0.5 text-[9px] bg-pulso-red text-white font-extrabold rounded-sm tracking-normal">HOT</span>
+                </a>
+                <a href="#grade" class="hover:text-pulso-volt transition-colors duration-200">Grade de Aulas</a>
+                <a href="#planos" class="hover:text-pulso-volt transition-colors duration-200">Planos</a>
+                <a href="#treinadores" class="hover:text-pulso-volt transition-colors duration-200">Treinadores</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden sm:flex items-center gap-4">
+                <button onclick="openBookingModal('Treino Experimental')" class="clip-button px-6 py-3 bg-pulso-volt hover:bg-pulso-voltDark text-pulso-black font-barlow font-black text-lg italic tracking-wider uppercase shadow-volt-glow transition-all duration-300 transform hover:-translate-y-0.5">
+                    EXPERIMENTE GRÁTIS
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" aria-label="Abrir menu mobile" class="md:hidden p-2 rounded-lg text-pulso-text hover:bg-pulso-carbon border border-pulso-border">
+                <i data-lucide="menu" class="w-7 h-7 text-pulso-volt"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-pulso-carbon border-b border-pulso-border px-4 pt-4 pb-6 space-y-4 font-barlow text-xl font-black uppercase tracking-wider">
+            <a href="#modalidades" class="block text-pulso-text hover:text-pulso-volt py-1">Modalidades</a>
+            <a href="#calculadora" class="block text-pulso-text hover:text-pulso-volt py-1 flex items-center justify-between">
+                <span>Calculadora BPM</span>
+                <span class="text-xs bg-pulso-red text-white px-2 py-0.5 rounded font-bold">HOT</span>
+            </a>
+            <a href="#grade" class="block text-pulso-text hover:text-pulso-volt py-1">Grade de Aulas</a>
+            <a href="#planos" class="block text-pulso-text hover:text-pulso-volt py-1">Planos</a>
+            <a href="#treinadores" class="block text-pulso-text hover:text-pulso-volt py-1">Treinadores</a>
+            <button onclick="openBookingModal('Treino Experimental Mobile')" class="w-full clip-button py-3 bg-pulso-volt text-pulso-black font-black text-lg italic tracking-wider uppercase text-center shadow-volt-sm">
+                EXPERIMENTE GRÁTIS
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="relative pt-12 pb-24 lg:pt-28 lg:pb-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+            <!-- Background Accent Visual Glare -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pulso-volt/10 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute top-1/3 right-10 w-[400px] h-[400px] bg-pulso-red/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+                
+                <!-- Hero Left Column -->
+                <div class="lg:col-span-7 space-y-8">
+                    <!-- High energy badge -->
+                    <div class="inline-flex items-center gap-3 px-4 py-2 bg-pulso-carbon rounded-full border border-pulso-volt/30 shadow-volt-sm">
+                        <span class="flex h-3 w-3 relative">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pulso-volt opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-pulso-volt"></span>
+                        </span>
+                        <span class="font-barlow font-bold text-sm sm:text-base tracking-widest text-pulso-volt uppercase">
+                            NOVA UNIDADE HIGH-TECH ABERTA
+                        </span>
+                    </div>
+
+                    <!-- Main Impact Headline -->
+                    <h1 class="font-barlow font-black text-5xl sm:text-7xl lg:text-8xl italic uppercase tracking-tight leading-[0.9] text-pulso-text">
+                        SINTA O <span class="text-transparent bg-clip-text bg-gradient-to-r from-pulso-volt via-pulso-volt to-pulso-red shadow-volt-glow">PULSO</span> DA SUA MÁXIMA <span class="text-pulso-volt">PERFORMANCE.</span>
+                    </h1>
+
+                    <p class="text-pulso-muted text-base sm:text-xl font-normal max-w-2xl leading-relaxed">
+                        Treinamento funcional de alta intensidade movido por som imersivo, iluminação sinestésica e monitoramento cardíaco em tempo real. Não é apenas treino. É ritmo e transformação.
+                    </p>
+
+                    <!-- Hero CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                        <button onclick="openBookingModal('Hero Experimental')" class="clip-button px-8 py-4 bg-pulso-volt hover:bg-pulso-voltDark text-pulso-black font-barlow font-black text-2xl italic tracking-widest uppercase shadow-volt-glow transition-all duration-300 transform hover:-translate-y-1 text-center">
+                            AGENDE TREINO EXPERIMENTAL
+                        </button>
+                        <a href="#grade" class="clip-button px-8 py-4 bg-transparent border-2 border-pulso-red text-pulso-red hover:bg-pulso-red hover:text-white font-barlow font-black text-2xl italic tracking-widest uppercase transition-all duration-300 text-center flex items-center justify-center gap-2">
+                            <span>VER GRADE DE AULAS</span>
+                            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+
+                    <!-- Live Metrics Widget Cards -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-pulso-border">
+                        <div>
+                            <div class="font-barlow font-black text-3xl sm:text-4xl text-pulso-volt italic">850+</div>
+                            <div class="text-xs text-pulso-muted uppercase font-bold tracking-wider">Atletas Ativos</div>
+                        </div>
+                        <div>
+                            <div class="font-barlow font-black text-3xl sm:text-4xl text-pulso-text italic">12K+</div>
+                            <div class="text-xs text-pulso-muted uppercase font-bold tracking-wider">Kcal / Dia Queimadas</div>
+                        </div>
+                        <div>
+                            <div class="font-barlow font-black text-3xl sm:text-4xl text-pulso-red italic">100%</div>
+                            <div class="text-xs text-pulso-muted uppercase font-bold tracking-wider">Pura Energia</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column: Interactive Heart Rate Pulse Card -->
+                <div class="lg:col-span-5">
+                    <div class="carbon-card rounded-3xl p-6 sm:p-8 relative border border-pulso-border shadow-2xl relative overflow-hidden group">
+                        
+                        <!-- Top Header info -->
+                        <div class="flex items-center justify-between pb-6 border-b border-pulso-border">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-pulso-red/20 border border-pulso-red/50 flex items-center justify-center text-pulso-red animate-pulse">
+                                    <i data-lucide="heart-pulse" class="w-7 h-7"></i>
+                                </div>
+                                <div>
+                                    <div class="font-barlow text-xl font-extrabold uppercase text-pulso-text tracking-wide">PULSE MONITOR LIVE</div>
+                                    <div class="text-xs text-pulso-muted font-mono">SENSORES CONECTADOS</div>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 bg-pulso-volt/20 text-pulso-volt border border-pulso-volt/40 text-xs font-mono font-bold rounded-full">
+                                ZONA 4 (88% BPM)
+                            </span>
+                        </div>
+
+                        <!-- Real-time SVG BPM Graph Simulation -->
+                        <div class="py-6 space-y-4">
+                            <div class="flex items-baseline justify-between">
+                                <div>
+                                    <span id="heroBpmValue" class="font-barlow font-black text-6xl text-pulso-volt italic">168</span>
+                                    <span class="text-sm font-mono text-pulso-muted font-bold ml-1">BPM TARGET</span>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs text-pulso-muted font-mono">QUEIMA ESTIMADA</div>
+                                    <div class="font-barlow font-black text-2xl text-pulso-red italic">780 KCAL / H</div>
+                                </div>
+                            </div>
+
+                            <!-- Animated ECG / Pulse Wave SVG -->
+                            <div class="bg-pulso-black/80 rounded-2xl p-4 border border-pulso-border h-32 flex items-center justify-center overflow-hidden relative">
+                                <svg class="w-full h-full" viewBox="0 0 500 100" preserveAspectRatio="none">
+                                    <path class="pulse-path" fill="none" stroke="#D6FF00" stroke-width="4" d="M0,50 L80,50 L100,20 L120,80 L140,10 L160,90 L180,50 L260,50 L280,10 L300,90 L320,30 L340,70 L360,50 L500,50" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Live Class Progress simulation -->
+                        <div class="space-y-2 pt-2">
+                            <div class="flex justify-between text-xs font-mono">
+                                <span class="text-pulso-muted uppercase">Sessão Atual: PULSO HIIT #04</span>
+                                <span class="text-pulso-volt font-bold">38 / 45 MIN</span>
+                            </div>
+                            <div class="w-full bg-pulso-black h-3 rounded-full overflow-hidden p-0.5 border border-pulso-border">
+                                <div class="bg-gradient-to-r from-pulso-volt to-pulso-red h-full rounded-full transition-all duration-500" style="width: 82%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Simulator Trigger -->
+                        <div class="pt-6">
+                            <button onclick="boostBPM()" class="w-full py-3 bg-pulso-carbonHover border border-pulso-volt/30 text-pulso-volt hover:bg-pulso-volt hover:text-pulso-black font-barlow font-bold uppercase tracking-wider text-base rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+                                <i data-lucide="zap" class="w-5 h-5"></i>
+                                <span>SIMULAR AUMENTO DE INTENSIDADE</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Interactive BPM & Calories Calculator Section -->
+        <section id="calculadora" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-pulso-border">
+            <div class="carbon-card rounded-3xl p-8 sm:p-12 border border-pulso-volt/30 shadow-volt-sm relative overflow-hidden">
+                
+                <div class="max-w-3xl mb-10 space-y-3">
+                    <span class="text-pulso-red font-barlow font-extrabold text-lg tracking-widest uppercase">
+                        FERRAMENTA INTERATIVA
+                    </span>
+                    <h2 class="font-barlow font-black text-4xl sm:text-6xl italic uppercase text-pulso-text">
+                        CALCULADOR DE <span class="text-pulso-volt">PULSO & ENERGIA</span>
+                    </h2>
+                    <p class="text-pulso-muted text-base">
+                        Ajuste o seu nível de intensidade e o tempo disponível para simular a sua zona alvo de batimentos e a estimativa de queima calórica nos treinos da Pulso.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <!-- Controls -->
+                    <div class="lg:col-span-7 space-y-8">
+                        
+                        <!-- Slider 1: Intensity level -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <label class="font-barlow font-bold text-xl uppercase tracking-wider text-pulso-text">Nível de Intensidade:</label>
+                                <span id="intensityLabel" class="font-barlow font-black text-2xl text-pulso-volt uppercase italic">INSANO (85-95% FC)</span>
+                            </div>
+                            <input type="range" id="intensitySlider" min="1" max="3" value="3" class="w-full h-3 bg-pulso-black rounded-lg appearance-none border border-pulso-border outline-none" oninput="updateCalculator()">
+                            <div class="flex justify-between text-xs text-pulso-muted font-bold uppercase font-mono">
+                                <span>1. Adaptativo</span>
+                                <span>2. Intenso</span>
+                                <span>3. Insano</span>
+                            </div>
+                        </div>
+
+                        <!-- Slider 2: Duration -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <label class="font-barlow font-bold text-xl uppercase tracking-wider text-pulso-text">Duração da Aula:</label>
+                                <span id="durationLabel" class="font-barlow font-black text-2xl text-pulso-volt uppercase italic">45 MINUTOS</span>
+                            </div>
+                            <input type="range" id="durationSlider" min="30" max="90" step="15" value="45" class="w-full h-3 bg-pulso-black rounded-lg appearance-none border border-pulso-border outline-none" oninput="updateCalculator()">
+                            <div class="flex justify-between text-xs text-pulso-muted font-bold uppercase font-mono">
+                                <span>30 min</span>
+                                <span>45 min</span>
+                                <span>60 min</span>
+                                <span>90 min</span>
+                            </div>
+                        </div>
+
+                        <!-- Modality Selection Radio Buttons -->
+                        <div class="space-y-3">
+                            <label class="font-barlow font-bold text-xl uppercase tracking-wider text-pulso-text block">Selecione o Foco:</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <button onclick="selectCalcModality('hiit', this)" class="calc-mod-btn active border-2 border-pulso-volt bg-pulso-volt/10 text-pulso-volt p-3 rounded-xl font-barlow font-extrabold uppercase text-base text-center transition-all">PULSO HIIT</button>
+                                <button onclick="selectCalcModality('power', this)" class="calc-mod-btn border-2 border-pulso-border bg-pulso-black text-pulso-muted p-3 rounded-xl font-barlow font-extrabold uppercase text-base text-center transition-all">FUNCTIONAL</button>
+                                <button onclick="selectCalcModality('cycle', this)" class="calc-mod-btn border-2 border-pulso-border bg-pulso-black text-pulso-muted p-3 rounded-xl font-barlow font-extrabold uppercase text-base text-center transition-all">RHYTHM CYCLE</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Calculated Result Display Box -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-pulso-black rounded-2xl p-6 border-2 border-pulso-volt/50 text-center space-y-6 shadow-volt-glow">
+                            <div>
+                                <div class="text-xs font-mono font-bold text-pulso-muted uppercase tracking-widest mb-1">ZONA DE FC RECOMENDADA</div>
+                                <div id="calcBpmTarget" class="font-barlow font-black text-6xl text-pulso-volt italic">155 - 180</div>
+                                <div class="text-sm font-bold text-pulso-text uppercase">Batimentos por Minuto</div>
+                            </div>
+
+                            <div class="border-t border-pulso-border pt-4">
+                                <div class="text-xs font-mono font-bold text-pulso-muted uppercase tracking-widest mb-1">ESTIMATIVA DE QUEIMA</div>
+                                <div id="calcCalories" class="font-barlow font-black text-6xl text-pulso-red italic">750</div>
+                                <div class="text-sm font-bold text-pulso-text uppercase">Kcal Totais Queimadas</div>
+                            </div>
+
+                            <button onclick="openBookingModal('Calculadora Result')" class="w-full clip-button py-3 bg-pulso-volt text-pulso-black font-barlow font-black text-xl italic uppercase tracking-wider hover:bg-pulso-voltDark transition-all">
+                                AGENDAR TREINO PARA ESTE PERFIL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Workouts & Modalities Showcase Section -->
+        <section id="modalidades" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-pulso-border">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="text-pulso-volt font-barlow font-extrabold text-xl tracking-widest uppercase">
+                        PROGRAMAS EXCLUSIVOS
+                    </span>
+                    <h2 class="font-barlow font-black text-4xl sm:text-6xl italic uppercase text-pulso-text mt-1">
+                        MODALIDADES DE <span class="text-pulso-volt">ALTA INTENSIDADE</span>
+                    </h2>
+                </div>
+                <p class="text-pulso-muted max-w-md text-base leading-relaxed">
+                    Cada aula é desenhada para desafiar limites metabólicos e musculares com trilhas sonoras autorais sincronizadas com a iluminação do estúdio.
+                </p>
+            </div>
+
+            <!-- Modalities Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Modality 1 -->
+                <div class="carbon-card rounded-3xl p-6 border border-pulso-border hover:border-pulso-volt transition-all duration-300 group flex flex-col justify-between hover:shadow-volt-sm">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-pulso-volt/10 border border-pulso-volt/30 flex items-center justify-center text-pulso-volt group-hover:scale-110 group-hover:bg-pulso-volt group-hover:text-pulso-black transition-all duration-300">
+                            <i data-lucide="flame" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-pulso-red uppercase tracking-widest block">// METABÓLICO</span>
+                        <h3 class="font-barlow font-black text-3xl uppercase italic text-pulso-text">PULSO HIIT</h3>
+                        <p class="text-pulso-muted text-sm leading-relaxed">
+                            Intervalado de altíssima intensidade que combina remadores, ski-ergs e exercícios calistênicos para máxima queima pós-treino.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-pulso-border mt-6 flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold text-pulso-volt">45 MIN · 800 KCAL</span>
+                        <button onclick="openBookingModal('PULSO HIIT')" class="text-pulso-text hover:text-pulso-volt font-barlow font-bold text-lg uppercase flex items-center gap-1">
+                            Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modality 2 -->
+                <div class="carbon-card rounded-3xl p-6 border border-pulso-border hover:border-pulso-volt transition-all duration-300 group flex flex-col justify-between hover:shadow-volt-sm">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-pulso-volt/10 border border-pulso-volt/30 flex items-center justify-center text-pulso-volt group-hover:scale-110 group-hover:bg-pulso-volt group-hover:text-pulso-black transition-all duration-300">
+                            <i data-lucide="dumbbell" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-pulso-volt uppercase tracking-widest block">// HIPERTROFIA & FORÇA</span>
+                        <h3 class="font-barlow font-black text-3xl uppercase italic text-pulso-text">FUNCTIONAL POWER</h3>
+                        <p class="text-pulso-muted text-sm leading-relaxed">
+                            Foco em ganho de massa magra, força explosiva e estabilidade articular utilizando kettlebells, bars e sandbags.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-pulso-border mt-6 flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold text-pulso-volt">50 MIN · 600 KCAL</span>
+                        <button onclick="openBookingModal('FUNCTIONAL POWER')" class="text-pulso-text hover:text-pulso-volt font-barlow font-bold text-lg uppercase flex items-center gap-1">
+                            Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modality 3 -->
+                <div class="carbon-card rounded-3xl p-6 border border-pulso-border hover:border-pulso-volt transition-all duration-300 group flex flex-col justify-between hover:shadow-volt-sm">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-pulso-volt/10 border border-pulso-volt/30 flex items-center justify-center text-pulso-volt group-hover:scale-110 group-hover:bg-pulso-volt group-hover:text-pulso-black transition-all duration-300">
+                            <i data-lucide="bike" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-pulso-red uppercase tracking-widest block">// SINESTESIA & RITMO</span>
+                        <h3 class="font-barlow font-black text-3xl uppercase italic text-pulso-text">RHYTHM CYCLE</h3>
+                        <p class="text-pulso-muted text-sm leading-relaxed">
+                            Pedalada indoor imersiva em sala escura com iluminação neon reativa ao ritmo das batidas eletrônicas.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-pulso-border mt-6 flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold text-pulso-volt">45 MIN · 700 KCAL</span>
+                        <button onclick="openBookingModal('RHYTHM CYCLE')" class="text-pulso-text hover:text-pulso-volt font-barlow font-bold text-lg uppercase flex items-center gap-1">
+                            Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modality 4 -->
+                <div class="carbon-card rounded-3xl p-6 border border-pulso-border hover:border-pulso-volt transition-all duration-300 group flex flex-col justify-between hover:shadow-volt-sm">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-pulso-volt/10 border border-pulso-volt/30 flex items-center justify-center text-pulso-volt group-hover:scale-110 group-hover:bg-pulso-volt group-hover:text-pulso-black transition-all duration-300">
+                            <i data-lucide="swords" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-pulso-volt uppercase tracking-widest block">// COMBATE & CORE</span>
+                        <h3 class="font-barlow font-black text-3xl uppercase italic text-pulso-text">BOXE & CORE</h3>
+                        <p class="text-pulso-muted text-sm leading-relaxed">
+                            Combinação de combinações de golpes no saco de pancadas com circuitos intensos focados em abdômen e lombar.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-pulso-border mt-6 flex items-center justify-between">
+                        <span class="text-xs font-mono font-bold text-pulso-volt">50 MIN · 750 KCAL</span>
+                        <button onclick="openBookingModal('BOXE & CORE')" class="text-pulso-text hover:text-pulso-volt font-barlow font-bold text-lg uppercase flex items-center gap-1">
+                            Reservar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Class Schedule Section (Grade de Horários Interativa) -->
+        <section id="grade" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-pulso-border">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <span class="text-pulso-red font-barlow font-extrabold text-xl tracking-widest uppercase">
+                    PROGRAMAÇÃO SEMANAL
+                </span>
+                <h2 class="font-barlow font-black text-4xl sm:text-6xl italic uppercase text-pulso-text">
+                    GRADE DE <span class="text-pulso-volt">AULAS AO VIVO</span>
+                </h2>
+                <p class="text-pulso-muted text-base">
+                    Escolha o dia da semana, confira a disponibilidade de vagas em tempo real e garanta o seu lugar na arena.
+                </p>
+
+                <!-- Day Selector Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 pt-6">
+                    <button onclick="switchScheduleDay('seg', this)" class="schedule-tab active px-5 py-2.5 rounded-xl font-barlow font-extrabold text-lg uppercase transition-all bg-pulso-volt text-pulso-black shadow-volt-sm">SEG</button>
+                    <button onclick="switchScheduleDay('ter', this)" class="schedule-tab px-5 py-2.5 rounded-xl font-barlow font-extrabold text-lg uppercase transition-all bg-pulso-carbon text-pulso-muted border border-pulso-border hover:text-pulso-text">TER</button>
+                    <button onclick="switchScheduleDay('qua', this)" class="schedule-tab px-5 py-2.5 rounded-xl font-barlow font-extrabold text-lg uppercase transition-all bg-pulso-carbon text-pulso-muted border border-pulso-border hover:text-pulso-text">QUA</button>
+                    <button onclick="switchScheduleDay('qui', this)" class="schedule-tab px-5 py-2.5 rounded-xl font-barlow font-extrabold text-lg uppercase transition-all bg-pulso-carbon text-pulso-muted border border-pulso-border hover:text-pulso-text">QUI</button>
+                    <button onclick="switchScheduleDay('sex', this)" class="schedule-tab px-5 py-2.5 rounded-xl font-barlow font-extrabold text-lg uppercase transition-all bg-pulso-carbon text-pulso-muted border border-pulso-border hover:text-pulso-text">SEX</button>
+                    <button onclick="switchScheduleDay('sab', this)" class="schedule-tab px-5 py-2.5 rounded-xl font-barlow font-extrabold text-lg uppercase transition-all bg-pulso-carbon text-pulso-muted border border-pulso-border hover:text-pulso-text">SÁB</button>
+                </div>
+            </div>
+
+            <!-- Schedule List Container -->
+            <div id="scheduleContainer" class="space-y-4 max-w-4xl mx-auto">
+                <!-- Schedule Items injected dynamically by JS -->
+            </div>
+        </section>
+
+        <!-- Pricing Plans Section -->
+        <section id="planos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-pulso-border">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <span class="text-pulso-volt font-barlow font-extrabold text-xl tracking-widest uppercase">
+                    SEJA MEMBRO PULSO
+                </span>
+                <h2 class="font-barlow font-black text-4xl sm:text-6xl italic uppercase text-pulso-text">
+                    PLANOS DE <span class="text-pulso-volt">ALTO RENDIMENTO</span>
+                </h2>
+                <p class="text-pulso-muted text-base">
+                    Sem fidelidade abusiva. Treine com a máxima tecnologia e suporte constante.
+                </p>
+
+                <!-- Billing Toggle Switch -->
+                <div class="flex items-center justify-center gap-4 pt-6">
+                    <span class="font-barlow font-bold text-lg uppercase text-pulso-muted">Mensal</span>
+                    <button onclick="toggleBilling()" id="billingToggle" class="w-16 h-8 bg-pulso-carbon border-2 border-pulso-volt rounded-full p-1 transition-all relative">
+                        <div id="toggleDot" class="w-5 h-5 bg-pulso-volt rounded-full transition-all transform"></div>
+                    </button>
+                    <span class="font-barlow font-bold text-lg uppercase text-pulso-text flex items-center gap-2">
+                        <span>Anual</span>
+                        <span class="text-xs bg-pulso-red text-white font-extrabold px-2 py-0.5 rounded-full">20% OFF</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Pricing Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Plan 1: START -->
+                <div class="carbon-card rounded-3xl p-8 border border-pulso-border flex flex-col justify-between hover:border-pulso-volt/50 transition-all">
+                    <div>
+                        <span class="text-xs font-mono font-bold text-pulso-muted uppercase tracking-widest block mb-2">// INICIAL</span>
+                        <h3 class="font-barlow font-black text-4xl uppercase italic text-pulso-text mb-4">START</h3>
+                        <div class="mb-6">
+                            <span class="font-barlow font-black text-5xl text-pulso-volt italic plan-price" data-monthly="189" data-annual="149">R$ 189</span>
+                            <span class="text-pulso-muted text-sm font-bold">/ mês</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-pulso-muted mb-8 font-medium">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> 3 Aulas presenciais por semana</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Acesso ao App Pulso Performance</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Monitoramento cardíaco nas aulas</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Plano START')" class="clip-button w-full py-3.5 bg-pulso-carbon border border-pulso-border text-pulso-text hover:bg-pulso-volt hover:text-pulso-black font-barlow font-black text-xl italic uppercase tracking-wider transition-all">
+                        ASSINAR START
+                    </button>
+                </div>
+
+                <!-- Plan 2: PULSO PRO (Featured) -->
+                <div class="carbon-card rounded-3xl p-8 border-2 border-pulso-volt flex flex-col justify-between relative shadow-volt-glow">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-pulso-volt text-pulso-black font-barlow font-black text-xs uppercase tracking-widest rounded-full">
+                        MAIS POPULAR
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono font-bold text-pulso-volt uppercase tracking-widest block mb-2">// RECOMENDADO</span>
+                        <h3 class="font-barlow font-black text-4xl uppercase italic text-pulso-text mb-4">PULSO PRO</h3>
+                        <div class="mb-6">
+                            <span class="font-barlow font-black text-5xl text-pulso-volt italic plan-price" data-monthly="269" data-annual="215">R$ 269</span>
+                            <span class="text-pulso-muted text-sm font-bold">/ mês</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-pulso-text mb-8 font-medium">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Acesso ILIMITADO a todas as modalidades</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Reserva prioritária com 7 dias de antecedência</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> 1 Avaliação de bioimpedância mensal</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Acesso a convidados (1/mês)</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Plano PULSO PRO')" class="clip-button w-full py-4 bg-pulso-volt text-pulso-black font-barlow font-black text-2xl italic uppercase tracking-wider hover:bg-pulso-voltDark transition-all shadow-volt-sm">
+                        ASSINAR PULSO PRO
+                    </button>
+                </div>
+
+                <!-- Plan 3: VIP INTENSE -->
+                <div class="carbon-card rounded-3xl p-8 border border-pulso-border flex flex-col justify-between hover:border-pulso-volt/50 transition-all">
+                    <div>
+                        <span class="text-xs font-mono font-bold text-pulso-red uppercase tracking-widest block mb-2">// EXPERIENCE</span>
+                        <h3 class="font-barlow font-black text-4xl uppercase italic text-pulso-text mb-4">VIP INTENSE</h3>
+                        <div class="mb-6">
+                            <span class="font-barlow font-black text-5xl text-pulso-volt italic plan-price" data-monthly="399" data-annual="319">R$ 399</span>
+                            <span class="text-pulso-muted text-sm font-bold">/ mês</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-pulso-muted mb-8 font-medium">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Tudo do Plano PRO Incluso</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Crio-recovery & Bota de Compressão ilimitados</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-5 h-5 text-pulso-volt"></i> Kit oficial de treino Pulso (Camiseta + Toalha)</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Plano VIP INTENSE')" class="clip-button w-full py-3.5 bg-pulso-carbon border border-pulso-border text-pulso-text hover:bg-pulso-volt hover:text-pulso-black font-barlow font-black text-xl italic uppercase tracking-wider transition-all">
+                        ASSINAR VIP
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Coaches / Trainers Grid -->
+        <section id="treinadores" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-pulso-border">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="text-pulso-red font-barlow font-extrabold text-xl tracking-widest uppercase">
+                        HEAD COACHES
+                    </span>
+                    <h2 class="font-barlow font-black text-4xl sm:text-6xl italic uppercase text-pulso-text mt-1">
+                        TREINADORES DE <span class="text-pulso-volt">ELITE</span>
+                    </h2>
+                </div>
+                <p class="text-pulso-muted max-w-md text-base leading-relaxed">
+                    Especialistas em fisiologia do exercício, alta performance e motivação extrema prontos para puxar o seu melhor.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Coach 1 -->
+                <div class="carbon-card rounded-3xl overflow-hidden border border-pulso-border group hover:border-pulso-volt transition-all">
+                    <div class="h-80 bg-pulso-black relative flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pulso-black via-transparent to-transparent z-10"></div>
+                        <div class="font-barlow font-black text-8xl text-pulso-carbon group-hover:text-pulso-volt/20 transition-colors duration-500 italic uppercase">
+                            MARCUS
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20 -mt-12 space-y-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-pulso-volt/20 text-pulso-volt border border-pulso-volt/40">HEAD OF HIIT</span>
+                        <h3 class="font-barlow font-black text-3xl uppercase italic text-pulso-text pt-2">MARCUS "TORCH" VANCE</h3>
+                        <p class="text-pulso-muted text-sm">"A dor é temporária, a sua evolução é permanente. Sem desculpas."</p>
+                    </div>
+                </div>
+
+                <!-- Coach 2 -->
+                <div class="carbon-card rounded-3xl overflow-hidden border border-pulso-border group hover:border-pulso-volt transition-all">
+                    <div class="h-80 bg-pulso-black relative flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pulso-black via-transparent to-transparent z-10"></div>
+                        <div class="font-barlow font-black text-8xl text-pulso-carbon group-hover:text-pulso-volt/20 transition-colors duration-500 italic uppercase">
+                            LIVIA
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20 -mt-12 space-y-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-pulso-red/20 text-pulso-red border border-pulso-red/40">RHYTHM CYCLE COACH</span>
+                        <h3 class="font-barlow font-black text-3xl uppercase italic text-pulso-text pt-2">LÍVIA "BEAT" COSTA</h3>
+                        <p class="text-pulso-muted text-sm">"Sincronize a sua respiração com a batida e sinta a energia fluir."</p>
+                    </div>
+                </div>
+
+                <!-- Coach 3 -->
+                <div class="carbon-card rounded-3xl overflow-hidden border border-pulso-border group hover:border-pulso-volt transition-all">
+                    <div class="h-80 bg-pulso-black relative flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pulso-black via-transparent to-transparent z-10"></div>
+                        <div class="font-barlow font-black text-8xl text-pulso-carbon group-hover:text-pulso-volt/20 transition-colors duration-500 italic uppercase">
+                            RODRIGO
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20 -mt-12 space-y-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-pulso-volt/20 text-pulso-volt border border-pulso-volt/40">FUNCTIONAL POWER</span>
+                        <h3 class="font-barlow font-black text-3xl uppercase italic text-pulso-text pt-2">RODRIGO "TITAN" SILVA</h3>
+                        <p class="text-pulso-muted text-sm">"Força de verdade se constrói na consistência diária."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Interactive Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="carbon-card rounded-3xl border-2 border-pulso-volt/50 w-full max-w-lg p-6 sm:p-8 relative shadow-volt-glow">
+            
+            <!-- Close Modal Button -->
+            <button onclick="closeBookingModal()" aria-label="Fechar modal" class="absolute top-5 right-5 text-pulso-muted hover:text-pulso-volt">
+                <i data-lucide="x" class="w-7 h-7"></i>
+            </button>
+
+            <div class="mb-6 space-y-2">
+                <span class="text-xs font-mono font-bold text-pulso-volt uppercase tracking-widest">// AGENDE SUA AULA EXPERIMENTAL</span>
+                <h3 class="font-barlow font-black text-3xl sm:text-4xl italic uppercase text-pulso-text">SINTA O PULSO NA PELE</h3>
+                <p class="text-pulso-muted text-sm">Preencha seus dados para garantir a sua vaga gratuita.</p>
+            </div>
+
+            <!-- Booking Form -->
+            <form id="bookingForm" onsubmit="handleBookingSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold font-barlow uppercase text-pulso-muted mb-1">Seu Nome Completo</label>
+                    <input type="text" required placeholder="Digite seu nome" class="w-full bg-pulso-black text-pulso-text rounded-xl px-4 py-3 border border-pulso-border focus:border-pulso-volt outline-none text-sm font-medium">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold font-barlow uppercase text-pulso-muted mb-1">WhatsApp / Telefone</label>
+                    <input type="tel" required placeholder="(11) 99999-9999" class="w-full bg-pulso-black text-pulso-text rounded-xl px-4 py-3 border border-pulso-border focus:border-pulso-volt outline-none text-sm font-medium">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold font-barlow uppercase text-pulso-muted mb-1">Modalidade</label>
+                        <input type="text" id="modalModalityInput" readonly class="w-full bg-pulso-black/60 text-pulso-volt font-barlow font-black uppercase rounded-xl px-3 py-3 border border-pulso-border text-base cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold font-barlow uppercase text-pulso-muted mb-1">Horário Preferido</label>
+                        <select class="w-full bg-pulso-black text-pulso-text rounded-xl px-3 py-3 border border-pulso-border focus:border-pulso-volt outline-none text-sm font-medium">
+                            <option>06:30 (Manhã)</option>
+                            <option>08:00 (Manhã)</option>
+                            <option>18:30 (Noite)</option>
+                            <option>20:00 (Noite)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="clip-button w-full py-4 bg-pulso-volt text-pulso-black font-barlow font-black text-2xl italic uppercase tracking-wider hover:bg-pulso-voltDark shadow-volt-glow transition-all mt-2">
+                    CONFIRMAR AGENDAMENTO GRÁTIS
+                </button>
+            </form>
+
+            <!-- Success Confirmation State -->
+            <div id="bookingSuccess" class="hidden text-center py-8 space-y-4">
+                <div class="w-16 h-16 rounded-full bg-pulso-volt/20 text-pulso-volt border border-pulso-volt flex items-center justify-center mx-auto shadow-volt-sm">
+                    <i data-lucide="check-circle" class="w-10 h-10"></i>
+                </div>
+                <h4 class="font-barlow font-black text-4xl italic uppercase text-pulso-text">VAGA RESERVADA!</h4>
+                <p class="text-pulso-muted text-sm max-w-sm mx-auto">Enviamos a confirmação e as instruções de preparação para o seu WhatsApp. Prepare sua squeeze e venha no ritmo!</p>
+                <button onclick="closeBookingModal()" class="clip-button px-8 py-3 bg-pulso-carbon border border-pulso-border text-pulso-text font-barlow font-bold uppercase hover:bg-pulso-carbonHover">
+                    FECHAR
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="border-t border-pulso-border bg-pulso-black pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-pulso-border">
+                
+                <!-- Brand Info -->
+                <div class="md:col-span-4 space-y-4">
+                    <a href="#" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-pulso-volt flex items-center justify-center rounded-lg shadow-volt-sm transform -skew-x-12">
+                            <i data-lucide="activity" class="w-5 h-5 text-pulso-black stroke-[3]"></i>
+                        </div>
+                        <span class="font-barlow text-3xl font-black italic tracking-wider text-pulso-text">
+                            PULSO<span class="text-pulso-volt">.</span>
+                        </span>
+                    </a>
+                    <p class="text-pulso-muted text-sm leading-relaxed max-w-sm">
+                        Estúdio de treino funcional de alta intensidade. Energia, ritmo e ciência aplicados para transformar o seu corpo e mente.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="md:col-span-2 space-y-3">
+                    <h4 class="font-barlow text-lg font-black text-pulso-text uppercase tracking-wider">Navegação</h4>
+                    <ul class="space-y-2 text-sm text-pulso-muted font-medium">
+                        <li><a href="#modalidades" class="hover:text-pulso-volt transition-colors">Modalidades</a></li>
+                        <li><a href="#calculadora" class="hover:text-pulso-volt transition-colors">Calculadora BPM</a></li>
+                        <li><a href="#grade" class="hover:text-pulso-volt transition-colors">Grade de Aulas</a></li>
+                        <li><a href="#planos" class="hover:text-pulso-volt transition-colors">Planos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Unidades -->
+                <div class="md:col-span-2 space-y-3">
+                    <h4 class="font-barlow text-lg font-black text-pulso-text uppercase tracking-wider">Unidades</h4>
+                    <ul class="space-y-2 text-sm text-pulso-muted font-medium">
+                        <li>Itaim Bibi — SP</li>
+                        <li>Pinheiros — SP</li>
+                        <li>Ipanema — RJ</li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Social -->
+                <div class="md:col-span-4 space-y-4">
+                    <h4 class="font-barlow text-lg font-black text-pulso-text uppercase tracking-wider">Sinta o Ritmo nas Redes</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-xl bg-pulso-carbon border border-pulso-border flex items-center justify-center text-pulso-muted hover:text-pulso-volt hover:border-pulso-volt transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-pulso-carbon border border-pulso-border flex items-center justify-center text-pulso-muted hover:text-pulso-volt hover:border-pulso-volt transition-all">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-pulso-carbon border border-pulso-border flex items-center justify-center text-pulso-muted hover:text-pulso-volt hover:border-pulso-volt transition-all">
+                            <i data-lucide="music" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 text-center text-xs text-pulso-muted font-mono">
+                © 2026 PULSO FITNESS STUDIO. TODOS OS DIREITOS RESERVADOS.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Boost BPM Interactive Simulation
+        let currentBpm = 168;
+        function boostBPM() {
+            currentBpm += 12;
+            if (currentBpm > 192) currentBpm = 145;
+            document.getElementById('heroBpmValue').innerText = currentBpm;
+        }
+
+        // Calculator Interactive Logic
+        let selectedMod = 'hiit';
+        function selectCalcModality(mod, btn) {
+            selectedMod = mod;
+            document.querySelectorAll('.calc-mod-btn').forEach(b => {
+                b.classList.remove('border-pulso-volt', 'bg-pulso-volt/10', 'text-pulso-volt');
+                b.classList.add('border-pulso-border', 'bg-pulso-black', 'text-pulso-muted');
+            });
+            btn.classList.remove('border-pulso-border', 'bg-pulso-black', 'text-pulso-muted');
+            btn.classList.add('border-pulso-volt', 'bg-pulso-volt/10', 'text-pulso-volt');
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const intensity = parseInt(document.getElementById('intensitySlider').value);
+            const duration = parseInt(document.getElementById('durationSlider').value);
+
+            const intensityLabels = ["ADAPTATIVO (65-75% FC)", "INTENSO (75-85% FC)", "INSANO (85-95% FC)"];
+            document.getElementById('intensityLabel').innerText = intensityLabels[intensity - 1];
+            document.getElementById('durationLabel').innerText = `${duration} MINUTOS`;
+
+            let baseBpmMin = 130 + (intensity * 12);
+            let baseBpmMax = baseBpmMin + 20;
+            document.getElementById('calcBpmTarget').innerText = `${baseBpmMin} - ${baseBpmMax}`;
+
+            let calorieFactor = selectedMod === 'hiit' ? 16 : (selectedMod === 'power' ? 13 : 14.5);
+            let totalCalories = Math.round(duration * calorieFactor * (intensity * 0.45));
+            document.getElementById('calcCalories').innerText = totalCalories;
+        }
+
+        // Class Schedule Data & Interactive Switcher
+        const scheduleData = {
+            seg: [
+                { time: "06:30", name: "PULSO HIIT", coach: "Marcus Vance", spots: 2, total: 15 },
+                { time: "08:00", name: "FUNCTIONAL POWER", coach: "Rodrigo Silva", spots: 5, total: 15 },
+                { time: "18:30", name: "RHYTHM CYCLE", coach: "Lívia Costa", spots: 1, total: 20 },
+                { time: "20:00", name: "BOXE & CORE", coach: "Marcus Vance", spots: 4, total: 15 }
+            ],
+            ter: [
+                { time: "07:00", name: "RHYTHM CYCLE", coach: "Lívia Costa", spots: 3, total: 20 },
+                { time: "09:00", name: "PULSO HIIT", coach: "Marcus Vance", spots: 6, total: 15 },
+                { time: "19:00", name: "FUNCTIONAL POWER", coach: "Rodrigo Silva", spots: 2, total: 15 }
+            ],
+            qua: [
+                { time: "06:30", name: "FUNCTIONAL POWER", coach: "Rodrigo Silva", spots: 1, total: 15 },
+                { time: "08:00", name: "PULSO HIIT", coach: "Marcus Vance", spots: 4, total: 15 },
+                { time: "18:30", name: "BOXE & CORE", coach: "Marcus Vance", spots: 3, total: 15 }
+            ],
+            qui: [
+                { time: "07:00", name: "PULSO HIIT", coach: "Marcus Vance", spots: 5, total: 15 },
+                { time: "19:00", name: "RHYTHM CYCLE", coach: "Lívia Costa", spots: 2, total: 20 }
+            ],
+            sex: [
+                { time: "06:30", name: "BOXE & CORE", coach: "Marcus Vance", spots: 2, total: 15 },
+                { time: "18:00", name: "PULSO HIIT (HAPPY HOUR)", coach: "Todos os Coaches", spots: 1, total: 25 }
+            ],
+            sab: [
+                { time: "09:00", name: "SUPER SATURDAY HIIT", coach: "Marcus & Rodrigo", spots: 3, total: 30 }
+            ]
+        };
+
+        function renderSchedule(day) {
+            const container = document.getElementById('scheduleContainer');
+            container.innerHTML = '';
+
+            const items = scheduleData[day] || [];
+            items.forEach(item => {
+                const percentage = Math.round(((item.total - item.spots) / item.total) * 100);
+                const el = document.createElement('div');
+                el.className = 'carbon-card rounded-2xl p-5 border border-pulso-border flex flex-col sm:flex-row items-center justify-between gap-4 hover:border-pulso-volt transition-all';
+                el.innerHTML = `
+                    <div class="flex items-center gap-4 w-full sm:w-auto">
+                        <div class="font-barlow font-black text-3xl text-pulso-volt italic font-mono w-20">${item.time}</div>
+                        <div>
+                            <h4 class="font-barlow font-black text-2xl uppercase italic text-pulso-text">${item.name}</h4>
+                            <div class="text-xs text-pulso-muted font-bold uppercase">Coach: ${item.coach}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
+                        <div class="text-right">
+                            <div class="text-xs font-mono font-bold text-pulso-red uppercase">${item.spots} VAGAS RESTANTES</div>
+                            <div class="w-28 bg-pulso-black h-2 rounded-full overflow-hidden mt-1 border border-pulso-border">
+                                <div class="bg-pulso-volt h-full" style="width: ${percentage}%;"></div>
+                            </div>
+                        </div>
+                        <button onclick="openBookingModal('${item.name} - ${item.time}')" class="clip-button px-5 py-2.5 bg-pulso-volt text-pulso-black font-barlow font-black text-base italic uppercase hover:bg-pulso-voltDark transition-all">
+                            RESERVAR
+                        </button>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function switchScheduleDay(day, btn) {
+            document.querySelectorAll('.schedule-tab').forEach(t => {
+                t.classList.remove('bg-pulso-volt', 'text-pulso-black', 'shadow-volt-sm');
+                t.classList.add('bg-pulso-carbon', 'text-pulso-muted');
+            });
+            btn.classList.remove('bg-pulso-carbon', 'text-pulso-muted');
+            btn.classList.add('bg-pulso-volt', 'text-pulso-black', 'shadow-volt-sm');
+            renderSchedule(day);
+        }
+
+        // Billing Toggle Switch Logic
+        let isAnnual = false;
+        function toggleBilling() {
+            isAnnual = !isAnnual;
+            const dot = document.getElementById('toggleDot');
+            const prices = document.querySelectorAll('.plan-price');
+
+            if (isAnnual) {
+                dot.classList.add('translate-x-8');
+                prices.forEach(p => {
+                    p.innerText = `R$ ${p.getAttribute('data-annual')}`;
+                });
+            } else {
+                dot.classList.remove('translate-x-8');
+                prices.forEach(p => {
+                    p.innerText = `R$ ${p.getAttribute('data-monthly')}`;
+                });
+            }
+        }
+
+        // Modal Controls
+        function openBookingModal(modality) {
+            document.getElementById('modalModalityInput').value = modality || 'Treino Experimental';
+            document.getElementById('bookingForm').classList.remove('hidden');
+            document.getElementById('bookingSuccess').classList.add('hidden');
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            document.getElementById('bookingForm').classList.add('hidden');
+            document.getElementById('bookingSuccess').classList.remove('hidden');
+        }
+
+        // Initial Setup
+        window.onload = function() {
+            renderSchedule('seg');
+            updateCalculator();
+        };
+    </script>
+</body>
+</html>

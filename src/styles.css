@@ -314,3 +314,25 @@
   .contact-footer__inner { width: min(100% - 44px, 1180px); align-items: flex-start; flex-direction: column; }
   .contact-footer__channels { justify-content: flex-start; }
 }
+
+.demo-cta {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--brand-navy);
+  color: var(--brand-white);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(16, 63, 107, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.demo-cta:hover { background: var(--brand-red); transform: translateY(-2px); }
+.demo-cta::after { content: "↗"; }

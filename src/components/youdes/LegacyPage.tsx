@@ -7,9 +7,10 @@ type LegacyPageProps = {
   css: string;
   markup: string;
   pageClass?: string;
+  demoUrl?: string;
 };
 
-export function LegacyPage({ css, markup, pageClass = "" }: LegacyPageProps) {
+export function LegacyPage({ css, markup, pageClass = "", demoUrl }: LegacyPageProps) {
   const contentWithoutLegacyFooter = markup.replace(/<footer\b[\s\S]*?<\/footer>/gi, "");
 
   useEffect(() => {
@@ -39,6 +40,11 @@ export function LegacyPage({ css, markup, pageClass = "" }: LegacyPageProps) {
         className={`legacy-page ${pageClass}`.trim()}
         dangerouslySetInnerHTML={{ __html: contentWithoutLegacyFooter }}
       />
+      {demoUrl && (
+        <a href={demoUrl} target="_blank" rel="noopener noreferrer" className="demo-cta">
+          Visualizar site
+        </a>
+      )}
       <ContactFooter />
     </>
   );

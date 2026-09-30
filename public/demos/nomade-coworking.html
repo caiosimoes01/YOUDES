@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nômade Coworking — Liberdade para criar. Espaço para pertencer.</title>
+    
+    <!-- Google Fonts: Syne & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nomade: {
+                            bg: '#0D0F14',
+                            card: '#161A22',
+                            cardHover: '#1E232F',
+                            text: '#F2F0EB',
+                            muted: '#9CA3AF',
+                            neon: '#6EFF6A',
+                            neonDark: '#4BD847',
+                            border: 'rgba(242, 240, 235, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'neon-glow': '0 0 25px rgba(110, 255, 106, 0.35)',
+                        'neon-sm': '0 0 10px rgba(110, 255, 106, 0.25)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0D0F14;
+            color: #F2F0EB;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphic custom utilities */
+        .glass-panel {
+            background: rgba(22, 26, 34, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(242, 240, 235, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(13, 15, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(242, 240, 235, 0.08);
+        }
+
+        /* Gradient Grid Mesh */
+        .bg-mesh {
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(110, 255, 106, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 60%, rgba(110, 255, 106, 0.05) 0%, transparent 50%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0D0F14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E232F;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6EFF6A;
+        }
+    </style>
+</head>
+<body class="bg-mesh min-h-screen flex flex-col justify-between selection:bg-nomade-neon selection:text-nomade-bg">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="w-3 h-3 rounded-full bg-nomade-neon group-hover:scale-125 transition-transform duration-300 shadow-neon-sm"></span>
+                <span class="font-syne text-2xl font-extrabold tracking-tight text-nomade-text">
+                    NÔMADE<span class="text-nomade-neon">.</span>
+                </span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-nomade-muted">
+                <a href="#sobre" class="hover:text-nomade-neon transition-colors duration-200">Sobre</a>
+                <a href="#planos" class="hover:text-nomade-neon transition-colors duration-200">Planos</a>
+                <a href="#espacos" class="hover:text-nomade-neon transition-colors duration-200">Espaços</a>
+                <a href="#comunidade" class="hover:text-nomade-neon transition-colors duration-200">Comunidade</a>
+                <a href="#eventos" class="hover:text-nomade-neon transition-colors duration-200">Eventos</a>
+            </nav>
+
+            <!-- CTA Header Button -->
+            <div class="hidden sm:flex items-center gap-4">
+                <button onclick="openBookingModal('Tour Presencial')" class="px-5 py-2.5 rounded-full bg-nomade-neon text-nomade-bg font-semibold text-sm hover:shadow-neon-glow hover:bg-nomade-neonDark transition-all duration-300 transform hover:-translate-y-0.5">
+                    Reservar Tour
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" aria-label="Abrir menu mobile" class="md:hidden p-2 rounded-lg text-nomade-text hover:bg-nomade-card">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-panel border-t border-nomade-border px-4 pt-4 pb-6 space-y-3">
+            <a href="#sobre" class="block py-2 text-nomade-text hover:text-nomade-neon font-medium">Sobre</a>
+            <a href="#planos" class="block py-2 text-nomade-text hover:text-nomade-neon font-medium">Planos</a>
+            <a href="#espacos" class="block py-2 text-nomade-text hover:text-nomade-neon font-medium">Espaços</a>
+            <a href="#comunidade" class="block py-2 text-nomade-text hover:text-nomade-neon font-medium">Comunidade</a>
+            <a href="#eventos" class="block py-2 text-nomade-text hover:text-nomade-neon font-medium">Eventos</a>
+            <button onclick="openBookingModal('Tour Presencial')" class="w-full mt-2 py-3 rounded-full bg-nomade-neon text-nomade-bg font-semibold text-center hover:shadow-neon-glow">
+                Reservar Tour
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="relative pt-12 pb-20 md:pt-24 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel text-xs font-semibold text-nomade-neon border border-nomade-neon/20">
+                        <span class="w-2 h-2 rounded-full bg-nomade-neon animate-pulse"></span>
+                        Vagas abertas para novos membros este mês
+                    </div>
+
+                    <h1 class="font-syne text-4xl sm:text-6xl xl:text-7xl font-extrabold leading-tight text-nomade-text">
+                        Liberdade para criar. <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-nomade-text via-nomade-text to-nomade-neon">
+                            Espaço para pertencer.
+                        </span>
+                    </h1>
+
+                    <p class="text-nomade-muted text-lg sm:text-xl max-w-2xl leading-relaxed">
+                        Um ecossistema de trabalho flexível projetado para criadores, startups e equipes remotas que buscam infraestrutura de altíssimo nível e uma comunidade hiperconectada.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                        <a href="#planos" class="px-8 py-4 rounded-full bg-nomade-neon text-nomade-bg font-bold text-base text-center hover:shadow-neon-glow hover:bg-nomade-neonDark transition-all duration-300 transform hover:-translate-y-1">
+                            Conhecer Planos
+                        </a>
+                        <button onclick="openBookingModal('Day Pass Grátis')" class="px-8 py-4 rounded-full glass-panel text-nomade-text font-semibold text-base text-center hover:border-nomade-neon/50 hover:bg-nomade-cardHover transition-all duration-300 flex items-center justify-center gap-2">
+                            <span>Agendar Visita + Day Pass</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 text-nomade-neon"></i>
+                        </button>
+                    </div>
+
+                    <!-- Quick Interactive Search Widget -->
+                    <div class="pt-6">
+                        <div class="glass-panel p-4 rounded-2xl border border-nomade-border max-w-xl">
+                            <div class="text-xs text-nomade-muted font-medium mb-3">Encontre a estação ideal para hoje:</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <select id="heroLocation" class="bg-nomade-bg text-sm text-nomade-text rounded-xl px-3 py-2 border border-nomade-border focus:border-nomade-neon outline-none">
+                                    <option>Paulista — SP</option>
+                                    <option>Vila Madalena — SP</option>
+                                    <option>Ipanema — RJ</option>
+                                </select>
+                                <select id="heroType" class="bg-nomade-bg text-sm text-nomade-text rounded-xl px-3 py-2 border border-nomade-border focus:border-nomade-neon outline-none">
+                                    <option>Hot Desk</option>
+                                    <option>Sala Privativa</option>
+                                    <option>Sala de Reunião</option>
+                                </select>
+                                <button onclick="quickFilter()" class="bg-nomade-neon/10 text-nomade-neon border border-nomade-neon/30 hover:bg-nomade-neon hover:text-nomade-bg rounded-xl py-2 text-sm font-semibold transition-all">
+                                    Buscar Espaço
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual Element / Interactive UI Mockup Card -->
+                <div class="lg:col-span-5 relative">
+                    <!-- Glow decoration -->
+                    <div class="absolute -top-10 -right-10 w-72 h-72 bg-nomade-neon/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="glass-panel rounded-3xl p-6 relative z-10 border border-nomade-border shadow-2xl">
+                        <!-- Mockup Header -->
+                        <div class="flex items-center justify-between pb-4 border-b border-nomade-border">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                            </div>
+                            <span class="text-xs text-nomade-muted font-mono">nomade-hub.app v2.4</span>
+                        </div>
+
+                        <!-- Inner Dashboard Content simulation -->
+                        <div class="py-6 space-y-5">
+                            <!-- Live status card -->
+                            <div class="bg-nomade-bg/80 p-4 rounded-2xl border border-nomade-border flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-nomade-neon/10 flex items-center justify-center text-nomade-neon">
+                                        <i data-lucide="wifi" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold text-nomade-text">Internet Ultra Redundante</div>
+                                        <div class="text-xs text-nomade-muted">1 Gbps Simétrico + Link Backup</div>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-nomade-neon/20 text-nomade-neon">LIVE</span>
+                            </div>
+
+                            <!-- Live Capacity Indicator -->
+                            <div class="bg-nomade-bg/80 p-4 rounded-2xl border border-nomade-border space-y-3">
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-nomade-muted">Ocupação Atual — Unidade Paulista</span>
+                                    <span class="text-nomade-neon font-mono font-bold">68%</span>
+                                </div>
+                                <div class="w-full bg-nomade-card h-2 rounded-full overflow-hidden">
+                                    <div class="bg-nomade-neon h-full rounded-full" style="width: 68%;"></div>
+                                </div>
+                                <div class="flex justify-between text-[11px] text-nomade-muted pt-1">
+                                    <span>Quiet Zone: 12 vagas</span>
+                                    <span>Lounge: 8 vagas</span>
+                                </div>
+                            </div>
+
+                            <!-- Community Mini Highlight -->
+                            <div class="bg-nomade-bg/80 p-4 rounded-2xl border border-nomade-border flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-nomade-card flex items-center justify-center text-nomade-neon">
+                                        <i data-lucide="coffee" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold text-nomade-text">Barista Especial no Lounge</div>
+                                        <div class="text-xs text-nomade-muted">Café grátis das 08h às 18h</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="check-circle" class="w-5 h-5 text-nomade-neon"></i>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Quick Action inside Mockup -->
+                        <div class="pt-2">
+                            <button onclick="openBookingModal('Check-in Expresso')" class="w-full py-3 rounded-xl bg-nomade-neon/10 border border-nomade-neon/40 text-nomade-neon hover:bg-nomade-neon hover:text-nomade-bg font-semibold text-sm transition-all duration-200">
+                                Simular Reserva de Mesa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Features Section (Por que Nômade?) -->
+        <section id="sobre" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-nomade-border">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-nomade-neon text-sm font-bold uppercase tracking-wider">Por que o Nômade?</span>
+                <h2 class="font-syne text-3xl sm:text-5xl font-bold text-nomade-text">
+                    Criado para quem não se adapta ao tradicional.
+                </h2>
+                <p class="text-nomade-muted text-base sm:text-lg">
+                    Mais do que mesas e cadeiras: entregamos um ecossistema completo para você focar no que realmente importa.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-panel p-8 rounded-3xl border border-nomade-border hover:border-nomade-neon/50 hover:bg-nomade-cardHover transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-nomade-neon/10 border border-nomade-neon/30 flex items-center justify-center text-nomade-neon mb-6 group-hover:scale-110 group-hover:bg-nomade-neon group-hover:text-nomade-bg transition-all duration-300">
+                        <i data-lucide="zap" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-syne text-xl font-bold text-nomade-text mb-3">Flexibilidade Total</h3>
+                    <p class="text-nomade-muted text-sm leading-relaxed">
+                        Acesso por diárias, pacotes mensais ou salas privativas sem contratos burocráticos ou fidelidade engessada.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-panel p-8 rounded-3xl border border-nomade-border hover:border-nomade-neon/50 hover:bg-nomade-cardHover transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-nomade-neon/10 border border-nomade-neon/30 flex items-center justify-center text-nomade-neon mb-6 group-hover:scale-110 group-hover:bg-nomade-neon group-hover:text-nomade-bg transition-all duration-300">
+                        <i data-lucide="cpu" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-syne text-xl font-bold text-nomade-text mb-3">Alta Performance</h3>
+                    <p class="text-nomade-muted text-sm leading-relaxed">
+                        Internet dedicada gigabit, cadeiras ergonômicas Herman Miller e cabines acústicas privativas para chamadas.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-panel p-8 rounded-3xl border border-nomade-border hover:border-nomade-neon/50 hover:bg-nomade-cardHover transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-nomade-neon/10 border border-nomade-neon/30 flex items-center justify-center text-nomade-neon mb-6 group-hover:scale-110 group-hover:bg-nomade-neon group-hover:text-nomade-bg transition-all duration-300">
+                        <i data-lucide="users" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-syne text-xl font-bold text-nomade-text mb-3">Comunidade Ativa</h3>
+                    <p class="text-nomade-muted text-sm leading-relaxed">
+                        Conecte-se com founders, freelancers e investidores. Happy hours semanais e mentorias exclusivas.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-panel p-8 rounded-3xl border border-nomade-border hover:border-nomade-neon/50 hover:bg-nomade-cardHover transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-nomade-neon/10 border border-nomade-neon/30 flex items-center justify-center text-nomade-neon mb-6 group-hover:scale-110 group-hover:bg-nomade-neon group-hover:text-nomade-bg transition-all duration-300">
+                        <i data-lucide="cup-soda" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-syne text-xl font-bold text-nomade-text mb-3">Café & Lounge Bar</h3>
+                    <p class="text-nomade-muted text-sm leading-relaxed">
+                        Café especial moído na hora ilimitado, chopp artesanal liberado no fim do dia e áreas relax de descompressão.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Plans & Spaces Section -->
+        <section id="planos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+                <span class="text-nomade-neon text-sm font-bold uppercase tracking-wider">Planos & Espaços</span>
+                <h2 class="font-syne text-3xl sm:text-5xl font-bold text-nomade-text">
+                    Escolha a sua forma de trabalhar.
+                </h2>
+                <p class="text-nomade-muted text-base sm:text-lg">
+                    Seja por um dia ou por vários anos, temos a solução sob medida.
+                </p>
+
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 pt-6">
+                    <button onclick="filterPlans('all')" class="plan-tab active-tab px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-nomade-neon text-nomade-bg shadow-neon-sm">
+                        Todos
+                    </button>
+                    <button onclick="filterPlans('individual')" class="plan-tab px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-nomade-card text-nomade-muted hover:text-nomade-text">
+                        Individuais
+                    </button>
+                    <button onclick="filterPlans('teams')" class="plan-tab px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 bg-nomade-card text-nomade-muted hover:text-nomade-text">
+                        Para Equipes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plans Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Plan 1: Day Pass -->
+                <div class="plan-card individual glass-panel p-6 rounded-3xl border border-nomade-border flex flex-col justify-between hover:border-nomade-neon/50 transition-all duration-300">
+                    <div>
+                        <div class="text-xs font-semibold text-nomade-muted uppercase tracking-wider mb-2">Flexível</div>
+                        <h3 class="font-syne text-2xl font-bold text-nomade-text mb-4">Day Pass</h3>
+                        <div class="mb-6">
+                            <span class="text-3xl font-syne font-extrabold text-nomade-neon">R$ 79</span>
+                            <span class="text-nomade-muted text-xs">/ dia</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-nomade-muted mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Acesso 08h às 20h</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Hot Desk rotativa</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Wi-Fi Gigabit</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Café e água ilimitados</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Day Pass')" class="w-full py-3 rounded-xl bg-nomade-card border border-nomade-border text-nomade-text hover:bg-nomade-neon hover:text-nomade-bg font-semibold text-sm transition-all duration-200">
+                        Garantir Vaga
+                    </button>
+                </div>
+
+                <!-- Plan 2: Hot Desk (Most Popular) -->
+                <div class="plan-card individual glass-panel p-6 rounded-3xl border-2 border-nomade-neon flex flex-col justify-between relative shadow-neon-sm">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-nomade-neon text-nomade-bg text-[10px] font-extrabold uppercase tracking-wider">
+                        Mais Popular
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-nomade-neon uppercase tracking-wider mb-2">Ilimitado</div>
+                        <h3 class="font-syne text-2xl font-bold text-nomade-text mb-4">Hot Desk Mensal</h3>
+                        <div class="mb-6">
+                            <span class="text-3xl font-syne font-extrabold text-nomade-neon">R$ 590</span>
+                            <span class="text-nomade-muted text-xs">/ mês</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-nomade-muted mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Acesso 24/7 com chave digital</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Crédito para salas de reunião</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Desconto nos eventos da comunidade</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Lockers e vestiário</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Hot Desk Mensal')" class="w-full py-3 rounded-xl bg-nomade-neon text-nomade-bg hover:bg-nomade-neonDark font-bold text-sm shadow-neon-sm transition-all duration-200">
+                        Garantir Vaga
+                    </button>
+                </div>
+
+                <!-- Plan 3: Dedicated Desk -->
+                <div class="plan-card individual glass-panel p-6 rounded-3xl border border-nomade-border flex flex-col justify-between hover:border-nomade-neon/50 transition-all duration-300">
+                    <div>
+                        <div class="text-xs font-semibold text-nomade-muted uppercase tracking-wider mb-2">Exclusividade</div>
+                        <h3 class="font-syne text-2xl font-bold text-nomade-text mb-4">Mesa Dedicada</h3>
+                        <div class="mb-6">
+                            <span class="text-3xl font-syne font-extrabold text-nomade-neon">R$ 950</span>
+                            <span class="text-nomade-muted text-xs">/ mês</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-nomade-muted mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Mesa fixa reservada para você</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Monitor ergonômico extra incluso</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Endereço fiscal e comercial</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Armário gaveteiro privativo com chave</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Mesa Dedicada')" class="w-full py-3 rounded-xl bg-nomade-card border border-nomade-border text-nomade-text hover:bg-nomade-neon hover:text-nomade-bg font-semibold text-sm transition-all duration-200">
+                        Garantir Vaga
+                    </button>
+                </div>
+
+                <!-- Plan 4: Private Office -->
+                <div class="plan-card teams glass-panel p-6 rounded-3xl border border-nomade-border flex flex-col justify-between hover:border-nomade-neon/50 transition-all duration-300">
+                    <div>
+                        <div class="text-xs font-semibold text-nomade-muted uppercase tracking-wider mb-2">Corporativo</div>
+                        <h3 class="font-syne text-2xl font-bold text-nomade-text mb-4">Sala Privativa</h3>
+                        <div class="mb-6">
+                            <span class="text-xs text-nomade-muted block">A partir de</span>
+                            <span class="text-3xl font-syne font-extrabold text-nomade-neon">R$ 2.800</span>
+                            <span class="text-nomade-muted text-xs">/ mês</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-nomade-muted mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Espaços de 4 a 30 pessoas</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Personalização de layout da sala</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Controle de acesso biométrico</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-nomade-neon"></i> Suporte de TI dedicado</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Sala Privativa')" class="w-full py-3 rounded-xl bg-nomade-card border border-nomade-border text-nomade-text hover:bg-nomade-neon hover:text-nomade-bg font-semibold text-sm transition-all duration-200">
+                        Solicitar Cotação
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Spaces Showcase Section -->
+        <section id="espacos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-nomade-border">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-nomade-neon text-sm font-bold uppercase tracking-wider">Nossos Espaços</span>
+                    <h2 class="font-syne text-3xl sm:text-5xl font-bold text-nomade-text mt-2">
+                        Ambientes desenhados para o seu fluxo.
+                    </h2>
+                </div>
+                <p class="text-nomade-muted max-w-md text-sm sm:text-base">
+                    Salas focadas em silêncio, lounges para descompressão e ambientes abertos para colaboração intensa.
+                </p>
+            </div>
+
+            <!-- Spaces Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Space 1 -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-nomade-border group">
+                    <div class="relative h-64 overflow-hidden bg-nomade-card flex items-center justify-center">
+                        <!-- Placeholder mockup image with stylish typography -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-nomade-bg to-transparent z-10"></div>
+                        <div class="text-center p-6 z-20">
+                            <span class="text-xs text-nomade-neon font-mono mb-2 block">// FOCUS AREA</span>
+                            <h4 class="font-syne text-2xl font-bold text-nomade-text">Quiet Zone</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <p class="text-nomade-muted text-sm">
+                            Área com isolamento acústico reforçado, iluminação suave e política de silêncio para trabalho profundo.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Space 2 -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-nomade-border group">
+                    <div class="relative h-64 overflow-hidden bg-nomade-card flex items-center justify-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nomade-bg to-transparent z-10"></div>
+                        <div class="text-center p-6 z-20">
+                            <span class="text-xs text-nomade-neon font-mono mb-2 block">// COLLABORATION</span>
+                            <h4 class="font-syne text-2xl font-bold text-nomade-text">Creative Lounge</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <p class="text-nomade-muted text-sm">
+                            Espaço aberto dinâmico com sofás modulares, quadros brancos e café de especialidade ilimitado.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Space 3 -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-nomade-border group">
+                    <div class="relative h-64 overflow-hidden bg-nomade-card flex items-center justify-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nomade-bg to-transparent z-10"></div>
+                        <div class="text-center p-6 z-20">
+                            <span class="text-xs text-nomade-neon font-mono mb-2 block">// MEETINGS</span>
+                            <h4 class="font-syne text-2xl font-bold text-nomade-text">Boardrooms Tech</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <p class="text-nomade-muted text-sm">
+                            Salas de reunião equipadas com monitores 4K, microfones omnidirecionais e videoconferência um-clique.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community & Events Preview -->
+        <section id="eventos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-nomade-border">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-nomade-neon text-sm font-bold uppercase tracking-wider">Agenda da Comunidade</span>
+                    <h2 class="font-syne text-3xl sm:text-5xl font-bold text-nomade-text mt-2">
+                        Próximos Eventos & Meetups
+                    </h2>
+                </div>
+                <button onclick="openBookingModal('Inscrição em Eventos')" class="text-nomade-neon hover:underline font-semibold flex items-center gap-2">
+                    Ver agenda completa <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Events Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Event Card 1 -->
+                <div class="glass-panel p-6 rounded-3xl border border-nomade-border hover:border-nomade-neon/40 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-nomade-neon/10 text-nomade-neon border border-nomade-neon/30">
+                            Tech Talk
+                        </span>
+                        <span class="text-xs font-mono text-nomade-muted">28 SET · 19:00</span>
+                    </div>
+                    <h3 class="font-syne text-xl font-bold text-nomade-text mb-2">IA Aplicada a Produtos SaaS</h3>
+                    <p class="text-nomade-muted text-sm mb-6">
+                        Painel com especialistas discutindo a integração prática de LLMs no desenvolvimento de software.
+                    </p>
+                    <div class="flex items-center justify-between border-t border-nomade-border pt-4 text-xs text-nomade-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-nomade-neon"></i> Lounge Paulista</span>
+                        <button onclick="openBookingModal('Tech Talk - IA em SaaS')" class="text-nomade-neon font-semibold hover:underline">Inscrever-se</button>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="glass-panel p-6 rounded-3xl border border-nomade-border hover:border-nomade-neon/40 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-nomade-neon/10 text-nomade-neon border border-nomade-neon/30">
+                            Networking
+                        </span>
+                        <span class="text-xs font-mono text-nomade-muted">02 OUT · 18:30</span>
+                    </div>
+                    <h3 class="font-syne text-xl font-bold text-nomade-text mb-2">Founders & Beers Happy Hour</h3>
+                    <p class="text-nomade-muted text-sm mb-6">
+                        Conexões informais, chopp artesanal liberado e apresentações relâmpago de novos projetos da comunidade.
+                    </p>
+                    <div class="flex items-center justify-between border-t border-nomade-border pt-4 text-xs text-nomade-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-nomade-neon"></i> Rooftop Vila Madalena</span>
+                        <button onclick="openBookingModal('Founders & Beers')" class="text-nomade-neon font-semibold hover:underline">Inscrever-se</button>
+                    </div>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div class="glass-panel p-6 rounded-3xl border border-nomade-border hover:border-nomade-neon/40 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-nomade-neon/10 text-nomade-neon border border-nomade-neon/30">
+                            Workshop
+                        </span>
+                        <span class="text-xs font-mono text-nomade-muted">07 OUT · 10:00</span>
+                    </div>
+                    <h3 class="font-syne text-xl font-bold text-nomade-text mb-2">Pitch Deck & Captação de Seed</h3>
+                    <p class="text-nomade-muted text-sm mb-6">
+                        Sessão mão na massa de revisão de decks para startups que estão se preparando para rodadas anjo.
+                    </p>
+                    <div class="flex items-center justify-between border-t border-nomade-border pt-4 text-xs text-nomade-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-nomade-neon"></i> Auditório Ipanema</span>
+                        <button onclick="openBookingModal('Workshop Pitch Deck')" class="text-nomade-neon font-semibold hover:underline">Inscrever-se</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-panel rounded-3xl p-8 sm:p-14 border border-nomade-neon/30 bg-gradient-to-r from-nomade-card via-nomade-cardHover to-nomade-card relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-8">
+                <div class="space-y-3 z-10 max-w-2xl">
+                    <h2 class="font-syne text-3xl sm:text-4xl font-extrabold text-nomade-text">
+                        Pronto para mudar a sua rotina de trabalho?
+                    </h2>
+                    <p class="text-nomade-muted text-base">
+                        Venha tomar um café especial com a nossa equipe e experimente um dia de trabalho inteiramente grátis.
+                    </p>
+                </div>
+                <div class="z-10 flex-shrink-0">
+                    <button onclick="openBookingModal('Day Pass Grátis Banner')" class="px-8 py-4 rounded-full bg-nomade-neon text-nomade-bg font-bold text-base hover:shadow-neon-glow hover:bg-nomade-neonDark transition-all duration-300">
+                        Agendar Day Pass Grátis
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Booking / Contact Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-panel rounded-3xl border border-nomade-neon/30 w-full max-w-lg p-6 sm:p-8 relative shadow-2xl animate-fade-in">
+            
+            <!-- Close Modal Button -->
+            <button onclick="closeBookingModal()" aria-label="Fechar modal" class="absolute top-5 right-5 text-nomade-muted hover:text-nomade-text">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="mb-6 space-y-2">
+                <span class="text-xs font-bold font-mono text-nomade-neon">// RESERVA RÁPIDA</span>
+                <h3 class="font-syne text-2xl font-bold text-nomade-text">Agende sua Experiência Nômade</h3>
+                <p class="text-nomade-muted text-sm">Preencha abaixo para confirmar sua visita ou tirar dúvidas.</p>
+            </div>
+
+            <!-- Form -->
+            <form id="bookingForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-nomade-muted mb-1">Nome Completo</label>
+                    <input type="text" required placeholder="Seu nome" class="w-full bg-nomade-bg text-nomade-text rounded-xl px-4 py-3 border border-nomade-border focus:border-nomade-neon outline-none text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-nomade-muted mb-1">E-mail Profissional</label>
+                    <input type="email" required placeholder="seu@email.com" class="w-full bg-nomade-bg text-nomade-text rounded-xl px-4 py-3 border border-nomade-border focus:border-nomade-neon outline-none text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-nomade-muted mb-1">Unidade Desejada</label>
+                        <select class="w-full bg-nomade-bg text-nomade-text rounded-xl px-3 py-3 border border-nomade-border focus:border-nomade-neon outline-none text-sm">
+                            <option>Paulista — SP</option>
+                            <option>Vila Madalena — SP</option>
+                            <option>Ipanema — RJ</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-nomade-muted mb-1">Interesse</label>
+                        <input type="text" id="modalPlanInput" readonly class="w-full bg-nomade-bg/60 text-nomade-neon font-medium rounded-xl px-3 py-3 border border-nomade-border text-sm cursor-not-allowed">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-nomade-muted mb-1">Mensagem ou dúvida (opcional)</label>
+                    <textarea rows="3" placeholder="Gostaria de saber mais sobre..." class="w-full bg-nomade-bg text-nomade-text rounded-xl px-4 py-3 border border-nomade-border focus:border-nomade-neon outline-none text-sm resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-nomade-neon text-nomade-bg font-bold text-sm hover:shadow-neon-glow hover:bg-nomade-neonDark transition-all duration-200 mt-2">
+                    Confirmar Agendamento
+                </button>
+            </form>
+
+            <!-- Success Message Container -->
+            <div id="modalSuccess" class="hidden text-center py-8 space-y-4">
+                <div class="w-16 h-16 rounded-full bg-nomade-neon/20 text-nomade-neon flex items-center justify-center mx-auto">
+                    <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+                </div>
+                <h4 class="font-syne text-2xl font-bold text-nomade-text">Reserva Solicitada!</h4>
+                <p class="text-nomade-muted text-sm">Entraremos em contato via WhatsApp/E-mail nos próximos 15 minutos para confirmar sua presença.</p>
+                <button onclick="closeBookingModal()" class="px-6 py-2.5 rounded-full bg-nomade-card border border-nomade-border text-nomade-text font-semibold text-sm hover:bg-nomade-cardHover">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-nomade-border bg-nomade-bg pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-nomade-border">
+                
+                <!-- Brand Info -->
+                <div class="md:col-span-4 space-y-4">
+                    <a href="#" class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-nomade-neon shadow-neon-sm"></span>
+                        <span class="font-syne text-2xl font-extrabold tracking-tight text-nomade-text">
+                            NÔMADE<span class="text-nomade-neon">.</span>
+                        </span>
+                    </a>
+                    <p class="text-nomade-muted text-sm leading-relaxed max-w-sm">
+                        Espaço de coworking e hub de inovação. Uma marca flexível que cresce com a sua comunidade.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="md:col-span-2 space-y-3">
+                    <h4 class="font-syne text-sm font-bold text-nomade-text uppercase tracking-wider">Navegação</h4>
+                    <ul class="space-y-2 text-sm text-nomade-muted">
+                        <li><a href="#sobre" class="hover:text-nomade-neon transition-colors">Sobre</a></li>
+                        <li><a href="#planos" class="hover:text-nomade-neon transition-colors">Planos</a></li>
+                        <li><a href="#espacos" class="hover:text-nomade-neon transition-colors">Espaços</a></li>
+                        <li><a href="#eventos" class="hover:text-nomade-neon transition-colors">Eventos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Units -->
+                <div class="md:col-span-2 space-y-3">
+                    <h4 class="font-syne text-sm font-bold text-nomade-text uppercase tracking-wider">Unidades</h4>
+                    <ul class="space-y-2 text-sm text-nomade-muted">
+                        <li>Paulista — SP</li>
+                        <li>Vila Madalena — SP</li>
+                        <li>Ipanema — RJ</li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="md:col-span-4 space-y-4">
+                    <h4 class="font-syne text-sm font-bold text-nomade-text uppercase tracking-wider">Fique por dentro</h4>
+                    <p class="text-nomade-muted text-xs">Receba novidades sobre eventos, vagas e novos espaços.</p>
+                    <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+                        <input type="email" required placeholder="Seu e-mail" class="bg-nomade-card border border-nomade-border text-nomade-text text-sm rounded-xl px-4 py-2.5 outline-none focus:border-nomade-neon flex-1">
+                        <button type="submit" aria-label="Inscrever-se na newsletter" class="bg-nomade-neon text-nomade-bg font-bold px-4 rounded-xl hover:bg-nomade-neonDark transition-all">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                    <div id="newsletterSuccess" class="hidden text-xs text-nomade-neon font-medium">Inscrição realizada com sucesso!</div>
+                </div>
+            </div>
+
+            <!-- Bottom Credits -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-nomade-muted gap-4">
+                <div>
+                    © 2026 Nômade Coworking. Todos os direitos reservados.
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-nomade-neon transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-nomade-neon transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-nomade-neon transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Interactive Filter for Plans
+        function filterPlans(category) {
+            const tabs = document.querySelectorAll('.plan-tab');
+            const cards = document.querySelectorAll('.plan-card');
+
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-nomade-neon', 'text-nomade-bg', 'shadow-neon-sm');
+                tab.classList.add('bg-nomade-card', 'text-nomade-muted');
+            });
+
+            event.target.classList.remove('bg-nomade-card', 'text-nomade-muted');
+            event.target.classList.add('bg-nomade-neon', 'text-nomade-bg', 'shadow-neon-sm');
+
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'flex';
+                } else {
+                    if (card.classList.contains(category)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Quick Search Filter Action
+        function quickFilter() {
+            const loc = document.getElementById('heroLocation').value;
+            const type = document.getElementById('heroType').value;
+            openBookingModal(`${type} (${loc})`);
+        }
+
+        // Booking Modal Control
+        function openBookingModal(planName) {
+            const modal = document.getElementById('bookingModal');
+            const planInput = document.getElementById('modalPlanInput');
+            const form = document.getElementById('bookingForm');
+            const success = document.getElementById('modalSuccess');
+
+            planInput.value = planName || 'Tour Presencial';
+            form.classList.remove('hidden');
+            success.classList.add('hidden');
+            modal.classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('hidden');
+        }
+
+        // Handle Form Submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('bookingForm').classList.add('hidden');
+            document.getElementById('modalSuccess').classList.remove('hidden');
+        }
+
+        // Handle Newsletter Submission
+        function handleNewsletter(e) {
+            e.preventDefault();
+            document.getElementById('newsletterSuccess').classList.remove('hidden');
+            e.target.reset();
+            setTimeout(() => {
+                document.getElementById('newsletterSuccess').classList.add('hidden');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
