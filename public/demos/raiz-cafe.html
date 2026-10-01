@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raiz Café — Cafeteria & Brunch de Bairro</title>
+
+    <!-- Google Fonts: DM Serif Display & DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        raiz: {
+                            cream: '#F5EFE0',       // Main background
+                            dark: '#2B1A0E',        // Primary text & dark headings
+                            medium: '#6B3D1E',      // Secondary text & subtitles
+                            caramel: '#C87941',     // Primary action accent
+                            'caramel-hover': '#B36833',
+                            sage: '#8A9B72',        // Highlight & open badge accent
+                            'sage-light': '#E8EFE0',
+                            card: '#FAF6ED',        // Primary container fill
+                            'card-dark': '#EFE8D6',  // Secondary container fill
+                            border: '#E3DAC7'       // Subtle border color
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['DM Serif Display', 'serif'],
+                        sans: ['DM Sans', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'cozy': '0 10px 30px -5px rgba(43, 26, 14, 0.08)',
+                        'cozy-hover': '0 20px 40px -10px rgba(43, 26, 14, 0.14)',
+                        'float': '0 25px 50px -12px rgba(43, 26, 14, 0.25)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F5EFE0;
+            color: #2B1A0E;
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-serif {
+            font-family: 'DM Serif Display', serif;
+        }
+
+        /* Custom Warm Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F5EFE0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C87941;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6B3D1E;
+        }
+
+        /* Pulse effect for live status badge */
+        @keyframes openPulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(138, 155, 114, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(138, 155, 114, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(138, 155, 114, 0); }
+        }
+        .live-dot {
+            animation: openPulse 2s infinite;
+        }
+
+        /* Smooth glassmorphism with warm tint */
+        .glass-cozy {
+            background: rgba(250, 246, 237, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .glass-dark {
+            background: rgba(43, 26, 14, 0.92);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-raiz-caramel selection:text-raiz-cream">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-raiz-dark text-raiz-cream text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-raiz-sage inline-block"></span>
+        <span>Brunch Especial de Fim de Semana: Pães artesanais saindo do forno a cada 30 minutos!</span>
+        <span class="hidden sm:inline font-bold text-raiz-caramel">· Reserve sua mesa antecipada</span>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 glass-cozy border-b border-raiz-border/60 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" aria-label="Abrir Menu" class="lg:hidden text-raiz-dark p-2 hover:text-raiz-caramel transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-2xl bg-raiz-caramel text-raiz-cream flex items-center justify-center shadow-cozy group-hover:scale-105 transition-transform">
+                    <i data-lucide="coffee" class="w-5 h-5"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-2xl font-bold tracking-tight text-raiz-dark leading-none group-hover:text-raiz-caramel transition-colors">
+                        Raiz Café
+                    </span>
+                    <span class="text-[10px] font-medium tracking-wider uppercase text-raiz-medium mt-0.5">Cafetaria & Brunch de Bairro</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-raiz-dark">
+                <a href="#cardapio" class="hover:text-raiz-caramel transition-colors py-1">Cardápio</a>
+                <a href="#quiz" class="hover:text-raiz-caramel transition-colors py-1 flex items-center gap-1">
+                    <span>Quiz do Café</span>
+                    <span class="px-1.5 py-0.5 text-[9px] bg-raiz-sage-light text-raiz-dark rounded-full font-bold uppercase">Interativo</span>
+                </a>
+                <a href="#brunch" class="hover:text-raiz-caramel transition-colors py-1">Experiência Brunch</a>
+                <a href="#origens" class="hover:text-raiz-caramel transition-colors py-1">Origens & Torra</a>
+                <a href="#espaco" class="hover:text-raiz-caramel transition-colors py-1">Nosso Espaço</a>
+            </nav>
+
+            <!-- Live Status & Header CTAs -->
+            <div class="flex items-center gap-3">
+                <!-- Live Status Badge -->
+                <div class="hidden xl:flex items-center gap-2 px-3 py-1.5 bg-raiz-sage-light border border-raiz-sage/30 rounded-full text-xs font-medium text-raiz-dark">
+                    <span class="w-2 h-2 rounded-full bg-raiz-sage live-dot"></span>
+                    <span>Aberto Agora · Pão Quentinho às 09h</span>
+                </div>
+
+                <!-- Reserve Table Button -->
+                <button onclick="openReservationModal()" class="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-raiz-card-dark hover:bg-raiz-border text-raiz-dark text-xs font-bold uppercase tracking-wider rounded-full transition-colors border border-raiz-border">
+                    <i data-lucide="calendar" class="w-4 h-4 text-raiz-caramel"></i>
+                    <span>Reservar Mesa</span>
+                </button>
+
+                <!-- Takeaway Cart Button -->
+                <button onclick="toggleCartDrawer()" aria-label="Sacola de Pedidos" class="px-3.5 py-2.5 bg-raiz-caramel hover:bg-raiz-caramel-hover text-raiz-cream rounded-full transition-all flex items-center gap-2 text-xs font-bold tracking-wider uppercase shadow-cozy hover:scale-105">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    <span class="hidden md:inline">Retirada</span>
+                    <span id="cartBadgeCount" class="w-5 h-5 bg-raiz-dark text-raiz-cream text-[11px] font-bold rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-raiz-card border-b border-raiz-border px-6 py-6 space-y-4 text-sm font-medium text-raiz-dark">
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-raiz-sage-light border border-raiz-sage/30 rounded-full text-xs font-medium text-raiz-dark w-fit mb-2">
+                <span class="w-2 h-2 rounded-full bg-raiz-sage live-dot"></span>
+                <span>Aberto Agora · Pão Quentinho</span>
+            </div>
+            <a href="#cardapio" onclick="toggleMobileMenu()" class="block py-1 hover:text-raiz-caramel">Cardápio Digital</a>
+            <a href="#quiz" onclick="toggleMobileMenu()" class="block py-1 hover:text-raiz-caramel">Quiz do Café Ideal</a>
+            <a href="#brunch" onclick="toggleMobileMenu()" class="block py-1 hover:text-raiz-caramel">Experiência Brunch</a>
+            <a href="#origens" onclick="toggleMobileMenu()" class="block py-1 hover:text-raiz-caramel">Origens & Torra</a>
+            <a href="#espaco" onclick="toggleMobileMenu()" class="block py-1 hover:text-raiz-caramel">Nosso Espaço</a>
+            <button onclick="toggleMobileMenu(); openReservationModal();" class="w-full mt-2 py-3 bg-raiz-dark text-raiz-cream text-xs font-bold uppercase tracking-wider rounded-full flex items-center justify-center gap-2">
+                <i data-lucide="calendar" class="w-4 h-4 text-raiz-caramel"></i>
+                <span>Reservar Mesa</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="relative py-12 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left: Headlines & Interactive Mood Picker -->
+                <div class="lg:col-span-7 space-y-8">
+                    
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-raiz-card border border-raiz-border rounded-full text-xs font-semibold text-raiz-medium uppercase tracking-wider">
+                        <i data-lucide="sun" class="w-4 h-4 text-raiz-caramel"></i>
+                        <span>O Refúgio do Seu Fim de Semana</span>
+                    </div>
+
+                    <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.08] text-raiz-dark">
+                        O aconchego do seu fim de semana, <span class="text-raiz-caramel italic font-normal">todos os dias.</span>
+                    </h1>
+
+                    <p class="text-raiz-medium text-base sm:text-lg font-normal leading-relaxed max-w-2xl">
+                        Cafés de especialidade moídos na hora, brunch artesanal preparado com afeto e pães de fermentação natural no coração do seu bairro.
+                    </p>
+
+                    <!-- Interactive Mood Picker Widget -->
+                    <div class="bg-raiz-card p-6 rounded-3xl border border-raiz-border shadow-cozy space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-raiz-dark flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-raiz-caramel"></i>
+                                <span>Como está seu clima hoje?</span>
+                            </span>
+                            <span class="text-[11px] text-raiz-medium">Clique para ver nossa sugestão</span>
+                        </div>
+
+                        <!-- Mood Option Buttons -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button onclick="selectMood('acordando', this)" class="mood-btn active p-3 rounded-2xl border-2 border-raiz-caramel bg-raiz-caramel text-raiz-cream text-xs font-bold text-center transition-all">
+                                🌅 Acordando Devagar
+                            </button>
+                            <button onclick="selectMood('brunch', this)" class="mood-btn p-3 rounded-2xl border border-raiz-border bg-raiz-card-dark text-raiz-dark text-xs font-medium text-center hover:border-raiz-caramel transition-all">
+                                🥞 Brunch Sem Apressa
+                            </button>
+                            <button onclick="selectMood('foco', this)" class="mood-btn p-3 rounded-2xl border border-raiz-border bg-raiz-card-dark text-raiz-dark text-xs font-medium text-center hover:border-raiz-caramel transition-all">
+                                💻 Foco & Trabalho
+                            </button>
+                            <button onclick="selectMood('doce', this)" class="mood-btn p-3 rounded-2xl border border-raiz-border bg-raiz-card-dark text-raiz-dark text-xs font-medium text-center hover:border-raiz-caramel transition-all">
+                                🍰 Doce da Tarde
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Recommendation Display Card -->
+                        <div id="moodRecommendationCard" class="p-4 bg-raiz-card-dark rounded-2xl border border-raiz-border/80 flex items-center justify-between gap-4 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-raiz-cream flex items-center justify-center text-2xl shadow-sm">
+                                    ☕
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-raiz-caramel">Combinação Recomendada</span>
+                                    <h4 id="moodPairingTitle" class="font-serif text-lg font-bold text-raiz-dark">Coado V60 Mantiqueira + Pão na Chapa</h4>
+                                    <p id="moodPairingDesc" class="text-xs text-raiz-medium">Aromas florais e textura amanteigada para despertar suavemente.</p>
+                                </div>
+                            </div>
+                            <button id="moodAddCartBtn" onclick="addMoodToCart()" class="px-3.5 py-2 bg-raiz-dark text-raiz-cream text-xs font-bold rounded-full hover:bg-raiz-caramel transition-colors whitespace-nowrap">
+                                Pedir Esse
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Tags -->
+                    <div class="flex flex-wrap gap-4 pt-2 text-xs font-semibold text-raiz-medium">
+                        <span class="flex items-center gap-1.5 px-3 py-1 bg-raiz-card-dark rounded-full border border-raiz-border">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-raiz-sage"></i> 100% Grãos Arábica
+                        </span>
+                        <span class="flex items-center gap-1.5 px-3 py-1 bg-raiz-card-dark rounded-full border border-raiz-border">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-raiz-sage"></i> 48h Fermentação Natural
+                        </span>
+                        <span class="flex items-center gap-1.5 px-3 py-1 bg-raiz-card-dark rounded-full border border-raiz-border">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-raiz-sage"></i> Espaço Pet Friendly
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Hero Right: Cozy Photography & Floating Badges -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        
+                        <!-- Main Cozy Photography Container -->
+                        <div class="relative rounded-[2.5rem] overflow-hidden border-4 border-raiz-card shadow-float aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80" alt="Mesa de brunch aconchegante no Raiz Café" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-raiz-dark/60 via-transparent to-transparent"></div>
+
+                            <!-- Bottom Floating Feature -->
+                            <div class="absolute bottom-6 left-6 right-6 p-4 glass-cozy rounded-2xl border border-white/50 flex items-center justify-between">
+                                <div class="space-y-0.5">
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-raiz-sage">Favorito do Bairro</span>
+                                    <div class="font-serif text-lg font-bold text-raiz-dark">Latte Caramelo Salgado & Croissant</div>
+                                    <div class="text-xs font-semibold text-raiz-caramel">R$ 32,50 (Combo)</div>
+                                </div>
+                                <button onclick="addToCart('latte-caramelo')" class="p-3 bg-raiz-caramel text-raiz-cream rounded-full hover:bg-raiz-dark transition-colors shadow-cozy">
+                                    <i data-lucide="plus" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Top Floating Badge -->
+                        <div class="absolute -top-6 -left-6 p-4 bg-raiz-card rounded-2xl border border-raiz-border shadow-cozy flex items-center gap-3 transform -rotate-3 hover:rotate-0 transition-transform">
+                            <div class="w-10 h-10 rounded-xl bg-raiz-sage-light text-raiz-sage flex items-center justify-center">
+                                <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-raiz-dark">+2.500 Cafezinhos</div>
+                                <div class="text-[10px] text-raiz-medium">Servidos com amor este mês</div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Right Floating Stamp -->
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-raiz-dark text-raiz-cream rounded-full border-4 border-raiz-cream flex flex-col items-center justify-center p-2 text-center shadow-float transform rotate-12">
+                            <i data-lucide="coffee" class="w-5 h-5 text-raiz-caramel mb-0.5"></i>
+                            <span class="text-[9px] font-bold uppercase tracking-wider leading-tight">Torra da Casa</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- COFFEE QUIZ SECTION -->
+        <section id="quiz" class="py-16 bg-raiz-card-dark/80 border-y border-raiz-border px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto space-y-8">
+                
+                <div class="text-center space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">// ASSISTENTE DE CORPO & SABOR</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-raiz-dark">
+                        Encontre Seu <span class="italic font-normal text-raiz-caramel">Café Ideal</span>
+                    </h2>
+                    <p class="text-raiz-medium text-sm max-w-xl mx-auto">
+                        Responda a 3 perguntas rápidas e nosso barista virtual indicará a extração perfeita para o seu paladar.
+                    </p>
+                </div>
+
+                <!-- Quiz Card Container -->
+                <div class="bg-raiz-card rounded-3xl p-6 sm:p-10 border border-raiz-border shadow-cozy space-y-8">
+                    
+                    <!-- Progress Step Indicator -->
+                    <div class="flex items-center justify-between text-xs font-bold text-raiz-medium border-b border-raiz-border pb-4">
+                        <span id="quizStepLabel">Passo 1 de 3: Intensidade</span>
+                        <div class="flex gap-1.5">
+                            <span id="stepDot1" class="w-3 h-3 rounded-full bg-raiz-caramel"></span>
+                            <span id="stepDot2" class="w-3 h-3 rounded-full bg-raiz-border"></span>
+                            <span id="stepDot3" class="w-3 h-3 rounded-full bg-raiz-border"></span>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Intensity -->
+                    <div id="quizStep1" class="space-y-4">
+                        <h3 class="font-serif text-xl font-bold text-raiz-dark">Como você prefere a intensidade da sua bebida?</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <button onclick="answerQuiz(1, 'suave')" class="p-4 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all group">
+                                <div class="text-2xl mb-1">🌿</div>
+                                <div class="font-bold text-raiz-dark text-sm">Suave & Florado</div>
+                                <div class="text-xs text-raiz-medium mt-1">Notas aromáticas de acidez agradável</div>
+                            </button>
+                            <button onclick="answerQuiz(1, 'equilibrado')" class="p-4 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all group">
+                                <div class="text-2xl mb-1">🍯</div>
+                                <div class="font-bold text-raiz-dark text-sm">Equilibrado & Dulçor</div>
+                                <div class="text-xs text-raiz-medium mt-1">Corpo aveludado e notas de caramelo</div>
+                            </button>
+                            <button onclick="answerQuiz(1, 'intenso')" class="p-4 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all group">
+                                <div class="text-2xl mb-1">⚡</div>
+                                <div class="font-bold text-raiz-dark text-sm">Intenso & Encorpado</div>
+                                <div class="text-xs text-raiz-medium mt-1">Sabor marcante de cacau e nozes</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Temperature -->
+                    <div id="quizStep2" class="space-y-4 hidden">
+                        <h3 class="font-serif text-xl font-bold text-raiz-dark">Qual a temperatura perfeita para o seu momento?</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="answerQuiz(2, 'quente')" class="p-5 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all">
+                                <div class="text-2xl mb-1">☕</div>
+                                <div class="font-bold text-raiz-dark text-sm">Quentinho e Confortável</div>
+                                <div class="text-xs text-raiz-medium mt-1">Para saborear devagar em xícara de cerâmica</div>
+                            </button>
+                            <button onclick="answerQuiz(2, 'gelado')" class="p-5 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all">
+                                <div class="text-2xl mb-1">🧊</div>
+                                <div class="font-bold text-raiz-dark text-sm">Gelado & Refrescante</div>
+                                <div class="text-xs text-raiz-medium mt-1">Infusionado com gelo, leite de aveia ou citros</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Pairing -->
+                    <div id="quizStep3" class="space-y-4 hidden">
+                        <h3 class="font-serif text-xl font-bold text-raiz-dark">Quer acompanhar com algo delicioso?</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <button onclick="answerQuiz(3, 'salgado')" class="p-4 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all">
+                                <div class="text-2xl mb-1">🥐</div>
+                                <div class="font-bold text-raiz-dark text-sm">Salgado Artesanal</div>
+                                <div class="text-xs text-raiz-medium mt-1">Croissants, pão na chapa ou ovos</div>
+                            </button>
+                            <button onclick="answerQuiz(3, 'doce')" class="p-4 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all">
+                                <div class="text-2xl mb-1">🍰</div>
+                                <div class="font-bold text-raiz-dark text-sm">Doce Fresquinho</div>
+                                <div class="text-xs text-raiz-medium mt-1">Cuca de maçã, cheesecake ou cookies</div>
+                            </button>
+                            <button onclick="answerQuiz(3, 'apenas')" class="p-4 rounded-2xl border-2 border-raiz-border hover:border-raiz-caramel bg-raiz-card-dark text-left transition-all">
+                                <div class="text-2xl mb-1">✨</div>
+                                <div class="font-bold text-raiz-dark text-sm">Apenas o Café Pureza</div>
+                                <div class="text-xs text-raiz-medium mt-1">Foco total na experiência sensorial do grão</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Result Panel -->
+                    <div id="quizResult" class="hidden p-6 bg-raiz-cream rounded-2xl border-2 border-raiz-caramel text-center space-y-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-raiz-sage">✨ RESULTADO DO SEU BARISTA</span>
+                        <h3 id="quizResultTitle" class="font-serif text-3xl font-bold text-raiz-dark">Latte Caramelo Salgado + Croissant de Amêndoas</h3>
+                        <p id="quizResultDesc" class="text-sm text-raiz-medium max-w-lg mx-auto">
+                            Uma harmonia envolvente entre a doçura cremosa do café e o crocante amanteigado da nossa massa folhada de 48h.
+                        </p>
+                        <div class="pt-2 flex flex-col sm:flex-row justify-center gap-3">
+                            <button id="quizAddBtn" onclick="addQuizResultToCart()" class="px-6 py-3 bg-raiz-caramel hover:bg-raiz-caramel-hover text-raiz-cream text-xs font-bold uppercase tracking-wider rounded-full shadow-cozy transition-colors">
+                                Adicionar Esse Combo
+                            </button>
+                            <button onclick="resetQuiz()" class="px-6 py-3 bg-raiz-card-dark text-raiz-dark text-xs font-bold uppercase tracking-wider rounded-full hover:bg-raiz-border transition-colors">
+                                Refazer Quiz
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DIGITAL MENU SECTION -->
+        <section id="cardapio" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">// FEITO NA HORA</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-raiz-dark">
+                        Cardápio do <span class="italic font-normal text-raiz-caramel">Nosso Bairro</span>
+                    </h2>
+                    <p class="text-raiz-medium text-sm">
+                        Selecione suas preferências e adicione itens direto para a sua sacola de retirada.
+                    </p>
+                </div>
+
+                <!-- Search & Dietary Filters Bar -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <!-- Search Input -->
+                    <div class="relative">
+                        <i data-lucide="search" class="w-4 h-4 text-raiz-medium absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="menuSearchInput" oninput="filterMenu()" placeholder="Buscar por sabor ou item..." class="pl-10 pr-4 py-2.5 bg-raiz-card border border-raiz-border rounded-full text-xs text-raiz-dark placeholder-raiz-medium outline-none focus:border-raiz-caramel w-full sm:w-60">
+                    </div>
+
+                    <!-- Dietary Toggles -->
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleDietaryFilter('veg', this)" class="diet-filter-btn px-3.5 py-2.5 bg-raiz-card rounded-full border border-raiz-border text-xs font-medium text-raiz-dark hover:border-raiz-caramel transition-colors flex items-center gap-1.5">
+                            <i data-lucide="leaf" class="w-3.5 h-3.5 text-raiz-sage"></i>
+                            <span>Vegetariano</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap items-center gap-2 border-b border-raiz-border pb-4 overflow-x-auto">
+                <button onclick="selectCategory('all', this)" class="menu-tab active px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-raiz-dark text-raiz-cream transition-all whitespace-nowrap">
+                    Todos os Itens
+                </button>
+                <button onclick="selectCategory('cafes', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider bg-raiz-card text-raiz-dark hover:bg-raiz-card-dark transition-all whitespace-nowrap">
+                    Cafés Especiais
+                </button>
+                <button onclick="selectCategory('brunch', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider bg-raiz-card text-raiz-dark hover:bg-raiz-card-dark transition-all whitespace-nowrap">
+                    Brunch & Ovos
+                </button>
+                <button onclick="selectCategory('paes', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider bg-raiz-card text-raiz-dark hover:bg-raiz-card-dark transition-all whitespace-nowrap">
+                    Pães & Torradas
+                </button>
+                <button onclick="selectCategory('doces', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider bg-raiz-card text-raiz-dark hover:bg-raiz-card-dark transition-all whitespace-nowrap">
+                    Doces da Casa
+                </button>
+                <button onclick="selectCategory('geladas', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider bg-raiz-card text-raiz-dark hover:bg-raiz-card-dark transition-all whitespace-nowrap">
+                    Bebidas Geladas
+                </button>
+            </div>
+
+            <!-- Menu Product Cards Grid -->
+            <div id="menuContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products rendered dynamically via JavaScript -->
+            </div>
+
+        </section>
+
+        <!-- BRUNCH EXPERIENCE SHOWCASE -->
+        <section id="brunch" class="py-20 bg-raiz-dark text-raiz-cream px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto space-y-16">
+                
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">// RITUAL DE FIM DE SEMANA</span>
+                    <h2 class="font-serif text-4xl sm:text-6xl font-normal leading-tight">
+                        A Mesa Posta para Desacelerar o Seu Tempo
+                    </h2>
+                    <p class="text-raiz-cream/80 text-base font-light max-w-xl mx-auto leading-relaxed">
+                        Nosso brunch é servido das 08h às 16h com combos fartos montados em tábuas de madeira nobre e cerâmicas artesanais.
+                    </p>
+                </div>
+
+                <!-- Featured Brunch Combos Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Combo 1 -->
+                    <div class="bg-raiz-card/10 border border-raiz-cream/15 rounded-3xl p-8 space-y-6 flex flex-col justify-between hover:border-raiz-caramel/50 transition-colors">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <span class="text-3xl">🌅</span>
+                                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-raiz-caramel text-raiz-cream rounded-full">Individual</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-raiz-cream">Combo Manhã Solar</h3>
+                            <p class="text-xs text-raiz-cream/70 leading-relaxed font-light">
+                                Suco verde natural + Pão na chapa com requeijão de corte + Ovo quentinho + Café Coado V60 da semana.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-raiz-cream/10">
+                            <span class="font-serif text-xl font-bold text-raiz-caramel">R$ 48,00</span>
+                            <button onclick="addToCart('combo-solar')" class="px-4 py-2 bg-raiz-cream text-raiz-dark text-xs font-bold rounded-full hover:bg-raiz-caramel hover:text-raiz-cream transition-colors">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Combo 2 -->
+                    <div class="bg-raiz-card/10 border-2 border-raiz-caramel rounded-3xl p-8 space-y-6 flex flex-col justify-between relative shadow-float">
+                        <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-raiz-caramel text-raiz-cream rounded-full">
+                            Mais Pedido para Dois
+                        </span>
+                        <div class="space-y-4 pt-2">
+                            <div class="flex justify-between items-start">
+                                <span class="text-3xl">🧺</span>
+                                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-raiz-sage text-raiz-dark rounded-full">Para 2 Pessoas</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-raiz-cream">Mesa do Bairro</h3>
+                            <p class="text-xs text-raiz-cream/70 leading-relaxed font-light">
+                                Cesta com 2 Croissants, Fatias de Pão de Fermentação, Ovos Mexidos com Meia Cura, Salada de Frutas com Iogurte, 2 Cappuccinos e Geleia da Casa.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-raiz-cream/10">
+                            <span class="font-serif text-xl font-bold text-raiz-caramel">R$ 96,00</span>
+                            <button onclick="addToCart('mesa-bairro')" class="px-4 py-2 bg-raiz-caramel text-raiz-cream text-xs font-bold rounded-full hover:bg-raiz-cream hover:text-raiz-dark transition-colors">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Combo 3 -->
+                    <div class="bg-raiz-card/10 border border-raiz-cream/15 rounded-3xl p-8 space-y-6 flex flex-col justify-between hover:border-raiz-caramel/50 transition-colors">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <span class="text-3xl">🍰</span>
+                                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-raiz-caramel text-raiz-cream rounded-full">Tarde Doce</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-raiz-cream">Tarde Aconchegante</h3>
+                            <p class="text-xs text-raiz-cream/70 leading-relaxed font-light">
+                                Fatia generosa de Cuca de Maçã quentinha + Cappuccino com raspa de chocolate amargo 70%.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-raiz-cream/10">
+                            <span class="font-serif text-xl font-bold text-raiz-caramel">R$ 38,00</span>
+                            <button onclick="addToCart('tarde-doce')" class="px-4 py-2 bg-raiz-cream text-raiz-dark text-xs font-bold rounded-full hover:bg-raiz-caramel hover:text-raiz-cream transition-colors">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Reservation Callout Banner -->
+                <div class="bg-raiz-cream text-raiz-dark rounded-3xl p-8 sm:p-12 flex flex-col lg:flex-row items-center justify-between gap-8 border border-raiz-border shadow-float">
+                    <div class="space-y-3 text-center lg:text-left">
+                        <span class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">SEM FILAS DE ESPERA</span>
+                        <h3 class="font-serif text-3xl sm:text-4xl font-bold">Reserve sua Mesa no Jardim de Inverno</h3>
+                        <p class="text-raiz-medium text-sm max-w-xl">
+                            Garanta seu cantinho ensolarado no nosso jardim com antecedência e venha curtir seu brunch no seu ritmo.
+                        </p>
+                    </div>
+                    <button onclick="openReservationModal()" class="px-8 py-4 bg-raiz-caramel hover:bg-raiz-caramel-hover text-raiz-cream text-xs font-bold uppercase tracking-widest rounded-full shadow-cozy transition-all hover:scale-105 whitespace-nowrap">
+                        Reservar Agora
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ORIGIN & LOCAL ROAST STORYTELLING -->
+        <section id="origens" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <span class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">// DA FAZENDA PARA A XÍCARA</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-raiz-dark">
+                    Nossa Torra & <span class="italic font-normal text-raiz-caramel">Origens Selecionadas</span>
+                </h2>
+                <p class="text-raiz-medium text-sm">
+                    Trabalhamos diretamente com pequenos produtores rurais de agricultura sustentável no Brasil.
+                </p>
+            </div>
+
+            <!-- Origins 3 Columns -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Origin Card 1 -->
+                <div class="bg-raiz-card rounded-3xl p-6 border border-raiz-border shadow-cozy space-y-4 hover:-translate-y-1 transition-transform">
+                    <div class="h-44 rounded-2xl overflow-hidden relative bg-raiz-card-dark">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Grãos de café Mantiqueira" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 px-3 py-1 bg-raiz-dark/80 text-raiz-cream text-[10px] font-bold uppercase tracking-wider rounded-full backdrop-blur-sm">
+                            Sul de Minas Gerais
+                        </span>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-serif text-2xl font-bold text-raiz-dark">Serra da Mantiqueira</h3>
+                        <p class="text-xs text-raiz-medium leading-relaxed">
+                            Cultivado a 1.250m de altitude. Apresenta doçura marcante de caramelo com acidez cítrica refrescante.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 pt-2">
+                        <span class="px-2.5 py-1 bg-raiz-card-dark text-raiz-dark text-[10px] font-bold rounded-full">🍯 Caramelo</span>
+                        <span class="px-2.5 py-1 bg-raiz-card-dark text-raiz-dark text-[10px] font-bold rounded-full">🌸 Flor de Laranjeira</span>
+                    </div>
+                </div>
+
+                <!-- Origin Card 2 -->
+                <div class="bg-raiz-card rounded-3xl p-6 border border-raiz-border shadow-cozy space-y-4 hover:-translate-y-1 transition-transform">
+                    <div class="h-44 rounded-2xl overflow-hidden relative bg-raiz-card-dark">
+                        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80" alt="Grãos de café Cerrado Mineiro" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 px-3 py-1 bg-raiz-dark/80 text-raiz-cream text-[10px] font-bold uppercase tracking-wider rounded-full backdrop-blur-sm">
+                            Cerrado Mineiro
+                        </span>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-serif text-2xl font-bold text-raiz-dark">Cerrado Mineiro</h3>
+                        <p class="text-xs text-raiz-medium leading-relaxed">
+                            Grãos de terroir vulcânico com corpo denso e aveludado, revelando notas intensas de cacau e nozes torradas.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 pt-2">
+                        <span class="px-2.5 py-1 bg-raiz-card-dark text-raiz-dark text-[10px] font-bold rounded-full">🍫 Chocolate Amargo</span>
+                        <span class="px-2.5 py-1 bg-raiz-card-dark text-raiz-dark text-[10px] font-bold rounded-full">🌰 Nozes</span>
+                    </div>
+                </div>
+
+                <!-- Origin Card 3 -->
+                <div class="bg-raiz-card rounded-3xl p-6 border border-raiz-border shadow-cozy space-y-4 hover:-translate-y-1 transition-transform">
+                    <div class="h-44 rounded-2xl overflow-hidden relative bg-raiz-card-dark">
+                        <img src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&w=800&q=80" alt="Grãos da Chapada Diamantina" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 px-3 py-1 bg-raiz-dark/80 text-raiz-cream text-[10px] font-bold uppercase tracking-wider rounded-full backdrop-blur-sm">
+                            Chapada Diamantina
+                        </span>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-serif text-2xl font-bold text-raiz-dark">Chapada Diamantina</h3>
+                        <p class="text-xs text-raiz-medium leading-relaxed">
+                            Secagem natural ao sol em terreiros suspensos. Notas exóticas de frutas amarelas e melaço de cana.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 pt-2">
+                        <span class="px-2.5 py-1 bg-raiz-card-dark text-raiz-dark text-[10px] font-bold rounded-full">🍑 Frutas Amarelas</span>
+                        <span class="px-2.5 py-1 bg-raiz-card-dark text-raiz-dark text-[10px] font-bold rounded-full">🍯 Melaço</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ATMOSPHERE & LOCAL COMMUNITY SECTION -->
+        <section id="espaco" class="py-20 bg-raiz-card-dark/60 border-y border-raiz-border px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto space-y-16">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-6">
+                        <span class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">// ESPAÇO DE CONVÍVIO</span>
+                        <h2 class="font-serif text-4xl sm:text-5xl font-bold text-raiz-dark leading-tight">
+                            Nosso Cantinho no <span class="italic font-normal text-raiz-caramel">Coração do Bairro</span>
+                        </h2>
+                        <p class="text-raiz-medium text-sm leading-relaxed">
+                            Criamos um espaço acolhedor pensado tanto para conversas sem pressa no fim de semana quanto para quem busca um cantinho tranquilo para trabalhar durante a semana.
+                        </p>
+
+                        <!-- Features Grid -->
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="p-4 bg-raiz-card rounded-2xl border border-raiz-border space-y-1">
+                                <i data-lucide="wifi" class="w-5 h-5 text-raiz-caramel"></i>
+                                <div class="font-bold text-xs text-raiz-dark">Wi-Fi Fibra de Alta Velocidade</div>
+                                <div class="text-[10px] text-raiz-medium">Com tomadas em todas as mesas</div>
+                            </div>
+                            <div class="p-4 bg-raiz-card rounded-2xl border border-raiz-border space-y-1">
+                                <i data-lucide="dog" class="w-5 h-5 text-raiz-sage"></i>
+                                <div class="font-bold text-xs text-raiz-dark">100% Pet Friendly</div>
+                                <div class="text-[10px] text-raiz-medium">Pote de água fresquinha & petisco</div>
+                            </div>
+                            <div class="p-4 bg-raiz-card rounded-2xl border border-raiz-border space-y-1">
+                                <i data-lucide="trees" class="w-5 h-5 text-raiz-sage"></i>
+                                <div class="font-bold text-xs text-raiz-dark">Jardim de Inverno</div>
+                                <div class="text-[10px] text-raiz-medium">Área aberta com luz natural</div>
+                            </div>
+                            <div class="p-4 bg-raiz-card rounded-2xl border border-raiz-border space-y-1">
+                                <i data-lucide="bike" class="w-5 h-5 text-raiz-caramel"></i>
+                                <div class="font-bold text-xs text-raiz-dark">Bicicletário Seguro</div>
+                                <div class="text-[10px] text-raiz-medium">Estacione em frente à nossa porta</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonials Carousel / Grid -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="bg-raiz-card p-8 rounded-3xl border border-raiz-border shadow-cozy space-y-6">
+                            <div class="flex items-center gap-1 text-raiz-caramel">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                            <p class="font-serif text-xl sm:text-2xl italic text-raiz-dark leading-relaxed">
+                                "O Raiz Café virou o meu ritual sagrado dos sábados de manhã. O pão de fermentação natural com ovo pochê e o cappuccino com caramelo salgado são simplesmente inesquecíveis!"
+                            </p>
+                            <div class="flex items-center gap-3 pt-2">
+                                <div class="w-10 h-10 rounded-full bg-raiz-caramel text-raiz-cream font-bold text-xs flex items-center justify-center">
+                                    MS
+                                </div>
+                                <div>
+                                    <div class="font-bold text-xs text-raiz-dark">Mariana Siqueira</div>
+                                    <div class="text-[10px] text-raiz-medium">Vizinha do bairro & cliente assídua</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-raiz-card p-5 rounded-2xl border border-raiz-border text-xs space-y-2">
+                                <div class="font-bold text-raiz-dark">"Café coado de primeira"</div>
+                                <p class="text-raiz-medium text-[11px]">"O atendimento é incrivelmente acolhedor e os grãos da Mantiqueira são sensacionais."</p>
+                                <span class="text-[10px] text-raiz-caramel font-semibold block">— Rodrigo V.</span>
+                            </div>
+                            <div class="bg-raiz-card p-5 rounded-2xl border border-raiz-border text-xs space-y-2">
+                                <div class="font-bold text-raiz-dark">"Ambiente relaxante"</div>
+                                <p class="text-raiz-medium text-[11px]">"Lugar perfeito para ler um livro tomando um cold brew geladinho."</p>
+                                <span class="text-[10px] text-raiz-caramel font-semibold block">— Camila F.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- TAKEAWAY CART DRAWER (SLIDE-OVER) -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-raiz-dark/60 backdrop-blur-sm"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-raiz-card shadow-float flex flex-col justify-between border-l border-raiz-border">
+                
+                <!-- Drawer Header -->
+                <div class="p-6 border-b border-raiz-border flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-raiz-caramel"></i>
+                        <h3 class="font-serif text-2xl font-bold text-raiz-dark">Sua Sacola de Retirada</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="text-raiz-dark hover:text-raiz-caramel">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Estimated Pickup Banner -->
+                <div class="px-6 py-3 bg-raiz-sage-light border-b border-raiz-border flex items-center justify-between text-xs font-semibold text-raiz-dark">
+                    <span class="flex items-center gap-1.5">
+                        <i data-lucide="clock" class="w-4 h-4 text-raiz-sage"></i>
+                        <span>Tempo estimado de preparo:</span>
+                    </span>
+                    <span class="px-2 py-0.5 bg-raiz-sage text-raiz-dark font-bold rounded-full">~15 minutos</span>
+                </div>
+
+                <!-- Cart Items List Container -->
+                <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Items populated dynamically via JS -->
+                </div>
+
+                <!-- Drawer Footer & Checkout -->
+                <div class="p-6 border-t border-raiz-border bg-raiz-card-dark space-y-4">
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between text-raiz-medium">
+                            <span>Subtotal</span>
+                            <span id="cartSubtotal" class="font-bold text-raiz-dark">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between text-raiz-medium">
+                            <span>Taxa de Embalagem Ecológica</span>
+                            <span class="font-bold text-raiz-sage">Grátis</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-raiz-dark pt-2 border-t border-raiz-border">
+                            <span>Total do Pedido</span>
+                            <span id="cartTotal" class="font-serif text-2xl text-raiz-caramel">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <button onclick="simulateOrderCheckout()" class="w-full py-4 bg-raiz-caramel hover:bg-raiz-caramel-hover text-raiz-cream text-xs font-bold uppercase tracking-widest rounded-full transition-all shadow-cozy flex items-center justify-center gap-2">
+                        <span>Confirmar & Gerar Senha de Retirada</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <p class="text-[10px] text-center text-raiz-medium">Pagamento no balcão via Pix, Cartão ou Dinheiro</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- RESERVATION MODAL -->
+    <div id="reservationModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div onclick="closeReservationModal()" class="absolute inset-0 bg-raiz-dark/60 backdrop-blur-sm"></div>
+        <div class="relative bg-raiz-card rounded-3xl border border-raiz-border max-w-lg w-full p-6 sm:p-8 shadow-float z-10 space-y-6">
+            <button onclick="closeReservationModal()" class="absolute top-4 right-4 text-raiz-dark hover:text-raiz-caramel">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="space-y-1">
+                <span class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">// GARANTA SEU LUGAR</span>
+                <h3 class="font-serif text-3xl font-bold text-raiz-dark">Reserva de Mesa</h3>
+            </div>
+
+            <form onsubmit="handleReservationSubmit(event)" class="space-y-4">
+                <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-raiz-dark">Seu Nome Completo</label>
+                    <input type="text" required placeholder="Ex: Ana Maria Silva" class="w-full px-4 py-3 bg-raiz-cream border border-raiz-border rounded-xl text-xs text-raiz-dark outline-none focus:border-raiz-caramel">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-raiz-dark">Número de Pessoas</label>
+                        <select required class="w-full px-4 py-3 bg-raiz-cream border border-raiz-border rounded-xl text-xs text-raiz-dark outline-none focus:border-raiz-caramel">
+                            <option value="1">1 Pessoa</option>
+                            <option value="2" selected>2 Pessoas</option>
+                            <option value="3">3 Pessoas</option>
+                            <option value="4">4 Pessoas</option>
+                            <option value="6">6 Pessoas</option>
+                            <option value="8">Mesa Família (8+)</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-raiz-dark">Preferência de Área</label>
+                        <select required class="w-full px-4 py-3 bg-raiz-cream border border-raiz-border rounded-xl text-xs text-raiz-dark outline-none focus:border-raiz-caramel">
+                            <option value="jardim">Jardim de Inverno</option>
+                            <option value="salao">Salão Aconchegante</option>
+                            <option value="varanda">Varanda Pet</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-raiz-dark">Data</label>
+                        <input type="date" required class="w-full px-4 py-3 bg-raiz-cream border border-raiz-border rounded-xl text-xs text-raiz-dark outline-none focus:border-raiz-caramel">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-raiz-dark">Horário</label>
+                        <select required class="w-full px-4 py-3 bg-raiz-cream border border-raiz-border rounded-xl text-xs text-raiz-dark outline-none focus:border-raiz-caramel">
+                            <option value="08:30">08:30</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:30">11:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="15:00">15:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-raiz-dark">Observações / Comemoração</label>
+                    <input type="text" placeholder="Ex: Aniversário, mesa para bebê..." class="w-full px-4 py-3 bg-raiz-cream border border-raiz-border rounded-xl text-xs text-raiz-dark outline-none focus:border-raiz-caramel">
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-raiz-caramel hover:bg-raiz-caramel-hover text-raiz-cream text-xs font-bold uppercase tracking-widest rounded-full transition-colors shadow-cozy">
+                    Confirmar Reserva
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastAlert" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 glass-dark text-raiz-cream px-5 py-3.5 rounded-2xl shadow-float flex items-center gap-3 border border-white/20 text-xs">
+        <i data-lucide="check-circle" class="w-5 h-5 text-raiz-sage"></i>
+        <span id="toastMsg">Item adicionado à sacola!</span>
+    </div>
+
+    <!-- FOOTER & VISIT INFO -->
+    <footer class="bg-raiz-dark text-raiz-cream pt-16 pb-12 border-t border-raiz-border/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-raiz-cream/15">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="md:col-span-4 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-raiz-caramel text-raiz-cream flex items-center justify-center">
+                            <i data-lucide="coffee" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-serif text-2xl font-bold tracking-tight">Raiz Café</span>
+                    </div>
+                    <p class="text-xs text-raiz-cream/70 leading-relaxed max-w-sm">
+                        O seu refúgio de bairro para momentos sem pressa, grãos especiais e brunch artesanal.
+                    </p>
+                    
+                    <!-- Copy Address Button -->
+                    <div class="pt-2">
+                        <button onclick="copyAddress()" class="px-4 py-2.5 bg-raiz-cream/10 hover:bg-raiz-cream/20 text-raiz-cream border border-raiz-cream/20 rounded-full text-xs font-medium transition-colors flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-raiz-caramel"></i>
+                            <span id="addressText">Rua Harmonia, 482 · Pinheiros, São Paulo</span>
+                            <i data-lucide="copy" class="w-3.5 h-3.5 opacity-60"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Col 2: Hours & Days -->
+                <div class="md:col-span-4 space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">Horário de Funcionamento</h4>
+                    <ul class="space-y-2 text-xs text-raiz-cream/80">
+                        <li class="flex justify-between max-w-xs border-b border-raiz-cream/10 pb-1">
+                            <span>Segunda a Sexta</span>
+                            <span class="font-bold text-raiz-cream">07:30 às 19:30</span>
+                        </li>
+                        <li class="flex justify-between max-w-xs border-b border-raiz-cream/10 pb-1">
+                            <span>Sábados e Domingos</span>
+                            <span class="font-bold text-raiz-cream">08:00 às 18:00</span>
+                        </li>
+                        <li class="flex justify-between max-w-xs pt-1">
+                            <span>Brunch Especial</span>
+                            <span class="font-bold text-raiz-sage">Até as 16h aos fds</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Newsletter Clube Raiz -->
+                <div class="md:col-span-4 space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-raiz-caramel">Clube Raiz de Benefícios</h4>
+                    <p class="text-xs text-raiz-cream/70 leading-relaxed">
+                        Receba convites para degustações de café e ganhe <strong class="text-raiz-cream">10% OFF na sua primeira visita</strong>.
+                    </p>
+                    <form onsubmit="handleNewsletterSubmit(event)" class="flex gap-2">
+                        <input type="email" required placeholder="Seu melhor e-mail..." class="px-4 py-2.5 bg-raiz-cream/10 border border-raiz-cream/20 rounded-full text-xs text-raiz-cream placeholder-raiz-cream/50 outline-none focus:border-raiz-caramel flex-1">
+                        <button type="submit" class="px-5 py-2.5 bg-raiz-caramel hover:bg-raiz-caramel-hover text-raiz-cream text-xs font-bold uppercase rounded-full transition-colors whitespace-nowrap">
+                            Entrar
+                        </button>
+                    </form>
+                    <div id="newsletterMsg" class="hidden text-xs text-raiz-sage font-medium">✨ Cupom ativado: <strong>BEMVINDO10</strong></div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-raiz-cream/50 gap-4">
+                <div>© 2026 RAIZ CAFÉ. TODOS OS DIREITOS RESERVADOS.</div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:underline">Privacidade</a>
+                    <a href="#" class="hover:underline">Trabalhe Conosco</a>
+                    <a href="#" class="hover:underline">Imprensa</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT INTERACTIVITY ENGINE -->
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+        // Global Products Data
+        const menuProducts = [
+            {
+                id: 'latte-caramelo',
+                category: 'cafes',
+                title: 'Latte Caramelo Salgado',
+                price: 18.50,
+                desc: 'Espresso duplo, leite vaporizado e calda artesanal de caramelo com flor de sal.',
+                tags: ['Destaque', 'Quente ou Gelado'],
+                veg: true,
+                image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 'coado-v60',
+                category: 'cafes',
+                title: 'Coado V60 Serra da Mantiqueira',
+                price: 14.00,
+                desc: 'Extração filtrada que realça notas florais e acidez cítrica suave.',
+                tags: ['100% Arábica'],
+                veg: true,
+                image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 'ovos-benedict',
+                category: 'brunch',
+                title: 'Ovos Benedict no Brioche',
+                price: 34.00,
+                desc: 'Dois ovos pochê, bacon crocante e molho holandês aveludado sobre fatia de brioche.',
+                tags: ['Destaque da Casa'],
+                veg: false,
+                image: 'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 'toast-abacate',
+                category: 'paes',
+                title: 'Avocado Toast & Ovo Pochê',
+                price: 28.00,
+                desc: 'Pão sourdough de 48h, abacate temperado com citros, ovo pochê e gergelim.',
+                tags: ['Vegetariano'],
+                veg: true,
+                image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 'croissant-manteiga',
+                category: 'paes',
+                title: 'Croissant Manteiga da Serra',
+                price: 14.00,
+                desc: 'Massa folhada artesanal dourada e crocante por fora, macia por dentro.',
+                tags: ['48h Fermentação'],
+                veg: true,
+                image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 'cuca-maca',
+                category: 'doces',
+                title: 'Cuca Gaúcha de Maçã & Canela',
+                price: 16.00,
+                desc: 'Receita tradicional de família com farofa crocante e fatias de maçã macerada.',
+                tags: ['Receita de Família'],
+                veg: true,
+                image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 'cold-brew-citros',
+                category: 'geladas',
+                title: 'Cold Brew Infused Citros',
+                price: 17.00,
+                desc: 'Infusão a frio de 18 horas finalizada com xarope de limão siciliano e tônica.',
+                tags: ['Sem Açúcar', 'Refrescante'],
+                veg: true,
+                image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 'cheesecake-frutas',
+                category: 'doces',
+                title: 'Cheesecake com Calda de Café',
+                price: 22.00,
+                desc: 'Base crocante de biscoito, creme leve de queijo e redução de espresso com frutas.',
+                tags: ['Artesanal'],
+                veg: true,
+                image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80'
+            }
+        ];
+
+        // Mood Picker Preset Recommendations
+        const moodPresets = {
+            acordando: {
+                title: 'Coado V60 Mantiqueira + Pão na Chapa',
+                desc: 'Aromas florais e textura amanteigada para despertar suavemente.',
+                price: 22.00,
+                id: 'coado-v60'
+            },
+            brunch: {
+                title: 'Latte Caramelo Salgado + Ovos Benedict',
+                desc: 'A combinação máxima de sabores ricos e textura cremosa.',
+                price: 49.50,
+                id: 'ovos-benedict'
+            },
+            foco: {
+                title: 'Cold Brew Citros + Avocado Toast',
+                desc: 'Energia limpa e leveza para manter a produtividade alta.',
+                price: 43.00,
+                id: 'toast-abacate'
+            },
+            doce: {
+                title: 'Cappuccino da Casa + Cuca de Maçã',
+                desc: 'Aconchego em forma de especiarias e chocolate quentinho.',
+                price: 32.00,
+                id: 'cuca-maca'
+            }
+        };
+
+        let currentMood = 'acordando';
+
+        function selectMood(key, btn) {
+            currentMood = key;
+            document.querySelectorAll('.mood-btn').forEach(b => {
+                b.className = 'mood-btn p-3 rounded-2xl border border-raiz-border bg-raiz-card-dark text-raiz-dark text-xs font-medium text-center hover:border-raiz-caramel transition-all';
+            });
+            btn.className = 'mood-btn active p-3 rounded-2xl border-2 border-raiz-caramel bg-raiz-caramel text-raiz-cream text-xs font-bold text-center transition-all';
+
+            const data = moodPresets[key];
+            document.getElementById('moodPairingTitle').innerText = data.title;
+            document.getElementById('moodPairingDesc').innerText = data.desc;
+        }
+
+        function addMoodToCart() {
+            const data = moodPresets[currentMood];
+            addToCart(data.id);
+        }
+
+        // Coffee Quiz Engine
+        let quizAnswers = {};
+
+        function answerQuiz(step, value) {
+            quizAnswers[step] = value;
+
+            if (step === 1) {
+                document.getElementById('quizStep1').classList.add('hidden');
+                document.getElementById('quizStep2').classList.remove('hidden');
+                document.getElementById('quizStepLabel').innerText = 'Passo 2 de 3: Temperatura';
+                document.getElementById('stepDot2').classList.replace('bg-raiz-border', 'bg-raiz-caramel');
+            } else if (step === 2) {
+                document.getElementById('quizStep2').classList.add('hidden');
+                document.getElementById('quizStep3').classList.remove('hidden');
+                document.getElementById('quizStepLabel').innerText = 'Passo 3 de 3: Acompanhamento';
+                document.getElementById('stepDot3').classList.replace('bg-raiz-border', 'bg-raiz-caramel');
+            } else if (step === 3) {
+                document.getElementById('quizStep3').classList.add('hidden');
+                calculateQuizResult();
+            }
+        }
+
+        function calculateQuizResult() {
+            const resultPanel = document.getElementById('quizResult');
+            const title = document.getElementById('quizResultTitle');
+            const desc = document.getElementById('quizResultDesc');
+
+            if (quizAnswers[2] === 'gelado') {
+                title.innerText = 'Cold Brew Citros + Toast de Abacate';
+                desc.innerText = 'Uma escolha leve, refrescante e cheia de energia para dias ensolarados.';
+            } else if (quizAnswers[1] === 'intenso') {
+                title.innerText = 'Espresso Duplo Ristretto + Croissant';
+                desc.innerText = 'Sabor potente com corpo aveludado contrastando com folhado crocante.';
+            } else {
+                title.innerText = 'Latte Caramelo Salgado + Cuca de Maçã';
+                desc.innerText = 'O equilíbrio perfeito entre doçura na medida e aconchego de especiarias.';
+            }
+
+            document.getElementById('quizStepLabel').innerText = 'Recomendação Pronta!';
+            resultPanel.classList.remove('hidden');
+        }
+
+        function resetQuiz() {
+            quizAnswers = {};
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizStep1').classList.remove('hidden');
+            document.getElementById('quizStepLabel').innerText = 'Passo 1 de 3: Intensidade';
+            document.getElementById('stepDot2').classList.replace('bg-raiz-caramel', 'bg-raiz-border');
+            document.getElementById('stepDot3').classList.replace('bg-raiz-caramel', 'bg-raiz-border');
+        }
+
+        function addQuizResultToCart() {
+            addToCart('latte-caramelo');
+        }
+
+        // Menu Filter & Render Logic
+        let activeCategory = 'all';
+        let vegOnlyFilter = false;
+
+        function renderMenu() {
+            const container = document.getElementById('menuContainer');
+            const searchVal = document.getElementById('menuSearchInput').value.toLowerCase();
+            container.innerHTML = '';
+
+            const filtered = menuProducts.filter(item => {
+                const matchCat = activeCategory === 'all' || item.category === activeCategory;
+                const matchVeg = !vegOnlyFilter || item.veg === true;
+                const matchSearch = item.title.toLowerCase().includes(searchVal) || item.desc.toLowerCase().includes(searchVal);
+                return matchCat && matchVeg && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 space-y-2">
+                        <i data-lucide="coffee" class="w-10 h-10 text-raiz-medium mx-auto"></i>
+                        <p class="text-sm text-raiz-medium">Nenhum item encontrado para essa busca.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-raiz-card rounded-3xl overflow-hidden border border-raiz-border shadow-cozy flex flex-col justify-between hover:-translate-y-1 transition-all duration-300';
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-raiz-card-dark">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+                                ${item.tags.map(t => `<span class="px-2.5 py-1 bg-raiz-dark/80 backdrop-blur-sm text-raiz-cream text-[9px] font-bold uppercase tracking-wider rounded-full">${t}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-2">
+                            <div class="flex justify-between items-start gap-2">
+                                <h3 class="font-serif text-xl font-bold text-raiz-dark leading-snug">${item.title}</h3>
+                                <span class="font-serif text-lg font-bold text-raiz-caramel whitespace-nowrap">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                            </div>
+                            <p class="text-xs text-raiz-medium font-normal leading-relaxed">${item.desc}</p>
+                        </div>
+                    </div>
+
+                    <div class="px-6 pb-6">
+                        <button onclick="addToCart('${item.id}')" class="w-full py-3 bg-raiz-caramel hover:bg-raiz-caramel-hover text-raiz-cream text-xs font-bold uppercase tracking-wider rounded-full transition-colors flex items-center justify-center gap-2 shadow-cozy">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <span>Adicionar à Sacola</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        function selectCategory(cat, btn) {
+            activeCategory = cat;
+            document.querySelectorAll('.menu-tab').forEach(b => {
+                b.className = 'menu-tab px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider bg-raiz-card text-raiz-dark hover:bg-raiz-card-dark transition-all whitespace-nowrap';
+            });
+            btn.className = 'menu-tab active px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-raiz-dark text-raiz-cream transition-all whitespace-nowrap';
+            renderMenu();
+        }
+
+        function toggleDietaryFilter(type, btn) {
+            vegOnlyFilter = !vegOnlyFilter;
+            btn.classList.toggle('bg-raiz-sage');
+            btn.classList.toggle('text-raiz-dark');
+            renderMenu();
+        }
+
+        function filterMenu() {
+            renderMenu();
+        }
+
+        // Takeaway Cart Drawer System
+        let cartItems = [];
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function addToCart(id) {
+            const product = menuProducts.find(p => p.id === id);
+            if (!product) return;
+
+            const existing = cartItems.find(item => item.id === id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cartItems.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`${product.title} adicionado!`);
+        }
+
+        function updateCartQty(index, delta) {
+            cartItems[index].qty += delta;
+            if (cartItems[index].qty <= 0) {
+                cartItems.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartItemsList');
+            const badge = document.getElementById('cartBadgeCount');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const totalEl = document.getElementById('cartTotal');
+
+            list.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            if (cartItems.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 text-raiz-border mx-auto"></i>
+                        <p class="text-xs text-raiz-medium">Sua sacola de retirada está vazia.</p>
+                    </div>
+                `;
+            } else {
+                cartItems.forEach((item, idx) => {
+                    total += item.price * item.qty;
+                    count += item.qty;
+
+                    const el = document.createElement('div');
+                    el.className = 'flex gap-4 p-3 bg-raiz-cream rounded-2xl border border-raiz-border items-center justify-between';
+                    el.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}" class="w-14 h-14 object-cover rounded-xl">
+                        <div class="flex-1">
+                            <h4 class="font-serif text-sm font-bold text-raiz-dark">${item.title}</h4>
+                            <div class="text-xs font-bold text-raiz-caramel">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</div>
+                        </div>
+                        <div class="flex items-center gap-2 bg-raiz-card-dark rounded-full px-2 py-1 border border-raiz-border">
+                            <button onclick="updateCartQty(${idx}, -1)" class="w-5 h-5 text-xs font-bold text-raiz-dark hover:text-raiz-caramel">-</button>
+                            <span class="text-xs font-bold text-raiz-dark px-1">${item.qty}</span>
+                            <button onclick="updateCartQty(${idx}, 1)" class="w-5 h-5 text-xs font-bold text-raiz-dark hover:text-raiz-caramel">+</button>
+                        </div>
+                    `;
+                    list.appendChild(el);
+                });
+            }
+
+            badge.innerText = count;
+            subtotalEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            totalEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+            lucide.createIcons();
+        }
+
+        function simulateOrderCheckout() {
+            if (cartItems.length === 0) {
+                showToast('Adicione itens antes de finalizar!');
+                return;
+            }
+            const pickupCode = Math.floor(1000 + Math.random() * 9000);
+            showToast(`Pedido Confirmado! Sua Senha de Retirada é #${pickupCode}`);
+            cartItems = [];
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        // Reservation Modal Logic
+        function openReservationModal() {
+            document.getElementById('reservationModal').classList.remove('hidden');
+        }
+
+        function closeReservationModal() {
+            document.getElementById('reservationModal').classList.add('hidden');
+        }
+
+        function handleReservationSubmit(e) {
+            e.preventDefault();
+            closeReservationModal();
+            showToast('✨ Reserva confirmada! Enviamos o comprovante no seu e-mail.');
+        }
+
+        // Copy Address Toast
+        function copyAddress() {
+            const text = document.getElementById('addressText').innerText;
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            showToast('Endereço copiado para a área de transferência!');
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            document.getElementById('newsletterMsg').classList.remove('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastAlert');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // On Load Init
+        window.onload = function() {
+            renderMenu();
+        };
+    </script>
+</body>
+</html>

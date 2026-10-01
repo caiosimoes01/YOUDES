@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vértice Contabilidade — Inteligência Tributária & Gestão Estratégica</title>
+
+    <!-- Google Fonts: IBM Plex Sans & IBM Plex Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            DEFAULT: '#0C1829',
+                            dark: '#08101C',
+                            light: '#132238',
+                            card: '#162840',
+                            border: '#1E3452'
+                        },
+                        slate: {
+                            DEFAULT: '#2E4057',
+                            light: '#3D5470',
+                            muted: '#637A99',
+                            soft: '#4A617C'
+                        },
+                        gold: {
+                            DEFAULT: '#B89A5A',
+                            hover: '#A08346',
+                            light: '#F7F3EA',
+                            glow: 'rgba(184, 154, 90, 0.25)',
+                            dark: '#8C723D'
+                        },
+                        paper: {
+                            DEFAULT: '#F4F2EE',
+                            card: '#EFECE6',
+                            dark: '#E5E1D8',
+                            border: '#D8D3C8',
+                            subtle: '#FAF9F6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['IBM Plex Sans', 'sans-serif'],
+                        mono: ['IBM Plex Mono', 'monospace']
+                    },
+                    boxShadow: {
+                        'paper': '0 4px 20px -2px rgba(12, 24, 41, 0.06)',
+                        'paper-hover': '0 12px 30px -4px rgba(12, 24, 41, 0.12)',
+                        'navy-glow': '0 10px 30px -5px rgba(184, 154, 90, 0.15)',
+                        'gold-border': '0 0 0 1px #B89A5A'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F4F2EE;
+            color: #0C1829;
+            font-family: 'IBM Plex Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Subtle grid background pattern for paper aesthetic */
+        .bg-grid-paper {
+            background-image: radial-gradient(#D8D3C8 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+        }
+
+        .bg-grid-navy {
+            background-image: radial-gradient(#1E3452 0.75px, transparent 0.75px);
+            background-size: 20px 20px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4F2EE;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2E4057;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B89A5A;
+        }
+
+        /* Custom Range Slider styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #2E4057;
+            border-radius: 9999px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #B89A5A;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -7px;
+            box-shadow: 0 0 10px rgba(184, 154, 90, 0.5);
+            transition: transform 0.1s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        /* Paper card border detailing */
+        .border-paper-precise {
+            border: 1px solid #D8D3C8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold selection:text-navy-dark">
+
+    <div class="bg-navy text-paper text-xs py-2 px-4 border-b border-navy-border flex items-center justify-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-gold/20 text-gold font-mono font-semibold text-[11px]">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> REGULARIDADE TRIBUTÁRIA 2026
+        </span>
+        <span class="hidden md:inline text-slate-muted">Planejamento do Lucro Presumido e Fator R do Simples Nacional ativado para o ano corrente.</span>
+        <a href="#calculadora" class="text-gold font-semibold hover:underline flex items-center gap-1">
+            Simular Economia <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        </a>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-paper/90 backdrop-blur-md border-b border-paper-border transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-navy text-gold rounded flex items-center justify-center border border-gold/40 shadow-paper group-hover:bg-navy-light transition-colors">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2L2 19h20L12 2zm0 4.5l6.5 11h-13L12 6.5z"/>
+                        <circle cx="12" cy="14" r="2" fill="#B89A5A"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-xl tracking-tight text-navy uppercase leading-none group-hover:text-slate transition-colors">
+                        VÉRTICE
+                    </span>
+                    <span class="text-[10px] font-mono tracking-widest text-slate uppercase mt-1">Contabilidade Estratégica</span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden lg:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-navy">
+                <a href="#servicos" class="hover:text-gold transition-colors py-1">Serviços</a>
+                <a href="#calculadora" class="hover:text-gold transition-colors py-1 flex items-center gap-1 text-gold">
+                    <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                    <span>Simulador Fiscal</span>
+                </a>
+                <a href="#portal" class="hover:text-gold transition-colors py-1">Portal Demo</a>
+                <a href="#planos" class="hover:text-gold transition-colors py-1">Planos</a>
+                <a href="#migracao" class="hover:text-gold transition-colors py-1">Migração Ágil</a>
+            </nav>
+
+            <!-- Header Action CTAs -->
+            <div class="flex items-center gap-3">
+                <button onclick="openClientPortalModal()" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded border border-navy/20 hover:border-navy text-navy text-xs font-semibold uppercase tracking-wider transition-all hover:bg-paper-card">
+                    <i data-lucide="lock" class="w-3.5 h-3.5 text-slate"></i>
+                    <span>Portal do Cliente</span>
+                </button>
+
+                <button onclick="openConsultationModal('Diagnóstico Inicial')" class="px-4 py-2.5 bg-navy hover:bg-navy-light text-paper text-xs font-semibold uppercase tracking-wider rounded border border-gold/40 shadow-paper hover:border-gold transition-all flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                    <span>Agendar Diagnóstico</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="lg:hidden p-2 text-navy hover:text-gold">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-paper border-b border-paper-border px-6 py-6 space-y-4 text-xs font-semibold uppercase tracking-wider text-navy">
+            <a href="#servicos" onclick="toggleMobileMenu()" class="block py-2 border-b border-paper-border">Serviços</a>
+            <a href="#calculadora" onclick="toggleMobileMenu()" class="block py-2 border-b border-paper-border text-gold">Simulador Fiscal</a>
+            <a href="#portal" onclick="toggleMobileMenu()" class="block py-2 border-b border-paper-border">Portal Demo</a>
+            <a href="#planos" onclick="toggleMobileMenu()" class="block py-2 border-b border-paper-border">Planos</a>
+            <a href="#migracao" onclick="toggleMobileMenu()" class="block py-2 border-b border-paper-border">Migração Ágil</a>
+            <button onclick="toggleMobileMenu(); openClientPortalModal();" class="w-full py-3 border border-navy text-navy text-center rounded uppercase font-mono text-xs">
+                Acessar Portal do Cliente
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="relative py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-grid-paper">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left: Headlines and Value Proposition -->
+                <div class="lg:col-span-7 space-y-8">
+                    
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-paper-card border border-paper-border rounded text-xs font-mono text-slate uppercase tracking-wider shadow-sm">
+                        <span class="w-2 h-2 bg-gold rounded-full"></span>
+                        <span>Contabilidade Consultiva & Societária CRC-SP</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight text-navy tracking-tight">
+                        Sua empresa no controle. A contabilidade que transforma <span class="text-slate italic font-serif font-normal border-b-2 border-gold pb-1">burocracia em inteligência.</span>
+                    </h1>
+
+                    <p class="text-slate text-base sm:text-lg font-normal leading-relaxed max-w-2xl">
+                        Especialistas na gestão tributária de pequenos e médios negócios. Redução legal de impostos via Fator R, emissão automatizada de CNDs e BPO financeiro de alta precisão.
+                    </p>
+
+                    <!-- Hero Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                        <a href="#calculadora" class="px-6 py-3.5 bg-navy hover:bg-navy-light text-paper text-xs font-bold uppercase tracking-widest rounded border border-gold/50 shadow-paper hover:shadow-paper-hover transition-all text-center flex items-center justify-center gap-2">
+                            <i data-lucide="calculator" class="w-4 h-4 text-gold"></i>
+                            <span>Simular Economia Tributária</span>
+                        </a>
+
+                        <button onclick="openConsultationModal('Troca de Contador')" class="px-6 py-3.5 bg-paper-card hover:bg-paper-dark text-navy border border-paper-border text-xs font-bold uppercase tracking-widest rounded transition-colors text-center flex items-center justify-center gap-2">
+                            <i data-lucide="refresh-cw" class="w-4 h-4 text-slate"></i>
+                            <span>Migrar de Contador sem Custo</span>
+                        </button>
+                    </div>
+
+                    <!-- Trust Bar Badges -->
+                    <div class="pt-6 border-t border-paper-border grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="space-y-1">
+                            <div class="font-mono text-xl font-bold text-navy">R$ 18.4M+</div>
+                            <div class="text-[11px] text-slate-muted uppercase font-medium">Economizados aos Clientes</div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="font-mono text-xl font-bold text-navy">99.8%</div>
+                            <div class="text-[11px] text-slate-muted uppercase font-medium">CNDs Ativas e Regulares</div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="font-mono text-xl font-bold text-navy">+950</div>
+                            <div class="text-[11px] text-slate-muted uppercase font-medium">Empresas Atendidas</div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="font-mono text-xl font-bold text-gold">CRC-SP 2SP0384/O</div>
+                            <div class="text-[11px] text-slate-muted uppercase font-medium">Regularidade Oficial</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Hero Right: Quick Teaser Simulator Box -->
+                <div class="lg:col-span-5">
+                    <div class="bg-navy rounded-lg border border-navy-border p-6 sm:p-8 text-paper shadow-paper-hover space-y-6 relative overflow-hidden">
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold/10 rounded-full blur-2xl"></div>
+
+                        <div class="flex items-center justify-between border-b border-navy-border pb-4">
+                            <span class="text-xs font-mono text-gold uppercase tracking-widest flex items-center gap-2">
+                                <i data-lucide="zap" class="w-4 h-4"></i>
+                                <span>Diagnóstico Expresso</span>
+                            </span>
+                            <span class="text-[10px] font-mono bg-navy-light text-slate-muted px-2 py-1 rounded">2026 UPDATED</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-slate-muted mb-2">Selecione seu segmento:</label>
+                                <select id="heroSegmentSelect" onchange="updateHeroTeaser()" class="w-full bg-navy-light border border-navy-border rounded px-3 py-2 text-xs text-paper focus:border-gold outline-none font-mono">
+                                    <option value="tecnologia">Tecnologia & Software (SaaS / Dev)</option>
+                                    <option value="servicos">Serviços Especializados & Consultoria</option>
+                                    <option value="comercio">Comércio Físico & E-Commerce</option>
+                                    <option value="saude">Clínicas Médicas & Saúde</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-mono mb-1">
+                                    <span class="text-slate-muted">Faturamento Mensal:</span>
+                                    <span id="heroRevenueLabel" class="text-gold font-bold">R$ 45.000,00</span>
+                                </div>
+                                <input type="range" id="heroRevenueRange" min="10000" max="250000" step="5000" value="45000" oninput="updateHeroTeaser()">
+                            </div>
+
+                            <!-- Teaser Dynamic Result Card -->
+                            <div class="p-4 bg-navy-light/90 rounded border border-gold/30 space-y-2">
+                                <div class="text-[11px] text-slate-muted font-mono uppercase">Potencial de Otimização Estimado:</div>
+                                <div class="flex items-baseline justify-between">
+                                    <span id="heroSavingsAmount" class="text-2xl font-mono font-bold text-gold">R$ 1.840,00</span>
+                                    <span class="text-[10px] font-mono text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded">
+                                        /mês economizado
+                                    </span>
+                                </div>
+                                <p id="heroStrategyText" class="text-xs text-paper/80 font-mono pt-1">
+                                    Aplicação da Regra do Fator R no Anexo III do Simples Nacional.
+                                </p>
+                            </div>
+                        </div>
+
+                        <a href="#calculadora" class="w-full py-3 bg-gold hover:bg-gold-hover text-navy font-mono font-bold text-xs uppercase tracking-widest rounded text-center block transition-colors">
+                            Abrir Calculadora Completa
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="calculadora" class="py-20 bg-paper-card border-y border-paper-border px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto space-y-12">
+                
+                <div class="text-center space-y-3 max-w-3xl mx-auto">
+                    <span class="text-xs font-mono uppercase tracking-widest text-gold bg-navy px-3 py-1 rounded">
+                        // SIMULADOR DE ENQUADRAMENTO TRIBUTÁRIO
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-navy">
+                        Descubra Quanto Sua Empresa Pode Deixar de Pagar em Impostos
+                    </h2>
+                    <p class="text-slate text-sm">
+                        Alterne as variáveis do seu negócio e compare o Simples Nacional convencional versus o planejamento com otimização Vértice.
+                    </p>
+                </div>
+
+                <!-- Simulator Container Card -->
+                <div class="bg-paper rounded-lg border border-paper-border shadow-paper p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- Left Inputs Controls -->
+                    <div class="lg:col-span-7 space-y-6">
+                        
+                        <!-- Segment Selector -->
+                        <div class="space-y-2">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-navy font-bold">1. Ramos de Atuação</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                <button type="button" onclick="setSimSegment('tecnologia', this)" class="sim-seg-btn active px-3 py-2.5 rounded border-2 border-gold bg-navy text-gold text-xs font-mono font-semibold text-left transition-all">
+                                    💻 T.I. & Software
+                                </button>
+                                <button type="button" onclick="setSimSegment('servicos', this)" class="sim-seg-btn px-3 py-2.5 rounded border border-paper-border bg-paper-subtle text-navy text-xs font-mono font-medium text-left hover:border-slate transition-all">
+                                    💼 Consultoria / Agência
+                                </button>
+                                <button type="button" onclick="setSimSegment('comercio', this)" class="sim-seg-btn px-3 py-2.5 rounded border border-paper-border bg-paper-subtle text-navy text-xs font-mono font-medium text-left hover:border-slate transition-all">
+                                    🛒 Comércio / E-com
+                                </button>
+                                <button type="button" onclick="setSimSegment('saude', this)" class="sim-seg-btn px-3 py-2.5 rounded border border-paper-border bg-paper-subtle text-navy text-xs font-mono font-medium text-left hover:border-slate transition-all">
+                                    🩺 Saúde & Clínicas
+                                </button>
+                                <button type="button" onclick="setSimSegment('engenharia', this)" class="sim-seg-btn px-3 py-2.5 rounded border border-paper-border bg-paper-subtle text-navy text-xs font-mono font-medium text-left hover:border-slate transition-all">
+                                    📐 Engenharia / Arq
+                                </button>
+                                <button type="button" onclick="setSimSegment('outros', this)" class="sim-seg-btn px-3 py-2.5 rounded border border-paper-border bg-paper-subtle text-navy text-xs font-mono font-medium text-left hover:border-slate transition-all">
+                                    📋 Outros Serviços
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Revenue Slider -->
+                        <div class="space-y-2 pt-2">
+                            <div class="flex justify-between items-center text-xs font-mono">
+                                <span class="font-bold text-navy uppercase">2. Faturamento Mensal Médio:</span>
+                                <span id="simRevenueDisplay" class="text-navy font-bold text-base bg-paper-dark px-3 py-1 rounded border border-paper-border">R$ 60.000</span>
+                            </div>
+                            <input type="range" id="simRevenueInput" min="10000" max="300000" step="5000" value="60000" oninput="calculateTaxSimulation()">
+                            <div class="flex justify-between text-[10px] font-mono text-slate-muted">
+                                <span>R$ 10.000</span>
+                                <span>R$ 150.000</span>
+                                <span>R$ 300.000</span>
+                            </div>
+                        </div>
+
+                        <!-- Payroll / Pro-labore Slider -->
+                        <div class="space-y-2 pt-2">
+                            <div class="flex justify-between items-center text-xs font-mono">
+                                <span class="font-bold text-navy uppercase">3. Folha de Pagamento + Pró-labore Atual:</span>
+                                <span id="simPayrollDisplay" class="text-navy font-bold text-base bg-paper-dark px-3 py-1 rounded border border-paper-border">R$ 12.000</span>
+                            </div>
+                            <input type="range" id="simPayrollInput" min="0" max="90000" step="2000" value="12000" oninput="calculateTaxSimulation()">
+                            <div class="flex justify-between text-[10px] font-mono text-slate-muted">
+                                <span>R$ 0 (Apenas sócio)</span>
+                                <span>R$ 45.000</span>
+                                <span>R$ 90.000</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-paper-subtle rounded border border-paper-border text-xs text-slate space-y-1 font-mono">
+                            <div class="flex items-center gap-1.5 font-bold text-navy">
+                                <i data-lucide="info" class="w-4 h-4 text-gold"></i>
+                                <span>O que é a Otimização Fator R?</span>
+                            </div>
+                            <p class="text-[11px] leading-relaxed">
+                                Para empresas do Anexo V (com alíquota inicial de 15,5%), quando a folha e pró-labore representam ao menos 28% do faturamento, a alíquota cai para o Anexo III (iniciando em apenas 6,0%).
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Outputs Dashboard -->
+                    <div class="lg:col-span-5 bg-navy text-paper rounded-lg p-6 flex flex-col justify-between border border-navy-border space-y-6">
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between border-b border-navy-border pb-3">
+                                <span class="text-xs font-mono uppercase text-slate-muted">Resultado da Simulação</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/20 text-gold uppercase font-bold">Regime Indicado</span>
+                            </div>
+
+                            <!-- Savings Highlight Box -->
+                            <div class="p-4 bg-navy-light rounded border border-gold/40 text-center space-y-1">
+                                <div class="text-[11px] font-mono uppercase text-slate-muted">Economia Estimada por Ano</div>
+                                <div id="simAnnualSavings" class="text-3xl font-mono font-bold text-gold">R$ 28.800,00</div>
+                                <div id="simMonthlySavings" class="text-xs font-mono text-emerald-400">Economia mensal de R$ 2.400,00</div>
+                            </div>
+
+                            <!-- Regime Comparison Rows -->
+                            <div class="space-y-3 font-mono text-xs pt-2">
+                                <div class="flex justify-between items-center p-2.5 rounded bg-navy-light/50 border border-navy-border">
+                                    <span class="text-slate-muted">Simples Nacional Padrão:</span>
+                                    <span id="simStandardTax" class="font-bold text-red-300">R$ 9.300 /mês</span>
+                                </div>
+
+                                <div class="flex justify-between items-center p-2.5 rounded bg-navy-light border border-gold/50">
+                                    <span class="text-gold font-bold flex items-center gap-1">
+                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Vértice Otimizado:
+                                    </span>
+                                    <span id="simOptimizedTax" class="font-bold text-gold text-sm">R$ 3.600 /mês</span>
+                                </div>
+
+                                <div class="flex justify-between items-center p-2.5 rounded bg-navy-light/50 border border-navy-border">
+                                    <span class="text-slate-muted">Lucro Presumido:</span>
+                                    <span id="simPresumedTax" class="font-bold text-paper/80">R$ 8.000 /mês</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA button -->
+                        <div class="space-y-2 pt-2">
+                            <button onclick="openConsultationModal('Simulação Calculadora')" class="w-full py-3.5 bg-gold hover:bg-gold-hover text-navy font-mono font-bold text-xs uppercase tracking-widest rounded transition-all text-center shadow-paper">
+                                Solicitar Parecer Tributário Grátis
+                            </button>
+                            <p class="text-[10px] text-center font-mono text-slate-muted">
+                                Análise realizada por contadores especializados sem compromisso.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="portal" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-mono uppercase tracking-widest text-gold bg-navy px-3 py-1 rounded">
+                    // TECNOLOGIA & TRANSPARÊNCIA
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-navy">
+                    Portal do Cliente Vértice em Tempo Real
+                </h2>
+                <p class="text-slate text-sm">
+                    Acompanhe impostos a vencer, guias de pagamento, Certidões Negativas e o DRE da sua empresa na palma da mão.
+                </p>
+            </div>
+
+            <!-- Dashboard Mockup Window -->
+            <div class="bg-navy rounded-xl border border-navy-border shadow-paper-hover overflow-hidden">
+                
+                <!-- Window Top Header -->
+                <div class="bg-navy-dark px-6 py-4 border-b border-navy-border flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="flex gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-muted pl-2 border-l border-navy-border">
+                            app.verticecontabilidade.com.br/dashboard
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <span class="text-[11px] font-mono text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-800/40 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Empresa: LOGIX TECH LTDA (CNPJ Regular)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Dashboard Interactive Tab Bar -->
+                <div class="bg-navy-light px-6 border-b border-navy-border flex overflow-x-auto gap-2">
+                    <button onclick="switchPortalTab('fiscal', this)" class="portal-tab active py-3 px-4 text-xs font-mono font-bold uppercase tracking-wider text-gold border-b-2 border-gold transition-colors whitespace-nowrap">
+                        🗓️ Calendário Fiscal
+                    </button>
+                    <button onclick="switchPortalTab('cnd', this)" class="portal-tab py-3 px-4 text-xs font-mono font-medium uppercase tracking-wider text-slate-muted hover:text-paper transition-colors whitespace-nowrap">
+                        📜 Certidões Negativas (CNDs)
+                    </button>
+                    <button onclick="switchPortalTab('dre', this)" class="portal-tab py-3 px-4 text-xs font-mono font-medium uppercase tracking-wider text-slate-muted hover:text-paper transition-colors whitespace-nowrap">
+                        📊 DRE Simplificado
+                    </button>
+                </div>
+
+                <!-- Dashboard Content Area -->
+                <div class="p-6 sm:p-8">
+                    
+                    <!-- Tab 1: Calendário Fiscal -->
+                    <div id="portalTabFiscal" class="space-y-4">
+                        <div class="flex justify-between items-center text-xs font-mono text-slate-muted pb-2 border-b border-navy-border">
+                            <span>Obrigações e Guia de Impostos do Mês Vigente</span>
+                            <span>Mês de Referência: Setembro / 2026</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            
+                            <!-- Tax Card 1 -->
+                            <div class="p-4 rounded bg-navy-light border border-navy-border space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <span class="font-mono text-xs font-bold text-gold">DAS - Simples Nacional</span>
+                                    <span class="px-2 py-0.5 bg-emerald-950 text-emerald-400 text-[10px] font-mono rounded font-bold">PAGO</span>
+                                </div>
+                                <div class="text-xl font-mono font-bold text-paper">R$ 3.840,20</div>
+                                <div class="text-[11px] font-mono text-slate-muted flex justify-between">
+                                    <span>Vencimento: 20/09/2026</span>
+                                    <span class="text-emerald-400">Guias Enviadas</span>
+                                </div>
+                            </div>
+
+                            <!-- Tax Card 2 -->
+                            <div class="p-4 rounded bg-navy-light border border-gold/40 space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <span class="font-mono text-xs font-bold text-paper">FGTS Digital (eSocial)</span>
+                                    <span class="px-2 py-0.5 bg-amber-950 text-amber-400 text-[10px] font-mono rounded font-bold">A VENCER</span>
+                                </div>
+                                <div class="text-xl font-mono font-bold text-paper">R$ 1.250,00</div>
+                                <div class="text-[11px] font-mono text-slate-muted flex justify-between">
+                                    <span>Vencimento: 20/10/2026</span>
+                                    <span class="text-gold">Linha Digitável Pronta</span>
+                                </div>
+                            </div>
+
+                            <!-- Tax Card 3 -->
+                            <div class="p-4 rounded bg-navy-light border border-navy-border space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <span class="font-mono text-xs font-bold text-paper">INSS / Pró-Labore</span>
+                                    <span class="px-2 py-0.5 bg-amber-950 text-amber-400 text-[10px] font-mono rounded font-bold">A VENCER</span>
+                                </div>
+                                <div class="text-xl font-mono font-bold text-paper">R$ 890,00</div>
+                                <div class="text-[11px] font-mono text-slate-muted flex justify-between">
+                                    <span>Vencimento: 20/10/2026</span>
+                                    <span class="text-gold">Guias Disponíveis</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Certidões Negativas -->
+                    <div id="portalTabCnd" class="space-y-4 hidden">
+                        <div class="flex justify-between items-center text-xs font-mono text-slate-muted pb-2 border-b border-navy-border">
+                            <span>Monitoramento Automático de CNDs nas Esferas Governamentais</span>
+                            <span class="text-emerald-400">Status Geral: 100% REGULAR</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            
+                            <div class="p-4 rounded bg-navy-light border border-navy-border space-y-2">
+                                <div class="text-xs font-mono font-bold text-paper">Receita Federal & DUA</div>
+                                <div class="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> Certidão Negativa Emitida
+                                </div>
+                                <div class="text-[10px] font-mono text-slate-muted">Validade: 14/11/2026</div>
+                            </div>
+
+                            <div class="p-4 rounded bg-navy-light border border-navy-border space-y-2">
+                                <div class="text-xs font-mono font-bold text-paper">Caixa Econômica (FGTS)</div>
+                                <div class="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> CRF Regular Ativo
+                                </div>
+                                <div class="text-[10px] font-mono text-slate-muted">Validade: 30/10/2026</div>
+                            </div>
+
+                            <div class="p-4 rounded bg-navy-light border border-navy-border space-y-2">
+                                <div class="text-xs font-mono font-bold text-paper">Prefeitura de São Paulo (ISS)</div>
+                                <div class="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> CND Municipal Ativa
+                                </div>
+                                <div class="text-[10px] font-mono text-slate-muted">Validade: 05/12/2026</div>
+                            </div>
+
+                            <div class="p-4 rounded bg-navy-light border border-navy-border space-y-2">
+                                <div class="text-xs font-mono font-bold text-paper">Justiça do Trabalho (CNDT)</div>
+                                <div class="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> Isento de Débitos
+                                </div>
+                                <div class="text-[10px] font-mono text-slate-muted">Validade: 22/01/2027</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: DRE Simplificado -->
+                    <div id="portalTabDre" class="space-y-4 hidden">
+                        <div class="flex justify-between items-center text-xs font-mono text-slate-muted pb-2 border-b border-navy-border">
+                            <span>Demonstrativo do Resultado do Exercício (Mês Anterior)</span>
+                            <span class="text-gold font-bold">Margem Líquida: 31.4%</span>
+                        </div>
+
+                        <!-- Bar Visualizer -->
+                        <div class="p-6 rounded bg-navy-light border border-navy-border space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-mono">
+                                    <span class="text-paper font-bold">Faturamento Bruto: R$ 85.000,00</span>
+                                    <span class="text-emerald-400">100%</span>
+                                </div>
+                                <div class="w-full bg-navy rounded-full h-3 overflow-hidden">
+                                    <div class="bg-emerald-500 h-full w-full"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-mono">
+                                    <span class="text-paper">Impostos (- Simples Otimizado): R$ 5.100,00</span>
+                                    <span class="text-red-400">6.0%</span>
+                                </div>
+                                <div class="w-full bg-navy rounded-full h-3 overflow-hidden">
+                                    <div class="bg-red-400 h-full" style="width: 6%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-mono">
+                                    <span class="text-paper">Custos de Operação & Folha: R$ 53.200,00</span>
+                                    <span class="text-amber-400">62.6%</span>
+                                </div>
+                                <div class="w-full bg-navy rounded-full h-3 overflow-hidden">
+                                    <div class="bg-amber-400 h-full" style="width: 62.6%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-navy-border flex justify-between items-center font-mono">
+                                <span class="text-xs font-bold uppercase text-gold">Lucro Líquido Distribuível ao Sócio (Isento IRPF):</span>
+                                <span class="text-xl font-bold text-gold">R$ 26.700,00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="servicos" class="py-20 bg-paper-card border-y border-paper-border px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto space-y-12">
+                
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-xs font-mono uppercase tracking-widest text-gold bg-navy px-3 py-1 rounded">
+                        // ESCOPO DE SERVIÇOS TRIBUTÁRIOS
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-bold text-navy">
+                        Gestão Contábil Completa Sem Pontas Soltas
+                    </h2>
+                    <p class="text-slate text-sm">
+                        Deixe a burocracia governamental conosco e concentre-se exclusivamente em escalar seu faturamento.
+                    </p>
+                </div>
+
+                <!-- Grid of Services -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Service 1 -->
+                    <div class="bg-paper p-8 rounded border border-paper-border hover:border-gold shadow-paper hover:shadow-paper-hover transition-all space-y-4 group">
+                        <div class="w-12 h-12 rounded bg-navy text-gold flex items-center justify-center font-mono font-bold text-lg group-hover:scale-105 transition-transform">
+                            01
+                        </div>
+                        <h3 class="text-xl font-bold text-navy">Planejamento & Blindagem Tributária</h3>
+                        <p class="text-xs text-slate leading-relaxed">
+                            Análise contínua entre Simples Nacional, Lucro Presumido e Fator R. Otimização de carga fiscal dentro da estrita legalidade.
+                        </p>
+                        <ul class="text-xs font-mono text-slate space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Enquadramento de Anexos</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Otimização de Pró-labore</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-paper p-8 rounded border border-paper-border hover:border-gold shadow-paper hover:shadow-paper-hover transition-all space-y-4 group">
+                        <div class="w-12 h-12 rounded bg-navy text-gold flex items-center justify-center font-mono font-bold text-lg group-hover:scale-105 transition-transform">
+                            02
+                        </div>
+                        <h3 class="text-xl font-bold text-navy">Folha de Pagamento & eSocial</h3>
+                        <p class="text-xs text-slate leading-relaxed">
+                            Cálculos automatizados de salários, pró-labore, FGTS Digital, férias e rescisões com envio pontual ao eSocial.
+                        </p>
+                        <ul class="text-xs font-mono text-slate space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Admissões e Rescisões</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Imposto de Renda Retido</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-paper p-8 rounded border border-paper-border hover:border-gold shadow-paper hover:shadow-paper-hover transition-all space-y-4 group">
+                        <div class="w-12 h-12 rounded bg-navy text-gold flex items-center justify-center font-mono font-bold text-lg group-hover:scale-105 transition-transform">
+                            03
+                        </div>
+                        <h3 class="text-xl font-bold text-navy">BPO Financeiro & Conciliação</h3>
+                        <p class="text-xs text-slate leading-relaxed">
+                            Terceirização da sua gestão financeira diária. Conciliação bancária, emissão de boletos e relatórios de fluxo de caixa.
+                        </p>
+                        <ul class="text-xs font-mono text-slate space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Contas a Pagar e Receber</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Relatórios em Tempo Real</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="bg-paper p-8 rounded border border-paper-border hover:border-gold shadow-paper hover:shadow-paper-hover transition-all space-y-4 group">
+                        <div class="w-12 h-12 rounded bg-navy text-gold flex items-center justify-center font-mono font-bold text-lg group-hover:scale-105 transition-transform">
+                            04
+                        </div>
+                        <h3 class="text-xl font-bold text-navy">Abertura & Migração de CNPJ</h3>
+                        <p class="text-xs text-slate leading-relaxed">
+                            Processo de abertura ou alteração societária em até 5 dias úteis sem taxas de honorários para novos contratos.
+                        </p>
+                        <ul class="text-xs font-mono text-slate space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Registro na Junta Comercial</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Inscrição Municipal & Alvarás</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="bg-paper p-8 rounded border border-paper-border hover:border-gold shadow-paper hover:shadow-paper-hover transition-all space-y-4 group">
+                        <div class="w-12 h-12 rounded bg-navy text-gold flex items-center justify-center font-mono font-bold text-lg group-hover:scale-105 transition-transform">
+                            05
+                        </div>
+                        <h3 class="text-xl font-bold text-navy">Emissão & Gestão de Notas (NF-e)</h3>
+                        <p class="text-xs text-slate leading-relaxed">
+                            Plataforma simples para emissão de notas fiscais de serviço e produto com integração direta com prefeituras.
+                        </p>
+                        <ul class="text-xs font-mono text-slate space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Emissão Recorrente</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Guarda Digital por 5 anos</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="bg-paper p-8 rounded border border-paper-border hover:border-gold shadow-paper hover:shadow-paper-hover transition-all space-y-4 group">
+                        <div class="w-12 h-12 rounded bg-navy text-gold flex items-center justify-center font-mono font-bold text-lg group-hover:scale-105 transition-transform">
+                            06
+                        </div>
+                        <h3 class="text-xl font-bold text-navy">Contabilidade Consultiva & DREs</h3>
+                        <p class="text-xs text-slate leading-relaxed">
+                            Reuniões trimestrais com contadores sêniores para leitura dos relatórios DRE e tomada de decisão estratégica.
+                        </p>
+                        <ul class="text-xs font-mono text-slate space-y-1.5 pt-2">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Distribuição Isenta de Lucros</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-gold"></i> Indicadores de Lucratividade</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="planos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-xs font-mono uppercase tracking-widest text-gold bg-navy px-3 py-1 rounded">
+                    // TRANSPARÊNCIA SEM SURPRESAS
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-navy">
+                    Planos Dimensionados para o Seu Momento
+                </h2>
+                <p class="text-slate text-sm">
+                    Honorários contábeis previsíveis. Escolha a opção ideal para a estrutura atual do seu negócio.
+                </p>
+
+                <!-- Billing Cycle Toggle Switch -->
+                <div class="pt-4 flex items-center justify-center gap-3 font-mono text-xs">
+                    <span id="labelMensal" class="font-bold text-navy">Pagamento Mensal</span>
+                    <button onclick="toggleBillingCycle()" class="w-14 h-8 bg-navy rounded-full p-1 relative border border-navy-border transition-colors">
+                        <div id="cycleToggleDot" class="w-6 h-6 bg-gold rounded-full transition-transform"></div>
+                    </button>
+                    <span id="labelAnual" class="text-slate-muted flex items-center gap-1">
+                        <span>Anual</span>
+                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded text-[10px]">15% OFF</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Pricing Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Plan 1 -->
+                <div class="bg-paper p-6 rounded border border-paper-border hover:border-navy shadow-paper flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-mono text-slate-muted uppercase font-bold">MEI & Autônomo</span>
+                            <h3 class="text-lg font-bold text-navy">Início Digital</h3>
+                            <p class="text-xs text-slate">Para profissionais autônomos ou em transição MEI para ME.</p>
+                        </div>
+                        <div class="pt-2 border-t border-paper-border">
+                            <div class="font-mono text-2xl font-bold text-navy" data-price-mensal="R$ 199" data-price-anual="R$ 169">R$ 199<span class="text-xs font-normal text-slate">/mês</span></div>
+                            <span class="text-[10px] font-mono text-slate-muted">Faturamento até R$ 15k/mês</span>
+                        </div>
+                        <ul class="text-xs font-mono text-slate space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Das/MEI inclusos</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Declaração Anual SIMEI</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Suporte via WhatsApp</li>
+                        </ul>
+                    </div>
+                    <button onclick="openConsultationModal('Plano Início Digital')" class="w-full py-3 bg-paper-dark hover:bg-navy hover:text-paper text-navy font-mono font-bold text-xs uppercase tracking-wider rounded transition-colors">
+                        Solicitar Proposta
+                    </button>
+                </div>
+
+                <!-- Plan 2 (Highlighted) -->
+                <div class="bg-navy text-paper p-6 rounded border-2 border-gold shadow-paper-hover flex flex-col justify-between space-y-6 relative">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-navy font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-0.5 rounded">
+                        Mais Escolhido
+                    </span>
+                    <div class="space-y-4 pt-1">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-mono text-gold uppercase font-bold">Simples Serviços</span>
+                            <h3 class="text-lg font-bold text-paper">Otimização Fator R</h3>
+                            <p class="text-xs text-slate-muted">Ideal para TI, Consultorias, Agências e Médicos.</p>
+                        </div>
+                        <div class="pt-2 border-t border-navy-border">
+                            <div class="font-mono text-3xl font-bold text-gold" data-price-mensal="R$ 380" data-price-anual="R$ 323">R$ 380<span class="text-xs font-normal text-slate-muted">/mês</span></div>
+                            <span class="text-[10px] font-mono text-slate-muted">Faturamento até R$ 80k/mês</span>
+                        </div>
+                        <ul class="text-xs font-mono text-paper/90 space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gold"></i> Cálculo Fator R (Redução de Imposto)</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gold"></i> Folha de até 3 Funcionários/Sócios</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gold"></i> Emissão de NFe ilimitada</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-gold"></i> CNDs Monitoradas</li>
+                        </ul>
+                    </div>
+                    <button onclick="openConsultationModal('Plano Otimização Fator R')" class="w-full py-3 bg-gold hover:bg-gold-hover text-navy font-mono font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-paper">
+                        Contratar Este
+                    </button>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="bg-paper p-6 rounded border border-paper-border hover:border-navy shadow-paper flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-mono text-slate-muted uppercase font-bold">Comércio & E-com</span>
+                            <h3 class="text-lg font-bold text-navy">Comércio Ativo</h3>
+                            <p class="text-xs text-slate">Para lojas físicas, e-commerce e marketplaces com ICMS/ST.</p>
+                        </div>
+                        <div class="pt-2 border-t border-paper-border">
+                            <div class="font-mono text-2xl font-bold text-navy" data-price-mensal="R$ 590" data-price-anual="R$ 500">R$ 590<span class="text-xs font-normal text-slate">/mês</span></div>
+                            <span class="text-[10px] font-mono text-slate-muted">Faturamento até R$ 150k/mês</span>
+                        </div>
+                        <ul class="text-xs font-mono text-slate space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Apuração de ICMS e Substituição</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Integração com Bling/Tiny</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> SPED Fiscal & Sintegra</li>
+                        </ul>
+                    </div>
+                    <button onclick="openConsultationModal('Plano Comércio Ativo')" class="w-full py-3 bg-paper-dark hover:bg-navy hover:text-paper text-navy font-mono font-bold text-xs uppercase tracking-wider rounded transition-colors">
+                        Solicitar Proposta
+                    </button>
+                </div>
+
+                <!-- Plan 4 -->
+                <div class="bg-paper p-6 rounded border border-paper-border hover:border-navy shadow-paper flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-mono text-slate-muted uppercase font-bold">Lucro Presumido & BPO</span>
+                            <h3 class="text-lg font-bold text-navy">Corporate & BPO</h3>
+                            <p class="text-xs text-slate">Gestão financeira terceirizada com contabilidade de alto nível.</p>
+                        </div>
+                        <div class="pt-2 border-t border-paper-border">
+                            <div class="font-mono text-2xl font-bold text-navy" data-price-mensal="R$ 980" data-price-anual="R$ 833">R$ 980<span class="text-xs font-normal text-slate">/mês</span></div>
+                            <span class="text-[10px] font-mono text-slate-muted">Faturamento sob consulta</span>
+                        </div>
+                        <ul class="text-xs font-mono text-slate space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> BPO Financeiro Completo</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Reunião Trimestral DRE</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Contador Dedicado</li>
+                        </ul>
+                    </div>
+                    <button onclick="openConsultationModal('Plano Corporate & BPO')" class="w-full py-3 bg-paper-dark hover:bg-navy hover:text-paper text-navy font-mono font-bold text-xs uppercase tracking-wider rounded transition-colors">
+                        Solicitar Proposta
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="migracao" class="py-20 bg-navy text-paper border-y border-navy-border px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto space-y-12">
+                
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-xs font-mono uppercase tracking-widest text-gold bg-navy-light px-3 py-1 rounded border border-gold/30">
+                        // TRANSIÇÃO SIMPLIFICADA
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-bold text-paper">
+                        Migração de Contador em 4 Passos Sem Burocracia
+                    </h2>
+                    <p class="text-slate-muted text-sm">
+                        Nós cuidamos de toda a comunicação com seu antigo contador. Sua operação não para por um segundo.
+                    </p>
+                </div>
+
+                <!-- Step-by-Step Horizontal Timeline -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                    
+                    <!-- Step 1 -->
+                    <div class="bg-navy-light p-6 rounded border border-navy-border space-y-3 relative">
+                        <span class="font-mono text-2xl font-bold text-gold">01.</span>
+                        <h3 class="font-bold text-base text-paper">Diagnóstico Gratuito</h3>
+                        <p class="text-xs text-slate-muted leading-relaxed">
+                            Avaliamos sua estrutura societária, faturamento e pendências fiscais atuais sem custo.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-navy-light p-6 rounded border border-navy-border space-y-3 relative">
+                        <span class="font-mono text-2xl font-bold text-gold">02.</span>
+                        <h3 class="font-bold text-base text-paper">Solicitação de Docs</h3>
+                        <p class="text-xs text-slate-muted leading-relaxed">
+                            Entramos em contato direto com seu escritório atual para resgatar os livros contábeis e certificados.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-navy-light p-6 rounded border border-navy-border space-y-3 relative">
+                        <span class="font-mono text-2xl font-bold text-gold">03.</span>
+                        <h3 class="font-bold text-base text-paper">Auditoria Inicial</h3>
+                        <p class="text-xs text-slate-muted leading-relaxed">
+                            Passamos um pente fino nos últimos 12 meses de impostos para encontrar créditos ou divergências.
+                        </p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="bg-navy-light p-6 rounded border border-gold/50 space-y-3 relative">
+                        <span class="font-mono text-2xl font-bold text-gold">04.</span>
+                        <h3 class="font-bold text-base text-paper">Acesso ao Portal</h3>
+                        <p class="text-xs text-slate-muted leading-relaxed">
+                            Empresa regularizada e pronta no portal Vértice com calendário fiscal do ano ativado.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-20 bg-paper px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-mono uppercase tracking-widest text-gold bg-navy px-3 py-1 rounded">
+                    // DEPOIMENTOS DE CLIENTES
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-navy">
+                    Aprovado por Quem Constrói Negócios Reais
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="bg-paper-card p-6 rounded border border-paper-border space-y-4 flex flex-col justify-between shadow-paper">
+                    <p class="text-xs text-slate italic leading-relaxed">
+                        "Estávamos no Anexo V pagando 15,5% de imposto por puro desconhecimento do antigo contador. A Vértice aplicou o Fator R no primeiro mês e reduzimos nossa alíquota para 6%. A economia cobriu o honorário contábil do ano inteiro."
+                    </p>
+                    <div class="pt-4 border-t border-paper-border flex items-center justify-between">
+                        <div>
+                            <div class="font-bold text-xs text-navy">Marcelo Andrade</div>
+                            <div class="text-[10px] text-slate-muted font-mono">Fundador, SaaS DevStudio</div>
+                        </div>
+                        <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded">
+                            - R$ 34k/ano em impostos
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-paper-card p-6 rounded border border-paper-border space-y-4 flex flex-col justify-between shadow-paper">
+                    <p class="text-xs text-slate italic leading-relaxed">
+                        "O grande diferencial para a nossa clínica foi o monitoramento automático de CNDs. Nunca mais tivemos surpresas na hora de renovar contratos de convênio médico ou emissão de notas."
+                    </p>
+                    <div class="pt-4 border-t border-paper-border flex items-center justify-between">
+                        <div>
+                            <div class="font-bold text-xs text-navy">Dra. Luciana B.</div>
+                            <div class="text-[10px] text-slate-muted font-mono">Diretora, Clínica Dermacare</div>
+                        </div>
+                        <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded">
+                            100% CNDs Ativas
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-paper-card p-6 rounded border border-paper-border space-y-4 flex flex-col justify-between shadow-paper">
+                    <p class="text-xs text-slate italic leading-relaxed">
+                        "O BPO financeiro da Vértice organizou nosso fluxo de caixa em menos de 30 dias. Hoje temos clareza absoluta da margem de lucro de cada produto do e-commerce."
+                    </p>
+                    <div class="pt-4 border-t border-paper-border flex items-center justify-between">
+                        <div>
+                            <div class="font-bold text-xs text-navy">Ricardo Fonseca</div>
+                            <div class="text-[10px] text-slate-muted font-mono">CEO, Casa & Estilo E-com</div>
+                        </div>
+                        <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 font-bold px-2 py-1 rounded">
+                            BPO Financeiro Ativo
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+    <div id="consultationModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div onclick="closeConsultationModal()" class="absolute inset-0 bg-navy/80 backdrop-blur-sm"></div>
+        <div class="relative bg-paper rounded-lg border border-paper-border max-w-lg w-full p-6 sm:p-8 shadow-paper-hover z-10 space-y-6">
+            <button onclick="closeConsultationModal()" class="absolute top-4 right-4 text-navy hover:text-gold">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="space-y-1">
+                <span class="text-xs font-mono uppercase text-gold bg-navy px-2 py-0.5 rounded">
+                    // DIAGNÓSTICO ESTRATÉGICO
+                </span>
+                <h3 id="modalPlanTitle" class="text-2xl font-bold text-navy">Agendar Diagnóstico Tributário</h3>
+                <p class="text-xs text-slate">Preencha os dados da sua empresa para recebermos sua solicitação.</p>
+            </div>
+
+            <form onsubmit="handleConsultationSubmit(event)" class="space-y-4">
+                <div class="space-y-1">
+                    <label class="block text-xs font-mono uppercase text-navy font-bold">Seu Nome Completo</label>
+                    <input type="text" required placeholder="Ex: Carlos Eduardo Silva" class="w-full px-3 py-2 bg-paper-card border border-paper-border rounded text-xs text-navy outline-none focus:border-gold">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-mono uppercase text-navy font-bold">E-mail Corporativo</label>
+                        <input type="email" required placeholder="carlos@empresa.com" class="w-full px-3 py-2 bg-paper-card border border-paper-border rounded text-xs text-navy outline-none focus:border-gold">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-mono uppercase text-navy font-bold">WhatsApp</label>
+                        <input type="tel" required placeholder="(11) 99999-8888" class="w-full px-3 py-2 bg-paper-card border border-paper-border rounded text-xs text-navy outline-none focus:border-gold">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-mono uppercase text-navy font-bold">Nome da Empresa / CNPJ</label>
+                        <input type="text" required placeholder="Minha Empresa Ltda" class="w-full px-3 py-2 bg-paper-card border border-paper-border rounded text-xs text-navy outline-none focus:border-gold">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-mono uppercase text-navy font-bold">Faturamento Mensal</label>
+                        <select required class="w-full px-3 py-2 bg-paper-card border border-paper-border rounded text-xs text-navy outline-none focus:border-gold font-mono">
+                            <option value="10k-30k">Até R$ 30.000 /mês</option>
+                            <option value="30k-80k" selected>R$ 30k a R$ 80k /mês</option>
+                            <option value="80k-150k">R$ 80k a R$ 150k /mês</option>
+                            <option value="+150k">Acima de R$ 150k /mês</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 bg-navy hover:bg-navy-light text-paper font-mono font-bold text-xs uppercase tracking-widest rounded border border-gold/40 shadow-paper transition-all">
+                    Confirmar Agendamento de Reunião
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="clientPortalModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div onclick="closeClientPortalModal()" class="absolute inset-0 bg-navy/80 backdrop-blur-sm"></div>
+        <div class="relative bg-navy rounded-lg border border-navy-border max-w-sm w-full p-6 shadow-paper-hover z-10 space-y-6 text-paper">
+            <button onclick="closeClientPortalModal()" class="absolute top-4 right-4 text-paper hover:text-gold">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 bg-navy-light text-gold rounded mx-auto flex items-center justify-center border border-gold/30">
+                    <i data-lucide="lock" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold font-mono">Portal Vértice</h3>
+                <p class="text-xs text-slate-muted">Acesso exclusivo para clientes ativos.</p>
+            </div>
+
+            <form onsubmit="handlePortalLogin(event)" class="space-y-4">
+                <div class="space-y-1">
+                    <label class="block text-xs font-mono uppercase text-slate-muted">CNPJ da Empresa</label>
+                    <input type="text" value="12.345.678/0001-90" class="w-full px-3 py-2 bg-navy-light border border-navy-border rounded text-xs text-paper font-mono outline-none focus:border-gold">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-xs font-mono uppercase text-slate-muted">Senha de Acesso</label>
+                    <input type="password" value="••••••••••••" class="w-full px-3 py-2 bg-navy-light border border-navy-border rounded text-xs text-paper font-mono outline-none focus:border-gold">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gold hover:bg-gold-hover text-navy font-mono font-bold text-xs uppercase tracking-widest rounded transition-colors">
+                    Acessar Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastAlert" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-navy text-paper px-5 py-3.5 rounded border border-gold/40 shadow-paper-hover flex items-center gap-3 text-xs font-mono">
+        <i data-lucide="check-circle" class="w-5 h-5 text-gold"></i>
+        <span id="toastMsg">Solicitação enviada com sucesso!</span>
+    </div>
+
+    <footer class="bg-navy text-paper pt-16 pb-12 border-t border-navy-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-navy-border">
+                
+                <!-- Col 1 -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gold text-navy rounded flex items-center justify-center font-bold">V</div>
+                        <span class="font-bold text-xl tracking-tight uppercase">Vértice Contabilidade</span>
+                    </div>
+                    <p class="text-xs text-slate-muted leading-relaxed max-w-sm">
+                        Soluções contábeis de alta precisão para empresas que buscam eficiência tributária, segurança jurídica e gestão financeira transparente.
+                    </p>
+                    <div class="text-xs font-mono text-gold pt-2">
+                        CRC-SP: 2SP0384/O-8 · CNPJ: 42.189.034/0001-12
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-xs font-mono font-bold uppercase text-gold">Sede Operacional</h4>
+                    <address class="not-italic text-xs text-slate-muted space-y-1 leading-relaxed">
+                        <div>Av. Brigadeiro Faria Lima, 2012 — Cj 84</div>
+                        <div>Jardim Paulistano, São Paulo — SP</div>
+                        <div>CEP 01451-000</div>
+                    </address>
+                </div>
+
+                <!-- Col 3 -->
+                <div class="md:col-span-4 space-y-3">
+                    <h4 class="text-xs font-mono font-bold uppercase text-gold">Atendimento Direto</h4>
+                    <div class="text-xs text-slate-muted space-y-1 font-mono">
+                        <div>Atendimento: (11) 3042-9800</div>
+                        <div>WhatsApp: (11) 98122-4500</div>
+                        <div>E-mail: contato@verticecontabilidade.com.br</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center text-[11px] font-mono text-slate-muted gap-4">
+                <div>© 2026 VÉRTICE CONTABILIDADE ESTRATÉGICA LTDA. TODOS OS DIREITOS RESERVADOS.</div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-gold">Política de Privacidade</a>
+                    <a href="#" class="hover:text-gold">Termos de Serviço</a>
+                    <a href="#" class="hover:text-gold">Segurança LGPD</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Navigation Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+        // Hero Teaser Quick Logic
+        function updateHeroTeaser() {
+            const seg = document.getElementById('heroSegmentSelect').value;
+            const rev = parseInt(document.getElementById('heroRevenueRange').value);
+            
+            document.getElementById('heroRevenueLabel').innerText = `R$ ${rev.toLocaleString('pt-BR')},00`;
+
+            let factor = 0.041; // Estimated tax savings ratio
+            if (seg === 'tecnologia' || seg === 'servicos') {
+                factor = 0.052;
+            }
+
+            const savings = Math.round(rev * factor);
+            document.getElementById('heroSavingsAmount').innerText = `R$ ${savings.toLocaleString('pt-BR')},00`;
+        }
+
+        // Calculator Segment Selection
+        let simCurrentSegment = 'tecnologia';
+
+        function setSimSegment(segKey, btn) {
+            simCurrentSegment = segKey;
+            document.querySelectorAll('.sim-seg-btn').forEach(b => {
+                b.className = 'sim-seg-btn px-3 py-2.5 rounded border border-paper-border bg-paper-subtle text-navy text-xs font-mono font-medium text-left hover:border-slate transition-all';
+            });
+            btn.className = 'sim-seg-btn active px-3 py-2.5 rounded border-2 border-gold bg-navy text-gold text-xs font-mono font-semibold text-left transition-all';
+
+            calculateTaxSimulation();
+        }
+
+        function calculateTaxSimulation() {
+            const rev = parseInt(document.getElementById('simRevenueInput').value);
+            const payroll = parseInt(document.getElementById('simPayrollInput').value);
+
+            document.getElementById('simRevenueDisplay').innerText = `R$ ${rev.toLocaleString('pt-BR')}`;
+            document.getElementById('simPayrollDisplay').innerText = `R$ ${payroll.toLocaleString('pt-BR')}`;
+
+            // Calculation logic for Simples Nacional, Lucro Presumido and Fator R
+            const payrollRatio = payroll / rev;
+            let standardRate = 0.155; // Anexo V standard
+            let optimizedRate = 0.060; // Anexo III with Fator R
+
+            if (simCurrentSegment === 'comercio') {
+                standardRate = 0.075;
+                optimizedRate = 0.045;
+            } else if (simCurrentSegment === 'saude') {
+                standardRate = 0.155;
+                optimizedRate = payrollRatio >= 0.28 ? 0.060 : 0.135;
+            } else {
+                // IT and Services
+                optimizedRate = payrollRatio >= 0.28 ? 0.060 : 0.095;
+            }
+
+            const standardTax = Math.round(rev * standardRate);
+            const optimizedTax = Math.round(rev * optimizedRate);
+            const presumedTax = Math.round(rev * 0.1333); // ~13.33% Lucro Presumido
+
+            const monthlySavings = Math.max(0, standardTax - optimizedTax);
+            const annualSavings = monthlySavings * 12;
+
+            document.getElementById('simStandardTax').innerText = `R$ ${standardTax.toLocaleString('pt-BR')} /mês`;
+            document.getElementById('simOptimizedTax').innerText = `R$ ${optimizedTax.toLocaleString('pt-BR')} /mês`;
+            document.getElementById('simPresumedTax').innerText = `R$ ${presumedTax.toLocaleString('pt-BR')} /mês`;
+
+            document.getElementById('simMonthlySavings').innerText = `Economia mensal de R$ ${monthlySavings.toLocaleString('pt-BR')},00`;
+            document.getElementById('simAnnualSavings').innerText = `R$ ${annualSavings.toLocaleString('pt-BR')},00`;
+        }
+
+        // Client Portal Tabs Switcher
+        function switchPortalTab(tabKey, btn) {
+            document.querySelectorAll('.portal-tab').forEach(b => {
+                b.className = 'portal-tab py-3 px-4 text-xs font-mono font-medium uppercase tracking-wider text-slate-muted hover:text-paper transition-colors whitespace-nowrap';
+            });
+            btn.className = 'portal-tab active py-3 px-4 text-xs font-mono font-bold uppercase tracking-wider text-gold border-b-2 border-gold transition-colors whitespace-nowrap';
+
+            document.getElementById('portalTabFiscal').classList.add('hidden');
+            document.getElementById('portalTabCnd').classList.add('hidden');
+            document.getElementById('portalTabDre').classList.add('hidden');
+
+            if (tabKey === 'fiscal') document.getElementById('portalTabFiscal').classList.remove('hidden');
+            if (tabKey === 'cnd') document.getElementById('portalTabCnd').classList.remove('hidden');
+            if (tabKey === 'dre') document.getElementById('portalTabDre').classList.remove('hidden');
+        }
+
+        // Billing Cycle Toggle Switch
+        let isAnualBilling = false;
+        function toggleBillingCycle() {
+            isAnualBilling = !isAnualBilling;
+            const dot = document.getElementById('cycleToggleDot');
+            
+            if (isAnualBilling) {
+                dot.classList.add('translate-x-6');
+                document.getElementById('labelMensal').classList.replace('text-navy', 'text-slate-muted');
+                document.getElementById('labelAnual').classList.replace('text-slate-muted', 'text-navy');
+            } else {
+                dot.classList.remove('translate-x-6');
+                document.getElementById('labelAnual').classList.replace('text-navy', 'text-slate-muted');
+                document.getElementById('labelMensal').classList.replace('text-slate-muted', 'text-navy');
+            }
+
+            document.querySelectorAll('[data-price-mensal]').forEach(el => {
+                const val = isAnualBilling ? el.getAttribute('data-price-anual') : el.getAttribute('data-price-mensal');
+                el.childNodes[0].nodeValue = val;
+            });
+        }
+
+        // Consultation Modal Logic
+        function openConsultationModal(planName) {
+            if (planName) {
+                document.getElementById('modalPlanTitle').innerText = `Proposta: ${planName}`;
+            }
+            document.getElementById('consultationModal').classList.remove('hidden');
+        }
+
+        function closeConsultationModal() {
+            document.getElementById('consultationModal').classList.add('hidden');
+        }
+
+        function handleConsultationSubmit(e) {
+            e.preventDefault();
+            closeConsultationModal();
+            showToast('✨ Solicitação de diagnóstico enviada! Entraremos em contato via WhatsApp.');
+        }
+
+        // Client Portal Demo Login Modal
+        function openClientPortalModal() {
+            document.getElementById('clientPortalModal').classList.remove('hidden');
+        }
+
+        function closeClientPortalModal() {
+            document.getElementById('clientPortalModal').classList.add('hidden');
+        }
+
+        function handlePortalLogin(e) {
+            e.preventDefault();
+            closeClientPortalModal();
+            showToast('Acesso ao portal ativado para demonstração.');
+            document.getElementById('portal').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toastAlert');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        // Init on Window Load
+        window.onload = function() {
+            updateHeroTeaser();
+            calculateTaxSimulation();
+        };
+    </script>
+</body>
+</html>
