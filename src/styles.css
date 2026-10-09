@@ -215,7 +215,7 @@
 .legacy-page { min-height: calc(100vh - 68px); overflow: hidden; }
 .legacy-page img { display: block; max-width: 100%; }
 
-.legacy-page {
+.legacy-page:not([class*="case-"]) {
   --paper: color-mix(in srgb, var(--brand-navy) 6%, var(--brand-white));
   --paper-2: color-mix(in srgb, var(--brand-navy) 12%, var(--brand-white));
   --bg: var(--paper);
@@ -257,13 +257,13 @@
   --line: color-mix(in srgb, var(--brand-navy) 24%, var(--brand-white));
 }
 
-.legacy-page :is(h1, h2, h3) { color: inherit; }
-.legacy-page :is(.kicker, .eyebrow, .label-mono, .section-label, .service-tag, .step-tag, .step-number, .step-n, .step-num) { color: var(--brand-navy); }
-.legacy-page :is(.btn-primary, .footer-cta) { background: var(--brand-navy); color: var(--brand-white); }
-.legacy-page :is(.btn-primary, .footer-cta):hover { background: var(--brand-red); color: var(--brand-white); }
-.legacy-page :is(.badge, .hero-badge, .hero-tag) { background: var(--brand-orange); color: var(--brand-ink); }
-.legacy-page a:hover { color: var(--brand-orange); }
-.legacy-page :focus-visible { outline-color: var(--brand-orange); }
+.legacy-page:not([class*="case-"]) :is(h1, h2, h3) { color: inherit; }
+.legacy-page:not([class*="case-"]) :is(.kicker, .eyebrow, .label-mono, .section-label, .service-tag, .step-tag, .step-number, .step-n, .step-num) { color: var(--brand-navy); }
+.legacy-page:not([class*="case-"]) :is(.btn-primary, .footer-cta) { background: var(--brand-navy); color: var(--brand-white); }
+.legacy-page:not([class*="case-"]) :is(.btn-primary, .footer-cta):hover { background: var(--brand-red); color: var(--brand-white); }
+.legacy-page:not([class*="case-"]) :is(.badge, .hero-badge, .hero-tag) { background: var(--brand-orange); color: var(--brand-ink); }
+.legacy-page:not([class*="case-"]) a:hover { color: var(--brand-orange); }
+.legacy-page:not([class*="case-"]) :focus-visible { outline-color: var(--brand-orange); }
 
 .contact-footer {
   background: var(--brand-navy);
