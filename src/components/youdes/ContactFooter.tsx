@@ -1,6 +1,7 @@
 import {
   Facebook,
   Instagram,
+  Mail,
   MessageCircle,
   Music2,
   X,
@@ -39,6 +40,7 @@ export function ContactFooter() {
       <div className="contact-footer__inner">
         <div className="contact-footer__identity">
           <strong>YOUDES</strong>
+          <span>Solicite seu orçamento por meio de nossos contatos</span>
           <span>© 2026 Youdes. Todos os direitos reservados.</span>
         </div>
 
@@ -64,6 +66,12 @@ export function ContactFooter() {
             <a href="https://wa.me/551112345678" target="_blank" rel="noreferrer">
               <MessageCircle aria-hidden="true" />
               WhatsApp (11) 1234.5678
+            </a>
+          </Button>
+          <Button asChild className="contact-footer__whatsapp">
+            <a href="mailto:oficialyourdesign@gmail.com">
+              <Mail aria-hidden="true" />
+              oficialyourdesign@gmail.com
             </a>
           </Button>
         </div>

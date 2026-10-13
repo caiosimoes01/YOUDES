@@ -336,3 +336,6 @@
 }
 .demo-cta:hover { background: var(--brand-red); transform: translateY(-2px); }
 .demo-cta::after { content: "↗"; }
+
+.legacy-page .elem-prev > [style*="flex:1"],
+.legacy-page .elem-prev > [style*="flex: 1"] { align-self: stretch; }
