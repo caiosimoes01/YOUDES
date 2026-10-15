@@ -8,6 +8,9 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
+    "preview:static": "npx serve .output/public",
+    "preview:ssr": "node .output/server/index.mjs",
+    "preview:nitro": "npx nitro preview --prebuilt",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

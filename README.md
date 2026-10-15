@@ -1,24 +1,58 @@
 # YOUDES
 
-crie pagina em branco
+Projeto escolar — site institucional para a YOUDES, criado como exercício acadêmico.
 
-This project was built with [Lovable](https://lovable.dev).
+Este repositório contém uma landing page construída com a stack TanStack React Start + Vite e usa um sistema de design centralizado em `src/styles.css`.
 
-## Build with Lovable
+Objetivo do projeto
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/393ceebf-bbee-4195-9292-6584e7fa90eb).
+- Apresentar a identidade visual da YOUDES e contatos oficiais.
+- Demonstrar habilidades em TypeScript, componentes React e organização de projeto front-end.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+Como rodar (desenvolvimento)
 
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+1. Clone o repositório:
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+git clone https://github.com/caiosimoes01/YOUDES.git
+cd YOUDES
+```
+
+2. Instale dependências (usa npm):
+
+```sh
+npm install
+```
+
+3. Rode em modo de desenvolvimento:
+
+```sh
 npm run dev
 ```
+
+4. Abra http://localhost:5173 (ou a porta indicada pelo Vite).
+
+Build para produção
+
+```sh
+npm run build
+npm run preview
+```
+
+Scripts úteis
+
+- `npm run dev` — inicia o servidor de desenvolvimento (Vite)
+- `npm run build` — gera o build de produção
+- `npm run lint` — roda o ESLint
+- `npm run format` — formata o código com Prettier
+
+Notas para avaliação escolar
+
+- Este é um projeto acadêmico; os objetivos estão descritos acima.
+- Verifique o build (`npm run build`) e o lint (`npm run lint`) para avaliar qualidade técnica.
+- Para facilitar a revisão, corrigi o handle das redes sociais para `@OFICIALYOURDESIGN` e normalizei a documentação relacionada.
+
+
+---
+
+Original README e instruções automáticas do Lovable mantidas nos arquivos do projeto.
