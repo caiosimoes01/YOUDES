@@ -13,23 +13,23 @@ import { Button } from "@/components/ui/button";
 const socialLinks = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/OFICIALYOURDESING",
+    href: "https://www.instagram.com/OFICIALYOURDESIGN",
     icon: Instagram,
   },
-  { label: "X", href: "https://x.com/OFICIALYOURDESING", icon: X },
+  { label: "X", href: "https://x.com/OFICIALYOURDESIGN", icon: X },
   {
     label: "Facebook",
-    href: "https://www.facebook.com/OFICIALYOURDESING",
+    href: "https://www.facebook.com/OFICIALYOURDESIGN",
     icon: Facebook,
   },
   {
     label: "TikTok",
-    href: "https://www.tiktok.com/@OFICIALYOURDESING",
+    href: "https://www.tiktok.com/@OFICIALYOURDESIGN",
     icon: Music2,
   },
   {
     label: "YouTube",
-    href: "https://www.youtube.com/@OFICIALYOURDESING",
+    href: "https://www.youtube.com/@OFICIALYOURDESIGN",
     icon: Youtube,
   },
 ] as const;
@@ -47,11 +47,11 @@ export function ContactFooter() {
         <div className="contact-footer__channels">
           <a
             className="contact-footer__handle"
-            href="https://www.instagram.com/OFICIALYOURDESING"
+            href="https://www.instagram.com/OFICIALYOURDESIGN"
             target="_blank"
             rel="noreferrer"
           >
-            @OFICIALYOURDESING
+            @OFICIALYOURDESIGN
           </a>
           <div className="contact-footer__socials" aria-label="Redes sociais da YOUDES">
             {socialLinks.map(({ label, href, icon: Icon }) => (
